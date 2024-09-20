@@ -26,7 +26,7 @@ export default function Appbar() {
     <div className="bg-darkBlue sticky-top-0 border-b text-white   justify-between h-16 flex items-center">
       <button
         onClick={() => {
-          router.push("/dashboard");
+          router.push("/");
         }}
         className="text-3xl font-bold ml-8"
       >
@@ -135,11 +135,11 @@ export default function Appbar() {
             ) : (
               <div
                 onClick={() => {
-                  router.push("/signup");
+                  router.push("/auth/signin");
                 }}
                 className="hidden sm:block"
               >
-                Signup
+                Signin
               </div>
             )}
           </div>
