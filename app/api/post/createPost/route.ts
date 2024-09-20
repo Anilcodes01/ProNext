@@ -1,4 +1,4 @@
-import prisma from "@/app/lib/prisma";
+import {prisma} from "@/app/lib/prisma";
 import cloudinary from "cloudinary";
 import { NextResponse } from "next/server";
 import stream from 'stream';
