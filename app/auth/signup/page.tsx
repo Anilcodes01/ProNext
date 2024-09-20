@@ -46,6 +46,7 @@ export default function Signup() {
       toast.error("Error while signing up. Please try again.", {
         position: "top-right",
       });
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -56,7 +57,9 @@ export default function Signup() {
       <Toaster position="top-right" reverseOrder={false} />
       <div className="bg-white h-auto text-black lg:w-1/3  rounded-xl shadow-2xl p-10">
         <div className="text-4xl  text-left">Get Started Now</div>
-        <div className="text-sm mt-1">Enter your credentials to create a new account</div>
+        <div className="text-sm mt-1">
+          Enter your credentials to create a new account
+        </div>
         <div className="mt-8">
           <div className="flex flex-col w-full">
             <label className="font-medium text-sm" htmlFor="name">
@@ -115,7 +118,7 @@ export default function Signup() {
               className="bg-green-700 text-white p-1 w-full rounded-lg"
               disabled={loading}
             >
-              {loading ? 'Signing up...' : 'Signup'}
+              {loading ? "Signing up..." : "Signup"}
             </button>
           </div>
 
@@ -133,9 +136,14 @@ export default function Signup() {
           </div>
           <div className="flex text-sm justify-center mt-4">
             <p>Have an account?</p>
-            <button onClick={() => {
-                router.push('/auth/signin')
-            }} className="ml-1 text-blue-700 font-medium">Signin</button>
+            <button
+              onClick={() => {
+                router.push("/auth/signin");
+              }}
+              className="ml-1 text-blue-700 font-medium"
+            >
+              Signin
+            </button>
           </div>
         </div>
       </div>

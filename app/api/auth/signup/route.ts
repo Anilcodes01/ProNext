@@ -50,6 +50,7 @@ export async function POST(req: Request) {
     return NextResponse.json(
       {
         message: "Error while registering the User...",
+        error,
         success: false,
       },
       { status: 500 }

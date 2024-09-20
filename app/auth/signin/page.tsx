@@ -32,6 +32,7 @@ export default function Signup() {
       }
     } catch (error) {
       toast.error("Error while signing in. Please try again.");
+      console.log(error)
     } finally {
       setLoading(false);
     }
@@ -45,6 +46,7 @@ export default function Signup() {
       toast.success("Successfully signed in with Google!");
     } catch (error) {
       toast.error("Google sign-in failed!");
+      console.log(error)
     }
   };
 
