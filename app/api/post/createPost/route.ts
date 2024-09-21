@@ -55,6 +55,9 @@ export async function POST(req: Request) {
         image: imageUrl || null, // Save Cloudinary URL if available
         userId: userId,
       },
+      include: {
+        user: true,  // Include the user information in the response
+      },
     });
 
     return NextResponse.json({ createPost: post }, { status: 200 });

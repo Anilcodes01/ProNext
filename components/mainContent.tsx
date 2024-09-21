@@ -39,6 +39,8 @@ export default function MainContent() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]); // Local state for posts
 
+  console.log(session)
+
   // Fetch posts using useEffect
   useEffect(() => {
     const fetchPosts = async () => {

@@ -137,7 +137,7 @@ export default function Appbar() {
                 onClick={() => {
                   router.push("/auth/signin");
                 }}
-                className="hidden sm:block"
+                className="hidden cursor-pointer sm:block"
               >
                 Signin
               </div>
