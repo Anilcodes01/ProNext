@@ -41,22 +41,21 @@ export async function POST(req: Request) {
           }
         );
 
-        // Create a readable stream from the buffer and pipe it to Cloudinary
+        
         const readableStream = new stream.PassThrough();
         readableStream.end(buffer);
         readableStream.pipe(uploadStream);
       });
     }
 
-    // Create the post in the database
     const post = await prisma.post.create({
       data: {
         content: content || null,
-        image: imageUrl || null, // Save Cloudinary URL if available
+        image: imageUrl || null, 
         userId: userId,
       },
       include: {
-        user: true,  // Include the user information in the response
+        user: true,  
       },
     });
 
