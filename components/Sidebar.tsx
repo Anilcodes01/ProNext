@@ -15,7 +15,7 @@ export default function Sidebar() {
            <div className="flex gap-2 mt-4  w-full items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
            <GoHome size={24}/>
            <button onClick={() => {
-            router.push('/dashboard')
+            router.push('/')
            }}  className="text-xl  w-full items-start flex ">Home</button>
            </div>
            <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
