@@ -104,6 +104,9 @@ export default function MainContent() {
 
       if (response.data.createPost && response.data.createPost.id) {
         // Refresh posts after creating a new post
+        const postResponse = await axios.get("/api/post/fetchPost");
+      setPosts(postResponse.data.getPosts);
+
         setPosts((prevPosts) => [response.data.createPost, ...prevPosts]);
         setPostContent("");
         setSelectedImage(null);
