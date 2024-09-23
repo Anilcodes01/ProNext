@@ -35,6 +35,20 @@ export async function POST(req: Request) {
       },
     });
 
+    // Trigger on-demand revalidation
+    try {
+      const revalidateRes = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?secret=${process.env.REVALIDATION_TOKEN}&path=/articles`,
+        { method: 'GET' }
+      );
+      
+      if (!revalidateRes.ok) {
+        console.error('Failed to revalidate:', await revalidateRes.text());
+      }
+    } catch (revalidateError) {
+      console.error('Error during revalidation:', revalidateError);
+    }
+
     return NextResponse.json(
       { message: "Article created successfully!", newArticle },
       { status: 200 }
