@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
-import ArticleCard from '@/components/articleCard';
+import ArticleCard from "@/components/articleCard";
 
 interface Article {
   id: string;
@@ -31,13 +31,16 @@ export default function ArticleList() {
   const fetchArticles = async () => {
     try {
       const response = await axios.get("/api/articles/fetchArticle");
-      if (response.data.getArticles && Array.isArray(response.data.getArticles)) {
+      if (
+        response.data.getArticles &&
+        Array.isArray(response.data.getArticles)
+      ) {
         setArticles(response.data.getArticles);
       } else {
         setError("Unexpected data structure received from server");
       }
     } catch (error) {
-      setError("Failed to fetch articles. Please try again later.");
+      setError("Failed to fetch articles. Please try again later."), error;
     }
   };
 
