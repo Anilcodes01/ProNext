@@ -23,6 +23,7 @@ export async function GET() {
       },
     });
     
+    console.log('fetched posts:', getPosts)
 
     return new NextResponse(
       JSON.stringify({
