@@ -39,17 +39,17 @@ export default function MainContent() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]); // Local state for posts
 
-  console.log(session)
+  console.log(session);
 
   // Fetch posts using useEffect
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('/api/post/fetchPost', {
+        const response = await axios.get("/api/post/fetchPost", {
           headers: {
             "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
-            "Pragma": "no-cache",
-            "Expires": "0",
+            Pragma: "no-cache",
+            Expires: "0",
           },
         });
         setPosts(response.data.getPosts);
@@ -104,8 +104,14 @@ export default function MainContent() {
 
       if (response.data.createPost && response.data.createPost.id) {
         // Refresh posts after creating a new post
-        const postResponse = await axios.get("/api/post/fetchPost");
-      setPosts(postResponse.data.getPosts);
+        const postResponse = await axios.get("/api/post/fetchPost", {
+          headers: {
+            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        });
+        setPosts(postResponse.data.getPosts);
 
         setPosts((prevPosts) => [response.data.createPost, ...prevPosts]);
         setPostContent("");
