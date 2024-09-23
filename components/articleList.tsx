@@ -40,7 +40,7 @@ export default function ArticleList() {
         setError("Unexpected data structure received from server");
       }
     } catch (error) {
-      setError("Failed to fetch articles. Please try again later."), error;
+      console.log("Failed to fetch articles. Please try again later.", error);
     }
   };
 
