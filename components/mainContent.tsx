@@ -45,7 +45,13 @@ export default function MainContent() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('/api/post/fetchPost');
+        const response = await axios.get('/api/post/fetchPost', {
+          headers: {
+            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+          },
+        });
         setPosts(response.data.getPosts);
       } catch (error) {
         console.error("Failed to fetch posts", error);
