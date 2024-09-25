@@ -113,7 +113,6 @@ export default function MainContent() {
         });
         setPosts(postResponse.data.getPosts);
 
-        setPosts((prevPosts) => [response.data.createPost, ...prevPosts]);
         setPostContent("");
         setSelectedImage(null);
         setPreviewUrl(null);

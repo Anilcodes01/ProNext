@@ -48,6 +48,8 @@ export async function POST(req: Request) {
       });
     }
 
+    console.log(userId)
+
     const post = await prisma.post.create({
       data: {
         content: content || null,
