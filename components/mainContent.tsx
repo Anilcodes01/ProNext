@@ -1,31 +1,18 @@
+// components/MainContent.tsx
 "use client";
 import { useSession } from "next-auth/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { FaImage } from "react-icons/fa6";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { LiaPollSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
-import PostCard from "./postCard";
 import axios from "axios";
 import Image from "next/image";
 import { MdOutlineArticle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
-
-interface Post {
-  id: string;
-  title: string;
-  content: string;
-  image?: string; // No `null`, only string or undefined
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    name: string;
-    avatarUrl?: string;
-  };
-}
+import PostList from "./postList"; // Import the new PostList component
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -37,30 +24,6 @@ export default function MainContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]); // Local state for posts
-
-  console.log(session);
-
-  // Fetch posts using useEffect
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get("/api/post/fetchPost", {
-          headers: {
-            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-        setPosts(response.data.getPosts);
-      } catch (error) {
-        console.error("Failed to fetch posts", error);
-        setError("Failed to fetch posts");
-      }
-    };
-
-    fetchPosts();
-  }, []); // Run once on component mount
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -103,16 +66,6 @@ export default function MainContent() {
       });
 
       if (response.data.createPost && response.data.createPost.id) {
-        // Refresh posts after creating a new post
-        const postResponse = await axios.get("/api/post/fetchPost", {
-          headers: {
-            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-        setPosts(postResponse.data.getPosts);
-
         setPostContent("");
         setSelectedImage(null);
         setPreviewUrl(null);
@@ -137,6 +90,10 @@ export default function MainContent() {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error...</div>
+  }
+
   return (
     <div className="p-8 w-full">
       <div className="text-3xl w-full text-white font-bold">
@@ -147,8 +104,8 @@ export default function MainContent() {
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
           className="outline-none border border-black text-white bg-black text-gray-400 w-full h-30 text-lg rounded-lg p-2"
-          placeholder="What's on your mind?..."
-        ></textarea>
+          placeholder="What's on your mind?...">
+        </textarea>
         {previewUrl && (
           <div className="relative w-full h-60 mt-2">
             <Image
@@ -221,16 +178,9 @@ export default function MainContent() {
           </div>
         </div>
       </div>
-      <div className="mt-8">
-        {error && <p className="text-red-500">{error}</p>}
-        {posts.length > 0 ? (
-          posts.map((post, index) => (
-            <PostCard key={post.id ?? `post-${index}`} post={post} />
-          ))
-        ) : (
-          <p className="text-gray-500">No posts available</p>
-        )}
-      </div>
+
+      {/* Render the PostList component here */}
+      <PostList />
     </div>
   );
 }

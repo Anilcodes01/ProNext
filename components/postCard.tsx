@@ -12,7 +12,6 @@ interface User {
 
 interface Post {
   id: string;
-  title: string;
   content: string;
   createdAt: string | Date;
   image?: string;

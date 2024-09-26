@@ -1,5 +1,7 @@
-import {prisma} from "@/app/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
+
+export const revalidate = 0;
 
 export async function GET() {
   try {
@@ -22,23 +24,18 @@ export async function GET() {
         createdAt: "desc",
       },
     });
-    
-    console.log('fetched posts:', getPosts)
 
-    return new NextResponse(
-      JSON.stringify({
-        message: "Posts fetched",
-        getPosts,
-      }),
+    console.log("fetched posts:", getPosts);
+    return NextResponse.json(
       {
+        message: "Posts fetched successfully!",
+        getPosts,
+
         headers: {
-          "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate, proxy-revalidate",
-          "Content-Type": "application/json",
-          "Pragma": "no-cache",
-          "Expires": "0",
+          "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
         },
-        status: 200,
-      }
+      },
+      { status: 200 }
     );
   } catch (error) {
     // Log the full error for debugging
