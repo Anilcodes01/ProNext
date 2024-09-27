@@ -1,4 +1,4 @@
-import Appbar from "./appbar";
+
 
 export default function AllArticleSkeleton() {
   return (
