@@ -48,7 +48,16 @@ export default function PostList() {
   }
 
   if (posts.length === 0) {
-    return <p className="text-gray-500">No posts available</p>;
+    return (
+      <div className="text-gray-500">
+        <div className="animate-pulse w-full ">
+          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
+          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
+          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
+          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
+        </div>
+      </div>
+    );
   }
 
   return (

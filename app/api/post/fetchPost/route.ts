@@ -25,7 +25,7 @@ export async function GET() {
       },
     });
 
-    console.log("fetched posts:", getPosts);
+    
     return NextResponse.json(
       {
         message: "Posts fetched successfully!",

@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import ArticleCard from "@/components/articleCard";
+import AllArticleSkeleton from "./allArticleSkeleton";
 
 interface Article {
   id: string;
@@ -57,7 +58,10 @@ export default function ArticleList() {
           </Link>
         ))
       ) : (
-        <p className="text-gray-500">No articles available</p>
+        <div>
+          
+          <AllArticleSkeleton />
+        </div>
       )}
     </div>
   );

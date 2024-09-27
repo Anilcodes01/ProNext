@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
 import PostList from "./postList"; // Import the new PostList component
+import PostSkeleton from "./postSkeleton";
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -87,7 +88,7 @@ export default function MainContent() {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div><PostSkeleton /></div>;
   }
 
   if (error) {

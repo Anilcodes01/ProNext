@@ -13,7 +13,8 @@ interface User {
 
 export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
-  const [following, setFollowing] = useState<string[]>([]); 
+  const [following, setFollowing] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
     async function fetchUsers() {
@@ -22,6 +23,8 @@ export default function UserCard() {
         setUsers(response.data.users);
       } catch (error) {
         console.error('Error fetching users:', error);
+      } finally {
+        setLoading(false); // Set loading to false after the data is fetched
       }
     }
     fetchUsers();
@@ -35,15 +38,31 @@ export default function UserCard() {
     }
   };
 
-
+  // Skeleton component
+  const Skeleton = () => (
+    <div className="border bg-gray-700 p-2 w-auto rounded-lg flex items-center gap-2 animate-pulse">
+      <div className="bg-gray-600 rounded-full w-8 h-8"></div>
+      <div className="flex justify-between gap-2 w-full">
+        <div className="bg-gray-600 h-6 rounded-lg w-1/2"></div>
+        <div className="bg-gray-600 h-6 rounded-full w-16"></div>
+      </div>
+    </div>
+  );
 
   return (
     <div className="bg-gray-800 rounded-lg p-4">
-      <h2 className="text-2xl font-semibold mb-4 ">All Users</h2>
-      <div className="grid grid-cols-2  md:grid-cols-1 lg:grid-cols-3 gap-4">
-        {users.length > 0 ? (
+      <h2 className="text-2xl font-semibold mb-4">All Users</h2>
+      <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-4">
+        {loading ? (
+          // Render skeletons while loading
+          <>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </>
+        ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="border bg-gray-800 p-2 w-auto rounded-lg flex  items-center gap-2 ">
+            <div key={user.id} className="border bg-gray-800 p-2 w-auto rounded-lg flex items-center gap-2">
               {user.avatarUrl ? (
                 <Image
                   src={user.avatarUrl}
@@ -59,7 +78,7 @@ export default function UserCard() {
                 <div className="text-xl font-medium">{user.name || "Unnamed User"}</div>
                 <button
                   onClick={() => handleFollow(user.id)}
-                  className={` p-1 text-sm font-medium rounded-full ${
+                  className={`p-1 text-sm font-medium rounded-full ${
                     following.includes(user.id) ? "bg-red-500 text-white" : "bg-blue-500 text-white"
                   }`}
                 >
@@ -69,7 +88,12 @@ export default function UserCard() {
             </div>
           ))
         ) : (
-          <p>No users found.</p>
+          // Render skeletons if no users are found
+          <>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+          </>
         )}
       </div>
     </div>
