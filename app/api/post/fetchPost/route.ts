@@ -5,7 +5,7 @@ import { authOptions } from "@/app/lib/authOptions"; // Import your NextAuth opt
 
 export const revalidate = 0;
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions); // Get the session
     const userId = session?.user?.id; // Get the logged-in user ID
