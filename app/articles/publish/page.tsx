@@ -50,7 +50,7 @@ export default function WriteArticle() {
   }
 
   return (
-    <div className="bg-gray-700  min-h-screen">
+    <div className="bg-white  min-h-screen">
       <Toaster position="top-right" />
       <div>
         <Appbar />
@@ -61,7 +61,7 @@ export default function WriteArticle() {
           onChange={(e) => {
             setTitle(e.target.value);
           }}
-          className="p-4 rounded-lg text-4xl outline-none text-black w-full font-bold"
+          className="p-4 rounded-lg text-4xl mt-16 outline-none text-black w-full font-bold"
           type="text"
           placeholder="Title..."
         />

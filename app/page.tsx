@@ -12,7 +12,7 @@ export default function Home() {
 <div className=" fixed w-52  lg:w-80 h-full ">
   <Sidebar />
 </div>
-<div className="ml-52 border-l lg:ml-80 border-r border-gray-200 lg:mr-52 ">
+<div className="ml-52 border-l w-full lg:ml-80 border-r border-gray-200 lg:mr-52 ">
   <MainContent />
 </div>
     </div>

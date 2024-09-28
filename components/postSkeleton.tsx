@@ -1,20 +1,21 @@
-// components/Skeleton.tsx
+
+
 export default function PostSkeleton() {
   return (
-    <div className="col-span-6 w-full bg-gray-800  border-l border-r md:col-span-7  text-white lg:col-span-6 md:w-[100%]">
-      <div className="animate-pulse w-full p-8">
-      <div className="text-gray-500">
-        <div className="animate-pulse w-full ">
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
-          <div className="h-28 w-full mt-6 bg-gray-700 rounded-lg"></div>
+    <div>
+      <div className="bg-white w-full min-h-screen">
+        <div className=" w-full">
+          <div role="status" className="animate-pulse">
+            <div className="text-4xl font-bold">{/* all articles */}</div>
+
+            <div className="mt-12">
+              <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+              <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+              <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+              <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+            </div>
+          </div>
         </div>
-      </div>
-       
       </div>
     </div>
   );

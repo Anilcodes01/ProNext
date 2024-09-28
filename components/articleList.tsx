@@ -58,7 +58,7 @@ export default function ArticleList() {
           </Link>
         ))
       ) : (
-        <div>
+        <div className="w-full">
           
           <AllArticleSkeleton />
         </div>

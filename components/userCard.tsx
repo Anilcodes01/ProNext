@@ -40,11 +40,11 @@ export default function UserCard() {
 
   // Skeleton component
   const Skeleton = () => (
-    <div className="border bg-gray-700 p-2 w-auto rounded-lg flex items-center gap-2 animate-pulse">
-      <div className="bg-gray-600 rounded-full w-8 h-8"></div>
+    <div className="border bg-gray-200 p-2 w-auto rounded-lg flex items-center gap-2 animate-pulse">
+      <div className="bg-gray-200 rounded-full w-8 h-8"></div>
       <div className="flex justify-between gap-2 w-full">
-        <div className="bg-gray-600 h-6 rounded-lg w-1/2"></div>
-        <div className="bg-gray-600 h-6 rounded-full w-16"></div>
+        <div className="bg-gray-200 h-6 rounded-lg w-1/2"></div>
+        <div className="bg-gray-200 h-2 rounded-full w-16"></div>
       </div>
     </div>
   );
@@ -56,6 +56,9 @@ export default function UserCard() {
         {loading ? (
           // Render skeletons while loading
           <>
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
             <Skeleton />
             <Skeleton />
             <Skeleton />

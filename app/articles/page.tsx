@@ -16,7 +16,7 @@ export default function Articles() {
         <div className='fixed w-52 mt-16 lg:w-80 h-full '>
           <Sidebar />
         </div>
-        <div className="ml-52 border-l min-h-screen lg:ml-80 border-r border-gray-200 lg:mr-52 p-8">
+        <div className="ml-52 border-l w-full min-h-screen lg:ml-80 border-r border-gray-200 lg:mr-52 p-8">
         <div className="text-4xl font-bold mt-16">All Articles</div>
         <Suspense fallback={<AllArticleSkeleton />}>
           <ArticleList />

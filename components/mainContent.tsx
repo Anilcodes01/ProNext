@@ -1,4 +1,3 @@
-// components/MainContent.tsx
 "use client";
 import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
@@ -88,27 +87,31 @@ export default function MainContent() {
   };
 
   if (loading) {
-    return <div><PostSkeleton /></div>;
+    return (
+      <div className="w-full">
+        <PostSkeleton />
+      </div>
+    );
   }
 
   if (error) {
-    return <div>Error...</div>
+    return <div>Error...</div>;
   }
 
   return (
-    <div className="p-8 w-full">
-      <div className="text-3xl w-full text-black font-bold">
+    <div className="p-4 sm:p-8 w-full">
+      <div className="text-2xl sm:text-3xl w-full text-black font-bold">
         Welcome back, {session?.user?.name}!
       </div>
       <div className="border border-gray-200 w-full bg-white rounded-xl mt-8 p-1">
         <textarea
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
-          className="outline-none border text-black bg-gray-200 text-black w-full h-30 text-lg rounded-lg p-2"
-          placeholder="What's on your mind?...">
-        </textarea>
+          className="outline-none border text-black bg-gray-200 text-black w-full h-20 sm:h-30 text-lg rounded-lg p-2 resize-none"
+          placeholder="What's on your mind?..."
+        ></textarea>
         {previewUrl && (
-          <div className="relative w-full h-60 mt-2">
+          <div className="relative w-full h-48 mt-2 sm:h-60">
             <Image
               src={previewUrl}
               alt="Preview"
@@ -131,7 +134,7 @@ export default function MainContent() {
           </div>
         )}
 
-        <div className="flex justify-between mt-2">
+        <div className="flex justify-between mt-2 flex-wrap">
           <div className="flex gap-4 ml-2">
             <input
               type="file"
