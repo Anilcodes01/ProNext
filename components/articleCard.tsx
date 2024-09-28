@@ -25,7 +25,7 @@ export default function ArticleCard({ article }: ArticleProps) {
   }
 
   return (
-    <div className="bg-gray-800 cursor-pointer items-start border mt-4 rounded-lg w-full p-4">
+    <div className="bg-white-800 cursor-pointer items-start border mt-4 rounded-lg w-full p-4">
       <div className="flex items-center mb-4">
         {article.user && article.user.avatarUrl ? (
           <Image
@@ -33,10 +33,10 @@ export default function ArticleCard({ article }: ArticleProps) {
             alt="User Profile"
             width={24}
             height={24}
-            className="rounded-full object-cover"
+            className="rounded-full text-black object-cover"
           />
         ) : (
-          <FaUserCircle className="w-6 h-6 text-white" />
+          <FaUserCircle className="w-6 h-6 text-black" />
         )}
         <div className="ml-2">
           <div className="text-sm font-bold">

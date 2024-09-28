@@ -1,4 +1,3 @@
-// components/PostList.tsx
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -6,21 +5,24 @@ import PostCard from "./postCard";
 
 interface Post {
   id: string;
-  title: string;
+  title?: string;
   content: string;
-  image?: string;
+  image?: string; // Make sure to allow null for optional images
   createdAt: string;
   updatedAt: string;
   userId: string;
   user: {
     name: string;
-    avatarUrl?: string;
+    avatarUrl?: string ; // Allow null for optional avatars
   };
+  isLiked: boolean; // This field is based on your backend response
+  likeCount: number; // Ensure this is passed correctly from the backend
 }
 
 export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   // Fetch posts using useEffect
   useEffect(() => {
@@ -33,10 +35,14 @@ export default function PostList() {
             Expires: "0",
           },
         });
-        setPosts(response.data.getPosts);
+        console.log('Fetched posts:', response.data); // Log the entire response for debugging
+        const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
+        setPosts(fetchedPosts);
       } catch (error) {
         console.error("Failed to fetch posts", error);
         setError("Failed to fetch posts");
+      } finally {
+        setLoading(false); // Set loading to false after fetch is complete
       }
     };
 
@@ -47,7 +53,7 @@ export default function PostList() {
     return <p className="text-red-500">{error}</p>;
   }
 
-  if (posts.length === 0) {
+  if (loading) {
     return (
       <div className="text-gray-500">
         <div className="animate-pulse w-full ">

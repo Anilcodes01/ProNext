@@ -1,13 +1,16 @@
 'use client'
 
+import { useState } from "react";
 import Image from "next/image";
-import { FaUserCircle, FaRegHeart, FaRegCommentAlt, FaRegBookmark } from "react-icons/fa";
+import { FaUserCircle, FaRegHeart, FaHeart, FaRegCommentAlt, FaRegBookmark } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
+import axios from "axios";
 import { formatDistanceToNow } from 'date-fns';
+import { useSession } from "next-auth/react";
 
 interface User {
   name: string;
-  avatarUrl?: string;  // Optional avatar URL
+  avatarUrl?: string;
 }
 
 interface Post {
@@ -16,15 +19,46 @@ interface Post {
   createdAt: string | Date;
   image?: string;
   user?: User;
+  isLiked: boolean;
+  likeCount: number;
 }
 
 export default function PostCard({ post }: { post: Post }) {
+  const [liked, setLiked] = useState(post.isLiked);
+  const [likeCount, setLikeCount] = useState(post.likeCount);
+
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
+
+  console.log('Post Data:', post); // Debugging log
+  console.log('Session Data:', session); // Debugging log
+
   const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
     addSuffix: true,
   });
 
+  const handleLikeToggle = async () => {
+    if (!userId) {
+      console.error("User not logged in");
+      return;
+    }
+
+    try {
+      if (liked) {
+        await axios.post('/api/post/unlike', { postId: post.id, userId });
+        setLikeCount((prev) => prev - 1);
+      } else {
+        await axios.post('/api/post/like', { postId: post.id, userId });
+        setLikeCount((prev) => prev + 1);
+      }
+      setLiked(!liked);
+    } catch (error) {
+      console.error("Failed to like/unlike the post:", error);
+    }
+  };
+
   return (
-    <div className="bg-black bg-gray-950 mt-4 cursor-pointer hover:bg-zinc-950 p-5 text-white border-white rounded-xl">
+    <div className="bg-black bg-white mt-4 cursor-pointer  hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
       <div className="flex items-center">
         {post.user?.avatarUrl ? (
           <Image
@@ -35,17 +69,16 @@ export default function PostCard({ post }: { post: Post }) {
             className="rounded-full object-cover"
           />
         ) : (
-          <FaUserCircle className="w-6 h-6 text-white" />
+          <FaUserCircle className="w-6 h-6 text-black" />
         )}
         <div className="flex items-center ml-4">
           <div className="text-xl">{post.user?.name || "Unknown User"}</div>
-          <div className="text-xs text-gray-200 ml-2">{formattedDate}</div>
+          <div className="text-xs text-gray-600 ml-2">{formattedDate}</div>
         </div>
       </div>
 
-      <div className="mt-2 ml-8 mr-8 ">
-        <div className="whitespace-pre-wrap text-white">{post.content}</div>
-
+      <div className="mt-2 ml-8 mr-8">
+        <div className="whitespace-pre-wrap text-black">{post.content}</div>
         {post.image && (
           <div className="mt-3">
             <Image
@@ -61,18 +94,24 @@ export default function PostCard({ post }: { post: Post }) {
         )}
 
         <div className="mt-3 ml-2 flex gap-8">
-          <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-            <FaRegHeart size={19} />
-            <div className="text-sm">12</div>
+          <button 
+            className={`gap-1 flex items-center ${liked ? 'text-red-500' : 'text-gray-400'} hover:text-red-600`}
+            onClick={handleLikeToggle}
+          >
+            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}
+            <div className="text-sm">{likeCount}</div>
           </button>
+
           <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
             <div className="text-sm">6</div>
           </button>
+
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
             <IoMdShare size={18} />
             <div className="text-sm">6</div>
           </button>
+
           <button className="text-gray-400 gap-1 flex hover:text-green-600 items-center">
             <FaRegBookmark size={18} />
             <div className="text-sm">6</div>

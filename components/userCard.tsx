@@ -50,7 +50,7 @@ export default function UserCard() {
   );
 
   return (
-    <div className="bg-gray-800 rounded-lg p-4">
+    <div className="bg-white text-black rounded-lg p-4">
       <h2 className="text-2xl font-semibold mb-4">All Users</h2>
       <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-4">
         {loading ? (
@@ -62,7 +62,7 @@ export default function UserCard() {
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="border bg-gray-800 p-2 w-auto rounded-lg flex items-center gap-2">
+            <div key={user.id} className="border bg-white  p-2 w-auto rounded-lg flex items-center gap-2">
               {user.avatarUrl ? (
                 <Image
                   src={user.avatarUrl}

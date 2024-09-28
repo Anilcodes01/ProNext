@@ -10,43 +10,37 @@ import { useRouter } from "next/navigation";
 export default function Sidebar() {
     const router = useRouter();
 
-    return <div className="bg-gray-800  flex flex-col w-full h-full text-white">
-        <div className="flex flex-col  p-4 gap-4">
-           <div className="flex gap-2 mt-4  w-full items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
+    return <div className="bg-white  mt-  flex flex-col items-center  h-full text-black">
+        <div className="flex flex-col w-full text-center p-4 gap-4">
+           <div className="flex gap-2 mt-4  w-full items-center justify-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <GoHome size={24}/>
            <button onClick={() => {
             router.push('/')
-           }}  className="text-xl  w-full items-start flex ">Home</button>
+           }}  className="text-xl  w-full items-center  flex ">Home</button>
            </div>
-           <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
+           <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <LuMessageSquare size={22}  />
            <button className="text-xl ">Messages</button>
            </div>
-           <div   className="flex gap-2 items-center w-full cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
+           <div   className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <MdPeopleOutline size={24}/>
            <button onClick={() => {
             router.push('/network')
            }} className="text-xl flex items-start  w-full">Network</button>
            </div>
-           <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
+           <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <IoDocumentTextOutline size={24}/>
            <button onClick={() => {
             router.push('/articles')
            }} className="text-xl w-full flex   items-start ">Aritcles</button>
            </div>
-           <div className="flex gap-2 items-center cursor-pointer hover:bg-gray-700 rounded-lg p-2 hover:text-white">
+           <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <CgPoll size={24}/>
            <button className="text-xl">Polls</button>
            </div>
         </div>
         <div className="text-white p-4 mt-2 flex flex-col gap-2">
-           <div className="text-white text-xl font-bold">Trending Topics</div>
-           <div className="flex flex-col gap-1 items-start ">
-           <button className="text-green-300 text-xl hover:underline ">#WebDevelopment</button>
-           <button className="text-green-300 text-xl hover:underline">#Javascript</button>
-           <button className="text-green-300 text-xl hover:underline">#OpenSource</button>
-           <button className="text-green-300 text-xl hover:underline">#CodingTips</button>
-           </div>
+           
         </div>
     </div>
 }

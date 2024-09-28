@@ -97,14 +97,14 @@ export default function MainContent() {
 
   return (
     <div className="p-8 w-full">
-      <div className="text-3xl w-full text-white font-bold">
+      <div className="text-3xl w-full text-black font-bold">
         Welcome back, {session?.user?.name}!
       </div>
-      <div className="border border-black w-full bg-gray-950 rounded-xl mt-8 p-1">
+      <div className="border border-gray-200 w-full bg-white rounded-xl mt-8 p-1">
         <textarea
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
-          className="outline-none border border-black text-white bg-black text-gray-400 w-full h-30 text-lg rounded-lg p-2"
+          className="outline-none border text-black bg-gray-200 text-black w-full h-30 text-lg rounded-lg p-2"
           placeholder="What's on your mind?...">
         </textarea>
         {previewUrl && (
@@ -172,7 +172,7 @@ export default function MainContent() {
           <div>
             <button
               onClick={handlePostSubmission}
-              className="border text-white hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
+              className="border text-green-800 hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
             >
               Post
             </button>

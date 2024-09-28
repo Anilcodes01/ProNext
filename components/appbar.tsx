@@ -23,7 +23,7 @@ export default function Appbar() {
  
 
   return (
-    <div className="bg-darkBlue sticky-top-0 border-b text-white   justify-between h-16 flex items-center">
+    <div className="bg-white text-black fixed border-b   w-full justify-between h-16 flex items-center">
       <button
         onClick={() => {
           router.push("/");
