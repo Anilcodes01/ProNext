@@ -37,4 +37,4 @@ export default function OneArticleSkeleton() {
       </div>
     </div>
   );
-}2
+}
