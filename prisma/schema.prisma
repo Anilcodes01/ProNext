@@ -19,6 +19,7 @@ model User {
   posts    Post[]
   articles Article[]
   likes    Like[]
+  comments Comment[]
 }
 
 model Post {
@@ -30,6 +31,7 @@ model Post {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   likes     Like[] 
+  comments Comment[]
 }
 
 model Article {
@@ -51,4 +53,15 @@ model Like {
   user   User   @relation(fields: [userId], references: [id])
 
   @@unique([postId, userId])
+}
+
+model Comment {
+  id String @id @default(uuid())
+  content String?
+  postId String
+  post Post @relation(fields: [postId], references: [id])
+  userId String
+  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  
 }

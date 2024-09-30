@@ -1,12 +1,19 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import Image from "next/image";
-import { FaUserCircle, FaRegHeart, FaHeart, FaRegCommentAlt, FaRegBookmark } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaRegHeart,
+  FaHeart,
+  FaRegCommentAlt,
+  FaRegBookmark,
+} from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 interface User {
   name: string;
@@ -26,12 +33,17 @@ interface Post {
 export default function PostCard({ post }: { post: Post }) {
   const [liked, setLiked] = useState(post.isLiked);
   const [likeCount, setLikeCount] = useState(post.likeCount);
+  const router = useRouter();
+
+  const handlePostClick = () => {
+    router.push(`/post/${post.id}`);
+  };
 
   const { data: session } = useSession();
   const userId = session?.user?.id;
 
-  console.log('Post Data:', post); // Debugging log
-  console.log('Session Data:', session); // Debugging log
+  console.log("Post Data:", post); // Debugging log
+  console.log("Session Data:", session); // Debugging log
 
   const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
     addSuffix: true,
@@ -45,10 +57,10 @@ export default function PostCard({ post }: { post: Post }) {
 
     try {
       if (liked) {
-        await axios.post('/api/post/unlike', { postId: post.id, userId });
+        await axios.post("/api/post/unlike", { postId: post.id, userId });
         setLikeCount((prev) => prev - 1);
       } else {
-        await axios.post('/api/post/like', { postId: post.id, userId });
+        await axios.post("/api/post/like", { postId: post.id, userId });
         setLikeCount((prev) => prev + 1);
       }
       setLiked(!liked);
@@ -58,7 +70,10 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <div className="bg-black bg-white mt-4 cursor-pointer  hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
+    <div
+      onClick={handlePostClick}
+      className="bg-black bg-white mt-4 cursor-pointer  hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl"
+    >
       <div className="flex items-center">
         {post.user?.avatarUrl ? (
           <Image
@@ -94,8 +109,10 @@ export default function PostCard({ post }: { post: Post }) {
         )}
 
         <div className="mt-3 ml-2 flex gap-8">
-          <button 
-            className={`gap-1 flex items-center ${liked ? 'text-red-500' : 'text-gray-400'} hover:text-red-600`}
+          <button
+            className={`gap-1 flex items-center ${
+              liked ? "text-red-500" : "text-gray-400"
+            } hover:text-red-600`}
             onClick={handleLikeToggle}
           >
             {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}
