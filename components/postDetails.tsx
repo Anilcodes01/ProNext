@@ -12,7 +12,7 @@ import {
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 
 // Interface for User
@@ -58,8 +58,9 @@ export default function PostDetail() {
           const response = await axios.get(`/api/post/${id}`);
           setPost(response.data);
           setLoading(false);
-        } catch (err) {
-          setError("Failed to load post", err);
+        } catch (error) {
+          setError("Failed to load post", );
+          console.log(error)
           setLoading(false);
         }
       };
