@@ -49,7 +49,6 @@ export default function PostDetail() {
   const [submitting, setSubmitting] = useState<boolean>(false); // For comment submission
   const { data: session } = useSession();
 
-  const router = useRouter();
   const { id } = useParams(); // Extract post ID from URL
 
   useEffect(() => {
@@ -60,7 +59,7 @@ export default function PostDetail() {
           setPost(response.data);
           setLoading(false);
         } catch (err) {
-          setError("Failed to load post");
+          setError("Failed to load post", err);
           setLoading(false);
         }
       };
