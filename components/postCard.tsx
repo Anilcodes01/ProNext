@@ -28,10 +28,11 @@ interface Post {
   user?: User;
   isLiked: boolean;
   likeCount: number;
+  commentCount: number;
 }
 
 export default function PostCard({ post }: { post: Post }) {
-  const [liked, setLiked] = useState(post.isLiked);
+  const [liked, setLiked] = useState(post.isLiked);  // Set the initial like status from the post
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const router = useRouter();
 
@@ -41,9 +42,6 @@ export default function PostCard({ post }: { post: Post }) {
 
   const { data: session } = useSession();
   const userId = session?.user?.id;
-
-  console.log("Post Data:", post); // Debugging log
-  console.log("Session Data:", session); // Debugging log
 
   const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
     addSuffix: true,
@@ -70,11 +68,8 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <div
-      onClick={handlePostClick}
-      className="bg-black bg-white mt-4 cursor-pointer  hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl"
-    >
-      <div className="flex items-center">
+    <div className="bg-white mt-4 cursor-pointer hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
+      <div onClick={handlePostClick} className="flex items-center">
         {post.user?.avatarUrl ? (
           <Image
             src={post.user.avatarUrl}
@@ -93,9 +88,11 @@ export default function PostCard({ post }: { post: Post }) {
       </div>
 
       <div className="mt-2 ml-8 mr-8">
-        <div className="whitespace-pre-wrap text-black">{post.content}</div>
+        <div onClick={handlePostClick} className="whitespace-pre-wrap text-black">
+          {post.content}
+        </div>
         {post.image && (
-          <div className="mt-3">
+          <div onClick={handlePostClick} className="mt-3">
             <Image
               src={post.image}
               alt="Post image"
@@ -115,13 +112,13 @@ export default function PostCard({ post }: { post: Post }) {
             } hover:text-red-600`}
             onClick={handleLikeToggle}
           >
-            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}
+            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}  {/* Conditional rendering based on liked state */}
             <div className="text-sm">{likeCount}</div>
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
-            <div className="text-sm">6</div>
+            <div className="text-sm">{post.commentCount}</div>
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">

@@ -36,6 +36,7 @@ export async function GET() {
         _count: {
           select: {
             likes: true, // Count total likes for each post
+            comments: true,
           },
         },
       },
@@ -49,6 +50,7 @@ export async function GET() {
       ...post,
       liked: post.likes.length > 0, // If the user has liked the post, mark as liked
       likeCount: post._count.likes, // Total like count
+      commentCount: post._count.comments,
     }));
 
     return NextResponse.json(

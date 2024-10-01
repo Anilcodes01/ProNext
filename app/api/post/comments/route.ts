@@ -10,7 +10,10 @@ export async function POST(req: Request) {
         postId,
         userId,
         content,
+      
       },
+      
+      
     });
 
     return NextResponse.json(

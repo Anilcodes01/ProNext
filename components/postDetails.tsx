@@ -59,8 +59,8 @@ export default function PostDetail() {
           setPost(response.data);
           setLoading(false);
         } catch (error) {
-          setError("Failed to load post", );
-          console.log(error)
+          setError("Failed to load post");
+          console.log(error);
           setLoading(false);
         }
       };
@@ -90,7 +90,7 @@ export default function PostDetail() {
         if (!prevPost) return null;
         return {
           ...prevPost,
-          comments: [...prevPost.comments, response.data],
+          comments: [response.data, ...prevPost.comments],
         };
       });
 
@@ -164,7 +164,7 @@ export default function PostDetail() {
 
           <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
-            <span>{post.comments.length} Comments</span>
+            <span>{post.comments?.length || 0} Comments</span>
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
