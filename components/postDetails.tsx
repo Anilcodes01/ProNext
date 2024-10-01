@@ -8,7 +8,6 @@ import {
   FaHeart,
   FaRegCommentAlt,
   FaRegBookmark,
-  FaBookmark
 } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
