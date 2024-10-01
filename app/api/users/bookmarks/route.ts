@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/lib/authOptions";
 import { prisma } from "@/app/lib/prisma";
-import { tr } from "date-fns/locale";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
