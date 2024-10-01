@@ -28,6 +28,12 @@ export default function Sidebar() {
             router.push('/network')
            }} className="text-xl flex items-start  w-full">Network</button>
            </div>
+           <div   className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+           <MdPeopleOutline size={24}/>
+           <button onClick={() => {
+            router.push('/bookmarks')
+           }} className="text-xl flex items-start  w-full">Bookmarks</button>
+           </div>
            <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <IoDocumentTextOutline size={24}/>
            <button onClick={() => {

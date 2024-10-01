@@ -8,6 +8,7 @@ import {
   FaHeart,
   FaRegCommentAlt,
   FaRegBookmark,
+  FaBookmark,
 } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
@@ -29,11 +30,13 @@ interface Post {
   isLiked: boolean;
   likeCount: number;
   commentCount: number;
+  isBookmarked: boolean
 }
 
 export default function PostCard({ post }: { post: Post }) {
   const [liked, setLiked] = useState(post.isLiked);  // Set the initial like status from the post
   const [likeCount, setLikeCount] = useState(post.likeCount);
+  const [bookmarked, setBookmarked] = useState(post.isBookmarked);
   const router = useRouter();
 
   const handlePostClick = () => {
@@ -64,6 +67,24 @@ export default function PostCard({ post }: { post: Post }) {
       setLiked(!liked);
     } catch (error) {
       console.error("Failed to like/unlike the post:", error);
+    }
+  };
+
+  const handleBookmarkToggle = async () => {
+    if (!userId) {
+      console.error('User not logged in');
+      return;
+    }
+
+    try {
+      if (bookmarked) {
+        await axios.post('/api/post/unbookmark', { postId: post.id });
+      } else {
+        await axios.post('/api/post/bookmark', { postId: post.id });
+      }
+      setBookmarked(!bookmarked);
+    } catch (error) {
+      console.error('Failed to bookmark/unbookmark the post:', error);
     }
   };
 
@@ -126,9 +147,15 @@ export default function PostCard({ post }: { post: Post }) {
             <div className="text-sm">6</div>
           </button>
 
-          <button className="text-gray-400 gap-1 flex hover:text-green-600 items-center">
-            <FaRegBookmark size={18} />
-            <div className="text-sm">6</div>
+         {/* Bookmark Button */}
+         <button
+            className={`text-gray-400 gap-1 flex hover:text-green-600 items-center ${
+              bookmarked ? 'text-green-600' : 'text-gray-400'
+            }`}
+            onClick={handleBookmarkToggle}
+          >
+            {bookmarked ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
+            <div className="text-sm">Save</div>
           </button>
         </div>
       </div>
