@@ -17,7 +17,8 @@ interface Post {
   };
   isLiked: boolean; // This field is based on your backend response
   likeCount: number;
-  commentCount: number // Ensure this is passed correctly from the backend
+  commentCount: number 
+  isBookmarked: boolean// Ensure this is passed correctly from the backend
 }
 
 export default function PostList() {
