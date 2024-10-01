@@ -5,6 +5,7 @@ import { IoDocumentTextOutline } from "react-icons/io5";
 import { CgPoll } from "react-icons/cg";
 import { LuMessageSquare } from "react-icons/lu";
 import { useRouter } from "next/navigation";
+import { GoBookmark } from "react-icons/go";
 
 
 export default function Sidebar() {
@@ -29,7 +30,7 @@ export default function Sidebar() {
            }} className="text-xl flex items-start  w-full">Network</button>
            </div>
            <div   className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
-           <MdPeopleOutline size={24}/>
+           <GoBookmark size={24}/>
            <button onClick={() => {
             router.push('/bookmarks')
            }} className="text-xl flex items-start  w-full">Bookmarks</button>
