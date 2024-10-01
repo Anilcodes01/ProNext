@@ -16,7 +16,8 @@ interface Post {
     avatarUrl?: string ; // Allow null for optional avatars
   };
   isLiked: boolean; // This field is based on your backend response
-  likeCount: number; // Ensure this is passed correctly from the backend
+  likeCount: number;
+  commentCount: number // Ensure this is passed correctly from the backend
 }
 
 export default function PostList() {
