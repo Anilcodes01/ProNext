@@ -21,7 +21,7 @@ export default function Post() {
         </div>
         <div className="ml-52 min-h-screen p-6 border-l mt-16 w-full lg:ml-80 border-r border-gray-200 lg:mr-52 ">
           
-            <div onClick={() => {
+        <div onClick={() => {
                 router.push('/')
              }} className="flex gap-4 cursor-pointer items-center">
              <div  className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center  rounded-full ">
