@@ -41,7 +41,9 @@ export default function Sidebar() {
             router.push('/articles')
            }} className="text-xl w-full flex   items-start ">Aritcles</button>
            </div>
-           <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+           <div onClick={() => {
+            router.push('/polls')
+           }} className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <CgPoll size={24}/>
            <button className="text-xl">Polls</button>
            </div>
