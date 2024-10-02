@@ -25,6 +25,7 @@ export async function POST(request: Request) {
         options: {
           create: options.map((optionText: string) => ({
             text: optionText,
+            votesNumber: 0
           })),
         },
       },

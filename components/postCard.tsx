@@ -137,7 +137,7 @@ export default function PostCard({ post }: { post: Post }) {
             <div className="text-sm">{likeCount}</div>
           </button>
 
-          <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
+          <button onClick={handlePostClick} className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
             <div className="text-sm">{post.commentCount}</div>
           </button>
