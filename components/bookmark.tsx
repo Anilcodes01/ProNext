@@ -58,8 +58,8 @@ export default function BookmarkComponent() {
   }
 
   return (
-    <div className="container mx-auto min-h-screen mt-8">
-      <h1 className="text-3xl text-gray-600 font-bold mb-6">Your Bookmarked Posts</h1>
+    <div className="container mx-auto min-h-screen mt-4">
+      <h1 className="text-3xl text-gray-600 font-bold mb-4">Your Bookmarked Posts</h1>
       <div className="grid grid-cols-1 gap-2">
         {bookmarkedPosts.map((post) => (
           <PostCard key={post.id} post={post} />

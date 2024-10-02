@@ -143,25 +143,25 @@ export default function MainContent() {
               className="hidden"
               ref={fileInputRef}
             />
-            <button onClick={() => fileInputRef.current?.click()}>
+            <button onClick={() => fileInputRef.current?.click()} title="Media" >
               <FaImage
                 size={20}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-            <button onClick={() => setShowEmojiPicker((prev) => !prev)}>
+            <button title="Emoji" onClick={() => setShowEmojiPicker((prev) => !prev)}>
               <MdOutlineEmojiEmotions
                 size={24}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-            <button>
+            <button title="Poll">
               <LiaPollSolid
                 size={26}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-            <button
+            <button title="article"
               onClick={() => {
                 router.push("/articles/publish");
               }}
