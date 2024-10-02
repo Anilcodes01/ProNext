@@ -21,6 +21,8 @@ model User {
   likes    Like[]
   comments Comment[]
   bookmarks Bookmark[]
+  polls Poll[]
+  pollVotes PollVote[]
 }
 
 model Post {
@@ -78,4 +80,30 @@ model Bookmark {
 
 
   @@unique([userId, postId])
+}
+
+model Poll {
+  id          String      @id @default(cuid())
+  question    String
+  options     PollOption[]
+  creator     User        @relation(fields: [creatorId], references: [id])
+  creatorId   String
+  createdAt   DateTime    @default(now())
+}
+
+model PollOption {
+  id        String   @id @default(cuid())
+  text      String
+  poll      Poll     @relation(fields: [pollId], references: [id])
+  pollId    String
+  votes     PollVote[]
+}
+
+model PollVote {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  option     PollOption @relation(fields: [optionId], references: [id])
+  optionId   String
+  createdAt  DateTime @default(now())
 }
