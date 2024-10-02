@@ -22,6 +22,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(vote);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to submit vote' }, { status: 500 });
+    return NextResponse.json({ message: 'Failed to submit vote', error }, { status: 500 });
   }
 }

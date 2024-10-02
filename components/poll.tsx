@@ -4,24 +4,41 @@ import axios from 'axios';
 import Image from 'next/image';
 import { formatDistanceToNow } from 'date-fns';
 import CreatePoll from './createPoll';
-import {
-    FaUserCircle,
-  } from "react-icons/fa";
+import { FaUserCircle } from "react-icons/fa";
+
+
+interface PollOption {
+  id: string;
+  text: string;
+}
+
+interface PollCreator {
+  name: string;
+  image?: string; 
+}
+
+interface Poll {
+  id: string;
+  question: string;
+  creator: PollCreator;
+  createdAt: string;
+  options: PollOption[];
+}
 
 export default function PollList() {
-  const [polls, setPolls] = useState<any[]>([]);
-  const [loading, setLoading] = useState(true); // Loading state
+  const [polls, setPolls] = useState<Poll[]>([]); 
+  const [loading, setLoading] = useState(true); 
 
-  // Fetch polls from the server
+
   const fetchPolls = async () => {
-    setLoading(true); // Set loading to true before fetching
+    setLoading(true);
     try {
-      const response = await axios.get('/api/polls');
+      const response = await axios.get<Poll[]>('/api/polls'); 
       setPolls(response.data);
     } catch (error) {
       console.error('Error fetching polls:', error);
     } finally {
-      setLoading(false); // Set loading to false after fetching
+      setLoading(false); 
     }
   };
 
@@ -38,10 +55,10 @@ export default function PollList() {
     }
   };
 
-  // Skeleton loader component
+
   const SkeletonLoader = () => (
     <div className="mb-8 border p-8 mt-4 rounded-lg animate-pulse">
-      <div className="flex items-center gap-4  mb-4">
+      <div className="flex items-center gap-4 mb-4">
         <div className="w-10 h-10 rounded-full bg-gray-300"></div>
         <div className="flex gap-2">
           <div className="h-4 bg-gray-300 rounded w-24 mb-2"></div>
@@ -52,7 +69,6 @@ export default function PollList() {
       <div className="mt-4">
         <div className="h-10 bg-gray-300 rounded-full mb-2"></div>
         <div className="h-10 bg-gray-300 rounded-full mb-2"></div>
-    
       </div>
     </div>
   );
@@ -60,9 +76,9 @@ export default function PollList() {
   return (
     <div className='rounded-lg mt-4 text-black'>
       <CreatePoll onPollCreated={fetchPolls} /> {/* Pass the refetch function to CreatePoll */}
-       <div className='mt-8 text-2xl font-semibold'>
+      <div className='mt-8 text-2xl font-semibold'>
         Polls
-       </div>
+      </div>
       {/* Show skeletons while loading */}
       {loading ? (
         <>
@@ -72,7 +88,6 @@ export default function PollList() {
         </>
       ) : (
         polls.map((poll) => (
-            
           <div key={poll.id} className="mb-8 border p-4 rounded-lg mt-4">
             {/* Poll Creator Details */}
             <div className="flex items-center gap-4 mb-4">
@@ -87,15 +102,14 @@ export default function PollList() {
                 />
               ) : (
                 <div className="w-8 h-8 rounded-full flex items-center justify-center">
-                  {/* Default icon for no avatar */}
-                  <FaUserCircle size={36} className='text-gray-600'/>
+                  <FaUserCircle size={36} className='text-gray-600' />
                 </div>
               )}
               <div className='flex items-center text-center gap-2'>
                 {/* Display Creator's Name */}
-                <p className=" text-xl font-semibold">{poll.creator?.name}</p>
+                <p className="text-xl font-semibold">{poll.creator?.name}</p>
                 {/* Display Created At Time */}
-                <p className=" text-xs mt-0.5  text-gray-600 ">
+                <p className="text-xs mt-0.5 text-gray-600 ">
                   {formatDistanceToNow(new Date(poll.createdAt), { addSuffix: true })}
                 </p>
               </div>
@@ -106,7 +120,7 @@ export default function PollList() {
 
             {/* Poll Options */}
             <div className="mt-4">
-              {poll.options.map((option: any) => (
+              {poll.options.map((option) => (
                 <button
                   className='border p-2 rounded-full mt-2 w-full text-start hover:bg-gray-200'
                   key={option.id}

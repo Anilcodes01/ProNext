@@ -35,6 +35,6 @@ export async function POST(request: Request) {
 
     return NextResponse.json(poll);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create poll' }, { status: 500 });
+    return NextResponse.json({ message: 'Failed to create poll', error }, { status: 500 });
   }
 }
