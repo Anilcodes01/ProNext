@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['res.cloudinary.com'], // Add Cloudinary as a trusted domain
-      },
+  images: {
+    domains: ['res.cloudinary.com', 'upload.wikimedia.org'],
+  },
 };
 
 export default nextConfig;

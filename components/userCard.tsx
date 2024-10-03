@@ -1,7 +1,8 @@
-'use client';
+"use client";
 
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 
@@ -14,15 +15,16 @@ interface User {
 export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     async function fetchUsers() {
       try {
-        const response = await axios.get('/api/users');
+        const response = await axios.get("/api/users");
         setUsers(response.data.users);
       } catch (error) {
-        console.error('Error fetching users:', error);
+        console.error("Error fetching users:", error);
       } finally {
         setLoading(false); // Set loading to false after the data is fetched
       }
@@ -32,7 +34,7 @@ export default function UserCard() {
 
   const handleFollow = (userId: string) => {
     if (following.includes(userId)) {
-      setFollowing(following.filter(id => id !== userId)); // Unfollow
+      setFollowing(following.filter((id) => id !== userId)); // Unfollow
     } else {
       setFollowing([...following, userId]); // Follow
     }
@@ -65,24 +67,34 @@ export default function UserCard() {
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="border bg-white  p-2 w-auto rounded-lg flex items-center gap-2">
+            <div
+              onClick={() => {
+                router.push(`/user/${user.id}`);
+              }}
+              key={user.id}
+              className="border cursor-pointer bg-white  p-2 w-auto rounded-lg flex items-center gap-2"
+            >
               {user.avatarUrl ? (
                 <Image
                   src={user.avatarUrl}
                   alt={user.name || "null"}
-                  width={64}
-                  height={64}
+                  width={28}
+                  height={28}
                   className="rounded-full object-cover"
                 />
               ) : (
                 <FaUserCircle className="w-8 h-8 text-gray-400" />
               )}
               <div className="text-center w-full justify-between mr-2 flex gap-4">
-                <div className="text-xl font-medium">{user.name || "Unnamed User"}</div>
+                <div className="text-xl font-medium">
+                  {user.name || "Unnamed User"}
+                </div>
                 <button
                   onClick={() => handleFollow(user.id)}
                   className={`p-1 text-sm font-medium rounded-full ${
-                    following.includes(user.id) ? "bg-red-500 text-white" : "bg-blue-500 text-white"
+                    following.includes(user.id)
+                      ? "bg-red-500 text-white"
+                      : "bg-blue-500 text-white"
                   }`}
                 >
                   {following.includes(user.id) ? "Unfollow" : "Follow"}

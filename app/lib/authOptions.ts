@@ -64,7 +64,6 @@ export const authOptions = {
         token.id = user.id;
         token.name = user.name;
       }
-      console.log("JWT Callback:", token);
       return token;
     },
     session: ({ session, token }: { session: Session; token: JWT }) => {
@@ -72,7 +71,6 @@ export const authOptions = {
         session.user.id = token.id as string;
         session.user.name = token.name;
       }
-      console.log("Session Callback:", session);
       return session;
     },
   },

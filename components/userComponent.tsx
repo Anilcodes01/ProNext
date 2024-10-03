@@ -26,8 +26,8 @@ interface Post {
 
 interface UserProfile {
   name: string;
-  image?: string;
-  createdAt: string; // Add createdAt field
+  avatarUrl?: string;
+  createdAt: string; 
 }
 
 export default function UserProfilePage() {
@@ -36,15 +36,15 @@ export default function UserProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { userId } = useParams(); // Use useParams to get the dynamic userId from the URL
+  const { userId } = useParams(); 
 
-  // Fetch posts and user profile using useEffect
+
   useEffect(() => {
-    if (!userId) return; // Ensure userId is available before fetching
+    if (!userId) return; 
 
     const fetchUserData = async () => {
       try {
-        // Fetch the user's posts
+       
         const response = await axios.get(`/api/post/fetchUserPost/${userId}`, {
           headers: {
             "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
@@ -56,26 +56,46 @@ export default function UserProfilePage() {
         const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
         setPosts(fetchedPosts);
 
-        // Fetch the user's profile info (e.g., name, avatar, and created date)
+       
         const userResponse = await axios.get(`/api/users/${userId}`);
         setUserProfile(userResponse.data.user);
       } catch (error) {
         console.error("Failed to fetch user data", error);
         setError("Failed to fetch user data");
       } finally {
-        setLoading(false); // Set loading to false after fetch is complete
+        setLoading(false); 
       }
     };
 
     fetchUserData();
-  }, [userId]); // Add userId as a dependency to refetch when it changes
+  }, [userId]); 
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="min-h-screen">
+         <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
+    <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
+      <div className="rounded-full h-48 w-48 bg-gray-200 animate-pulse" /> 
+      <div className="p-5 lg:mr-16 h-48 w-96">
+        <div className="h-8 bg-gray-200 animate-pulse rounded mb-2" /> 
+        <div className="h-6 bg-gray-200 animate-pulse rounded" /> 
+      </div>
+    </div>
+    <div className="bg-white min-h-screen">
+      <div>
+        <div className="text-black text-2xl h-8 w-24 bg-gray-200 animate-pulse rounded mb-4" /> 
+        <div className="mt-8 space-y-4"> 
+          {Array.from({ length: 3 }).map((_, index) => ( 
+            <div key={index} className="border rounded-lg p-4 bg-gray-200 animate-pulse h-32" /> 
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+    </div>;
   }
 
   // Format the createdAt date
@@ -92,8 +112,8 @@ export default function UserProfilePage() {
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5 ">
       <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
         <div className="rounded-full h-48 w-48">
-          {userProfile?.image ? (
-            <img src={userProfile.image} alt="User Avatar" className="h-full w-full rounded-full object-cover" />
+          {userProfile?.avatarUrl ? (
+            <img src={userProfile.avatarUrl} alt="User Avatar" className="h-full w-full rounded-full object-cover" />
           ) : (
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
