@@ -93,8 +93,8 @@ export default function UserCard() {
                   onClick={() => handleFollow(user.id)}
                   className={`p-1 text-sm font-medium rounded-full ${
                     following.includes(user.id)
-                      ? "bg-red-500 text-white"
-                      : "bg-blue-500 text-white"
+                      ? " text-red-500"
+                      : " text-blue-500"
                   }`}
                 >
                   {following.includes(user.id) ? "Unfollow" : "Follow"}
