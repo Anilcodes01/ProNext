@@ -95,8 +95,9 @@ export default function PostCard({ post }: { post: Post }) {
           <Image
             src={post.user.avatarUrl}
             alt="User Profile"
-            width={24}
-            height={24}
+            width={34}
+            height={34}
+            quality={75}
             className="rounded-full object-cover"
           />
         ) : (
