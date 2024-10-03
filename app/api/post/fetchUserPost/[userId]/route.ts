@@ -9,14 +9,38 @@ export async function GET(request: Request, { params }: { params: { userId: stri
       where: { userId },
       orderBy: { createdAt: 'desc' },
       include: {
-        user: true, // Include user details if needed in the response
+        user: {
+          select: {
+            name: true,       // Include user name
+            avatarUrl: true,  // Include user avatar URL (if applicable)
+          },
+        },
+        likes: {            // Include likes
+          select: {
+            id: true,       // Just to indicate a like exists (can be any field)
+          },
+        },
+        comments: {         // Include comments
+          select: {
+            id: true,       // Include comment ID
+            content: true,  // Include comment content
+            createdAt: true // Include comment creation date
+          },
+        },
       },
     });
+
+    const postsWithDetails = userPosts.map(post => ({
+      ...post,
+      likeCount: post.likes.length,          // Calculate like count
+      commentCount: post.comments.length,    // Calculate comment count
+      isLiked: post.likes.length > 0,        // Determine if the post is liked
+    }));
 
     return NextResponse.json(
       {
         message: "User-specific posts fetched successfully",
-        posts: userPosts, // Use 'posts' instead of 'userPosts'
+        posts: postsWithDetails, // Use 'postsWithDetails' instead of 'userPosts'
       },
       { status: 200 }
     );

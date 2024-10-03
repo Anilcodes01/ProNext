@@ -9,7 +9,12 @@ export async function GET(request: Request, { params }: { params: { userId: stri
   try {
     // Fetch the user details from the database
     const user = await prisma.user.findUnique({
-      where: { id: userId }, // Ensure this matches your User model's primary key
+      where: { id: userId },
+      select: {
+        name: true,
+        avatarUrl: true,
+        createdAt: true, 
+      },
     });
 
     if (!user) {

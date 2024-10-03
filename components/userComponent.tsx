@@ -24,9 +24,15 @@ interface Post {
   isBookmarked: boolean;
 }
 
+interface UserProfile {
+  name: string;
+  image?: string;
+  createdAt: string; // Add createdAt field
+}
+
 export default function UserProfilePage() {
   const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<{ name: string; image?: string } | null>(null);
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -47,13 +53,10 @@ export default function UserProfilePage() {
           },
         });
 
-        // Log the response for debugging
-        console.log('Fetched user posts:', response.data);
-
         const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
         setPosts(fetchedPosts);
 
-        // Fetch the user's profile info (e.g., name and avatar)
+        // Fetch the user's profile info (e.g., name, avatar, and created date)
         const userResponse = await axios.get(`/api/users/${userId}`);
         setUserProfile(userResponse.data.user);
       } catch (error) {
@@ -75,6 +78,16 @@ export default function UserProfilePage() {
     return <div>Loading...</div>;
   }
 
+  // Format the createdAt date
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
+
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5 ">
       <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
@@ -85,9 +98,12 @@ export default function UserProfilePage() {
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
         </div>
-        <div className=" p-5 lg:mr-16 h-48 w-96">
+        <div className="p-5 lg:mr-16 h-48 w-96">
           <div className="text-xl text-black">
             {userProfile?.name}
+          </div>
+          <div className="text-black">
+            Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"} {/* Show formatted date */}
           </div>
         </div>
       </div>
