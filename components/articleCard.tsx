@@ -31,15 +31,15 @@ export default function ArticleCard({ article }: ArticleProps) {
           <Image
             src={article.user.avatarUrl}
             alt="User Profile"
-            width={24}
-            height={24}
+            width={34}
+            height={34}
             className="rounded-full text-black object-cover"
           />
         ) : (
           <FaUserCircle className="w-6 h-6 text-black" />
         )}
         <div className="ml-2">
-          <div className="text-sm font-bold">
+          <div className="text-lg font-semibold">
             {article.user?.name || "Unknown User"}
           </div>
         </div>
