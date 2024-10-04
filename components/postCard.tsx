@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 interface User {
   name: string;
   avatarUrl?: string;
+  
 }
 
 interface Post {
@@ -30,11 +31,11 @@ interface Post {
   isLiked: boolean;
   likeCount: number;
   commentCount: number;
-  isBookmarked: boolean
+  isBookmarked: boolean;
 }
 
 export default function PostCard({ post }: { post: Post }) {
-  const [liked, setLiked] = useState(post.isLiked);  // Set the initial like status from the post
+  const [liked, setLiked] = useState(post.isLiked); // Set the initial like status from the post
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [bookmarked, setBookmarked] = useState(post.isBookmarked);
   const router = useRouter();
@@ -72,45 +73,60 @@ export default function PostCard({ post }: { post: Post }) {
 
   const handleBookmarkToggle = async () => {
     if (!userId) {
-      console.error('User not logged in');
+      console.error("User not logged in");
       return;
     }
 
     try {
       if (bookmarked) {
-        await axios.post('/api/post/unbookmark', { postId: post.id });
+        await axios.post("/api/post/unbookmark", { postId: post.id });
       } else {
-        await axios.post('/api/post/bookmark', { postId: post.id });
+        await axios.post("/api/post/bookmark", { postId: post.id });
       }
       setBookmarked(!bookmarked);
     } catch (error) {
-      console.error('Failed to bookmark/unbookmark the post:', error);
+      console.error("Failed to bookmark/unbookmark the post:", error);
     }
   };
 
   return (
     <div className="bg-white mt-4 cursor-pointer hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
-      <div onClick={handlePostClick} className="flex items-center">
+      <div className="flex items-center">
         {post.user?.avatarUrl ? (
           <Image
+            
             src={post.user.avatarUrl}
             alt="User Profile"
             width={34}
             height={34}
             quality={75}
             className="rounded-full object-cover"
+           
           />
         ) : (
-          <FaUserCircle className="w-6 h-6 text-black" />
+          <FaUserCircle
+           
+            
+            className="w-6 h-6 text-black"
+          />
         )}
         <div className="flex items-center ml-4">
-          <div className="text-xl">{post.user?.name || "Unknown User"}</div>
+          <div
+            
+            className="text-xl"
+            
+          >
+            {post.user?.name || "Unknown User"}
+          </div>
           <div className="text-xs text-gray-600 ml-2">{formattedDate}</div>
         </div>
       </div>
 
       <div className="mt-2 ml-8 mr-8">
-        <div onClick={handlePostClick} className="whitespace-pre-wrap text-black">
+        <div
+          onClick={handlePostClick}
+          className="whitespace-pre-wrap text-black"
+        >
           {post.content}
         </div>
         {post.image && (
@@ -134,11 +150,15 @@ export default function PostCard({ post }: { post: Post }) {
             } hover:text-red-600`}
             onClick={handleLikeToggle}
           >
-            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}  {/* Conditional rendering based on liked state */}
+            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}{" "}
+            {/* Conditional rendering based on liked state */}
             <div className="text-sm">{likeCount}</div>
           </button>
 
-          <button onClick={handlePostClick} className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
+          <button
+            onClick={handlePostClick}
+            className="text-gray-400 gap-1 hover:text-green-400 flex items-center"
+          >
             <FaRegCommentAlt size={18} />
             <div className="text-sm">{post.commentCount}</div>
           </button>
@@ -148,14 +168,18 @@ export default function PostCard({ post }: { post: Post }) {
             <div className="text-sm">6</div>
           </button>
 
-         {/* Bookmark Button */}
-         <button
+          {/* Bookmark Button */}
+          <button
             className={`text-gray-400 gap-1 flex hover:text-green-600 items-center ${
-              bookmarked ? 'text-green-600' : 'text-gray-400'
+              bookmarked ? "text-green-600" : "text-gray-400"
             }`}
             onClick={handleBookmarkToggle}
           >
-            {bookmarked ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
+            {bookmarked ? (
+              <FaBookmark size={18} />
+            ) : (
+              <FaRegBookmark size={18} />
+            )}
             <div className="text-sm">Save</div>
           </button>
         </div>
