@@ -24,9 +24,6 @@ export default function Appbar() {
   const [searchResults, setSearchResults] = useState<User[]>([]);  // To store the search results
   const [isSearching, setIsSearching] = useState(false); // To track if searching is ongoing
 
-  const handleDropdownToggle = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
   console.log(isSearching)
 
   const handleDropdownClose = () => {
