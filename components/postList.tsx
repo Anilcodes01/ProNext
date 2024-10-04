@@ -37,7 +37,7 @@ export default function PostList() {
             Expires: "0",
           },
         });
-        console.log('Fetched posts:', response.data); // Log the entire response for debugging
+
         const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
         setPosts(fetchedPosts);
       } catch (error) {

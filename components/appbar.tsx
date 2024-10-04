@@ -12,19 +12,29 @@ type User = {
   id: string;
   name: string;
   avatarUrl?: string;
+  
 };
 
 export default function Appbar() {
   const { data: session } = useSession();
+  console.log('session:', session)
   const userId = session?.user.id;
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); // To store the search query
-  const [searchResults, setSearchResults] = useState<User[]>([]);  // To store the search results
+  const [searchResults, setSearchResults] = useState<User[]>([]); // To store the search results
   const [isSearching, setIsSearching] = useState(false); // To track if searching is ongoing
 
-  console.log(isSearching)
+  const handleDropdownToggle = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+  console.log(isSearching);
+
+  console.log("Session User:", session?.user);
+
+  console.log('aVATARURL:',  session?.user.avatarUrl)
+
 
   const handleDropdownClose = () => {
     setDropdownOpen(false);
@@ -51,7 +61,10 @@ export default function Appbar() {
 
   return (
     <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
-      <button onClick={() => router.push("/")} className="text-3xl font-bold ml-8">
+      <button
+        onClick={() => router.push("/")}
+        className="text-3xl font-bold ml-8"
+      >
         ProNext
       </button>
 
@@ -89,7 +102,6 @@ export default function Appbar() {
                 onChange={handleSearchChange}
                 required
               />
-              
             </div>
           </form>
 
@@ -124,36 +136,43 @@ export default function Appbar() {
       </div>
 
       <div className="mr-8 flex">
-        <MdOutlineNotifications size={28} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
+        <MdOutlineNotifications
+          size={28}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="0"
+        />
         <div>
           <div className="relative flex items-center ml-4 sm:ml-8">
             {session?.user ? (
               <>
-                <div onClick={() => {
-                  router.push(`/user/${userId}`)
-                }} className="flex items-center">
-                  {session.user.image ? (
+                <div
+                  onClick={handleDropdownToggle}
+                  className="flex items-center"
+                >
+                  {session?.user.avatarUrl ? (
                     <Image
-                      src={session.user.image}
+                      src={session.user.avatarUrl}
                       alt="User Profile Picture"
                       width={28}
                       height={28}
                       className="rounded-full cursor-pointer border"
                     />
                   ) : (
-                    <div onClick={() => {
-                      router.push(`/user/${userId}`)
-                    }} className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
                       {session.user.name?.charAt(0).toUpperCase()}
                     </div> // Fallback icon for current user
                   )}
                 </div>
                 {dropdownOpen && (
-                  <div className="absolute right-0 mt-48 w-48 bg-white border rounded-lg shadow-lg" onMouseLeave={handleDropdownClose}>
+                  <div
+                    className="absolute right-0 mt-48 w-48 bg-white border rounded-lg shadow-lg"
+                    onMouseLeave={handleDropdownClose}
+                  >
                     <div className="p-4 flex flex-col cursor-pointer items-center">
-                      {session.user.image ? (
+                      {session.user.avatarUrl ? (
                         <Image
-                          src={session.user.image}
+                          src={session.user.avatarUrl}
                           alt="User Profile Picture"
                           width={40}
                           height={40}
@@ -164,23 +183,38 @@ export default function Appbar() {
                       )}
                       <div className="mt-2 text-center">
                         <p className="font-semibold">{session.user.name}</p>
-                        <p className="text-sm text-gray-600">{session.user.email}</p>
+                        <p className="text-sm text-gray-600">
+                          {session.user.email}
+                        </p>
                       </div>
-                      <button
-                        onClick={() => {
-                          signOut({ callbackUrl: "/auth/signin" });
-                          handleDropdownClose();
-                        }}
-                        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg"
-                      >
-                        Sign out
-                      </button>
+                      <div className="flex flex-col w-full mt-4">
+                        <button
+                          onClick={() => {
+                            router.push(`/user/${userId}`);
+                          }}
+                          className="border hover:bg-gray-100 rounded-lg text-black w-full"
+                        >
+                          Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            signOut({ callbackUrl: "/auth/signin" });
+                            handleDropdownClose();
+                          }}
+                          className="mt-2 px-4 border hover:bg-gray-100 text-black rounded-lg"
+                        >
+                          Sign out
+                        </button>
+                      </div>
                     </div>
                   </div>
                 )}
               </>
             ) : (
-              <div onClick={() => router.push("/auth/signin")} className="hidden cursor-pointer sm:block">
+              <div
+                onClick={() => router.push("/auth/signin")}
+                className="hidden cursor-pointer sm:block"
+              >
                 Signin
               </div>
             )}

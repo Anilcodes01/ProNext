@@ -133,7 +133,7 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
-      <div className="bg-white min-h-screen">
+      <div className="bg-white ">
         <div>
           <div className="text-black text-2xl">Posts</div>
           <div className="mt-8">
