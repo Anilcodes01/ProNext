@@ -16,6 +16,7 @@ type User = {
 
 export default function Appbar() {
   const { data: session } = useSession();
+  const userId = session?.user.id;
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -131,7 +132,9 @@ export default function Appbar() {
           <div className="relative flex items-center ml-4 sm:ml-8">
             {session?.user ? (
               <>
-                <div onClick={handleDropdownToggle} className="flex items-center">
+                <div onClick={() => {
+                  router.push(`/user/${userId}`)
+                }} className="flex items-center">
                   {session.user.image ? (
                     <Image
                       src={session.user.image}
@@ -141,7 +144,9 @@ export default function Appbar() {
                       className="rounded-full cursor-pointer border"
                     />
                   ) : (
-                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                    <div onClick={() => {
+                      router.push(`/user/${userId}`)
+                    }} className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
                       {session.user.name?.charAt(0).toUpperCase()}
                     </div> // Fallback icon for current user
                   )}
