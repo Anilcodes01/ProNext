@@ -166,7 +166,7 @@ export default function Appbar() {
                 </div>
                 {dropdownOpen && (
                   <div
-                    className="absolute right-0 mt-48 w-48 bg-white border rounded-lg shadow-lg"
+                    className="absolute right-0 mt-64 w-48 bg-white border rounded-lg shadow-lg"
                     onMouseLeave={handleDropdownClose}
                   >
                     <div className="p-4 flex flex-col cursor-pointer items-center">
