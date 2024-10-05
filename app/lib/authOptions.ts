@@ -33,7 +33,7 @@ export const authOptions = {
           where: { email },
         });
 
-        console.log('fetched User:', user)
+       
 
         if (!user) {
           console.log("User not found");
@@ -68,7 +68,7 @@ export const authOptions = {
         token.name = user.name;
         token.picture = user.avatarUrl ?? null
       }
-      console.log('jwt token:', token)
+     
       return token;
     },
     session: ({ session, token }: { session: Session; token: JWT }) => {
@@ -77,7 +77,7 @@ export const authOptions = {
         session.user.name = token.name;
         session.user.avatarUrl = token.picture ?? ""
       }
-      console.log('session:', session)
+      
       return session;
     },
   },

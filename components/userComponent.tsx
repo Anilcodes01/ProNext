@@ -6,6 +6,9 @@ import PostCard from "./postCard";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import Image from "next/image";
+import { IoLocationOutline } from "react-icons/io5";
+import { AiOutlineLink } from "react-icons/ai";
+import { SlCalender } from "react-icons/sl";
 
 interface Post {
   id: string;
@@ -29,6 +32,9 @@ interface UserProfile {
   name: string;
   avatarUrl?: string;
   createdAt: string; 
+  bio?: string;
+  website?: string;
+  city?: string;
 }
 
 export default function UserProfilePage() {
@@ -79,8 +85,11 @@ export default function UserProfilePage() {
           <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
             <div className="rounded-full h-48 w-48 bg-gray-200 animate-pulse" /> 
             <div className="p-5 lg:mr-16 h-48 w-96">
-              <div className="h-8 bg-gray-200 animate-pulse rounded mb-2" /> 
-              <div className="h-6 bg-gray-200 animate-pulse rounded" /> 
+              <div className="h-8 bg-gray-200 animate-pulse w-32 rounded mb-2" /> 
+              <div className="h-6 bg-gray-200 animate-pulse rounded mb-2" /> 
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-64 mb-2" /> 
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-56 mb-2" /> 
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-48 mb-2" /> 
             </div>
           </div>
           <div className="bg-white min-h-screen">
@@ -124,11 +133,26 @@ export default function UserProfilePage() {
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
         </div>
-        <div className="p-5 lg:mr-16 h-48 w-96">
+        <div className="p-5 lg:mr-16 flex flex-col gap-1 h-48 w-96">
           <div className="text-xl text-black">
             {userProfile?.name}
           </div>
-          <div className="text-black">
+          <div className="text-black text-md w-full">
+            {userProfile?.bio}
+          </div>
+          <div className="text-black flex items-center gap-2">
+          <IoLocationOutline className="text-md"/>
+            {userProfile?.city}
+          </div>
+          <div className="text-black flex items-center gap-2">
+          <AiOutlineLink className="text-gray-600"/>
+            <div className="text-blue-500 text-sm curso">
+            {userProfile?.website}
+            </div>
+          </div>
+          <div className="text-gray-500 flex text-md items-center gap-2  ">
+          <SlCalender className="text-sm text-gray-600"/>
+
             Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"} {/* Show formatted date */}
           </div>
         </div>

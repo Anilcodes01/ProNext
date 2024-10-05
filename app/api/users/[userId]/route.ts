@@ -14,6 +14,9 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         name: true,
         avatarUrl: true,
         createdAt: true, 
+        bio: true,
+        website: true,
+        city: true
       },
     });
 
