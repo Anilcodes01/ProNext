@@ -41,6 +41,8 @@ export default function EditProfileForm() {
       if (response.status === 200) {
         toast.success("Profile data changed successfully!");
         router.push(`/user/${userId}`);
+      } else {
+        toast.error('Error while changing data, Please try again!')
       }
 
       console.log("Profile updated:", response.data);
@@ -63,7 +65,7 @@ export default function EditProfileForm() {
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border rounded-lg outline-none px-2 py-1"
+            className="border rounded-lg bg-gray-100 outline-none px-2 py-1"
           />
         </div>
         <div className="flex flex-col">
@@ -72,7 +74,7 @@ export default function EditProfileForm() {
             id="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="border rounded-lg outline-none  p-2"
+            className="border bg-gray-100 rounded-lg outline-none  p-2"
           />
         </div>
         <div className="flex flex-col">
@@ -82,7 +84,7 @@ export default function EditProfileForm() {
             id="city"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="border rounded-lg outline-none py-1 px-2"
+            className="border bg-gray-100 rounded-lg outline-none py-1 px-2"
           />
         </div>
         <div className="flex flex-col">
@@ -92,7 +94,7 @@ export default function EditProfileForm() {
             id="website"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            className="border rounded-lg outline-none py-1 px-2"
+            className="border bg-gray-100 rounded-lg outline-none py-1 px-2"
           />
         </div>
         <div className="flex flex-col">
@@ -102,7 +104,7 @@ export default function EditProfileForm() {
             id="avatar"
             accept="image/*"
             onChange={(e) => setAvatar(e.target.files?.[0] || null)}
-            className="border rounded p-2"
+            className="border bg-gray-100 rounded p-2"
           />
         </div>
         <button

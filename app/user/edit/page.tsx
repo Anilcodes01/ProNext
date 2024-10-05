@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import Appbar from '@/components/appbar'
+import Appbar from "@/components/appbar";
 import EditProfileForm from "@/components/editProfileform";
-import Sidebar from '@/components/Sidebar';
-import { useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import Sidebar from "@/components/Sidebar";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function EditProfilePage() {
   const { data: session, status } = useSession();
@@ -13,13 +13,39 @@ export default function EditProfilePage() {
 
   useEffect(() => {
     // If the user is not logged in, redirect to the login page
-    if (status === 'unauthenticated') {
-      router.push('/auth/login'); // Adjust this based on your app's login route
+    if (status === "unauthenticated") {
+      router.push("/auth/login"); // Adjust this based on your app's login route
     }
   }, [status, router]);
 
-  if (status === 'loading') {
-    return <div>Loading...</div>; // Show a loading state while session is being fetched
+  if (status === "loading") {
+    return (
+      <div className="bg-white min-h-screen">
+        <div className="h-16">
+          <Appbar />
+        </div>
+        <div className="flex">
+          <div className="fixed w-52  lg:w-80 h-full ">
+            <Sidebar />
+          </div>
+          <div className="ml-52 border-l w-full p-8 lg:mr-52 min-h-screen overflow-x-hidden lg:ml-80 border-r border-gray-200  ">
+            <div className="text-2xl font-bold text-black">Edit Profile</div>
+            <div className="mt-6 text-black text-sm">Name</div>
+            <div className="h-8 w-full bg-gray-200 animate-pulse rounded-lg mb-2"></div>
+            <div className="text-black mt-4">Bio</div>
+            <div className="h-20 w-full bg-gray-200 animate-pulse rounded-lg mb-2"></div>
+            <div className="text-black mt-4">City</div>
+            <div className="h-8 w-full bg-gray-200 animate-pulse rounded-lg mb-2"></div>
+            <div className="text-black mt-4">Website</div>
+            <div className="h-8 w-full bg-gray-200 animate-pulse rounded-lg mb-2"></div>
+            <div className="text-black mt-4">Profile Image</div>
+            <div className="h-16 w-full bg-gray-200 animate-pulse rounded-lg "></div>
+            <div className="h-12 mt-6 rounded-lg animate-pulse bg-gray-200"></div>
+
+          </div>
+        </div>
+      </div>
+    ); 
   }
 
   if (!session?.user) {
@@ -27,16 +53,16 @@ export default function EditProfilePage() {
   }
 
   return (
-    <div className='min-h-screen bg-white'>
-      <div className='h-16'>
+    <div className="min-h-screen bg-white">
+      <div className="h-16">
         <Appbar />
       </div>
-      <div className='flex'>
+      <div className="flex">
         <div className=" fixed w-52  lg:w-80 h-full ">
-            <Sidebar />
+          <Sidebar />
         </div>
-        <div  className="ml-52 border-l w-full lg:mr-52 min-h-screen overflow-x-hidden lg:ml-80 border-r border-gray-200  ">
-        <EditProfileForm />
+        <div className="ml-52 border-l w-full lg:mr-52 min-h-screen overflow-x-hidden lg:ml-80 border-r border-gray-200  ">
+          <EditProfileForm />
         </div>
       </div>
     </div>
