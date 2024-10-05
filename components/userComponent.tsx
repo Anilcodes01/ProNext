@@ -93,8 +93,14 @@ export default function UserProfilePage() {
               <div className="h-6 bg-gray-200 animate-pulse rounded w-64 mb-2" />
               <div className="h-6 bg-gray-200 animate-pulse rounded w-56 mb-2" />
               <div className="h-6 bg-gray-200 animate-pulse rounded w-48 mb-2" />
+              
             </div>
+            
           </div>
+          <div className="h-12 w-40 animate-pulse rounded bg-gray-200 "></div>
+              <div className="h-28 rounded animate-pulse bg-gray-200 mt-8"></div>
+              <div className="h-28 rounded animate-pulse bg-gray-200  "></div>
+              <div className="h-28 rounded animate-pulse bg-gray-200 "></div>
         </div>
       </div>
     );
