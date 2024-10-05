@@ -11,8 +11,14 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+// Define the type for the Cloudinary response
+interface CloudinaryResponse {
+  secure_url: string;
+  // You can add more fields if necessary, depending on what Cloudinary returns
+}
+
 // Helper function to handle Cloudinary upload using a Promise
-const uploadToCloudinary = (buffer: Buffer, publicId: string) => {
+const uploadToCloudinary = (buffer: Buffer, publicId: string): Promise<CloudinaryResponse> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.v2.uploader.upload_stream(
       {
@@ -25,7 +31,7 @@ const uploadToCloudinary = (buffer: Buffer, publicId: string) => {
         if (error) {
           reject(error);
         } else {
-          resolve(result);
+          resolve(result as CloudinaryResponse);  // Ensure the result matches the expected type
         }
       }
     );
@@ -64,19 +70,25 @@ export async function POST(request: Request, { params }: { params: { userId: str
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    // Prepare update data with current values as fallback
-    let updateData: any = {
+    // Prepare update data with current values as fallback and correct typing
+    const updateData: {
+      name?: string;
+      bio?: string;
+      city?: string;
+      website?: string;
+      avatarUrl?: string;
+    } = {
       name: name || currentUser.name,
-      bio: bio || currentUser.bio,
-      city: city || currentUser.city,
-      website: website || currentUser.website,
+      bio: bio || currentUser.bio || undefined,
+      city: city || currentUser.city || undefined,
+      website: website || currentUser.website || undefined,
     };
 
     // If a new avatar image is provided, upload it to Cloudinary
     if (file && file instanceof File) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      const uploadResponse: any = await uploadToCloudinary(buffer, `${currentUserId}_profile_pic`);
+      const uploadResponse = await uploadToCloudinary(buffer, `${currentUserId}_profile_pic`);
 
       if (uploadResponse && uploadResponse.secure_url) {
         updateData.avatarUrl = uploadResponse.secure_url;
