@@ -9,6 +9,7 @@ import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineLink } from "react-icons/ai";
 import { SlCalender } from "react-icons/sl";
+import { useSession } from "next-auth/react"; // Import NextAuth session
 
 interface Post {
   id: string;
@@ -43,10 +44,11 @@ export default function UserProfilePage() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { userId } = useParams(); 
+  const { userId } = useParams(); // Get userId from the URL parameters
+  const { data: session } = useSession(); // Access the current session
 
   useEffect(() => {
-    if (!userId) return; 
+    if (!userId) return;
 
     const fetchUserData = async () => {
       try {
@@ -67,12 +69,12 @@ export default function UserProfilePage() {
         console.error("Failed to fetch user data", error);
         setError("Failed to fetch user data");
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchUserData();
-  }, [userId]); 
+  }, [userId]);
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
@@ -82,24 +84,15 @@ export default function UserProfilePage() {
     return (
       <div className="min-h-screen">
         <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
+          {/* Loading Skeleton */}
           <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
-            <div className="rounded-full h-48 w-48 bg-gray-200 animate-pulse" /> 
+            <div className="rounded-full h-48 w-48 bg-gray-200 animate-pulse" />
             <div className="p-5 lg:mr-16 h-48 w-96">
-              <div className="h-8 bg-gray-200 animate-pulse w-32 rounded mb-2" /> 
-              <div className="h-6 bg-gray-200 animate-pulse rounded mb-2" /> 
-              <div className="h-6 bg-gray-200 animate-pulse rounded w-64 mb-2" /> 
-              <div className="h-6 bg-gray-200 animate-pulse rounded w-56 mb-2" /> 
-              <div className="h-6 bg-gray-200 animate-pulse rounded w-48 mb-2" /> 
-            </div>
-          </div>
-          <div className="bg-white min-h-screen">
-            <div>
-              <div className="text-black text-2xl h-8 w-24 bg-gray-200 animate-pulse rounded mb-4" /> 
-              <div className="mt-8 space-y-4"> 
-                {Array.from({ length: 3 }).map((_, index) => ( 
-                  <div key={index} className="border rounded-lg p-4 bg-gray-200 animate-pulse h-32" /> 
-                ))}
-              </div>
+              <div className="h-8 bg-gray-200 animate-pulse w-32 rounded mb-2" />
+              <div className="h-6 bg-gray-200 animate-pulse rounded mb-2" />
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-64 mb-2" />
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-56 mb-2" />
+              <div className="h-6 bg-gray-200 animate-pulse rounded w-48 mb-2" />
             </div>
           </div>
         </div>
@@ -117,16 +110,19 @@ export default function UserProfilePage() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
+  // Check if the logged-in user is viewing their own profile
+  const isOwnProfile = session?.user?.id === userId;
+
   return (
-    <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5 ">
+    <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
       <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
         <div className="rounded-full h-48 w-48">
           {userProfile?.avatarUrl ? (
             <Image
               src={userProfile.avatarUrl}
               alt="User Avatar"
-              width={192} // or the desired width (e.g., 48 * 4)
-              height={192} // or the desired height (e.g., 48 * 4)
+              width={192}
+              height={192}
               className="rounded-full object-cover"
             />
           ) : (
@@ -134,30 +130,34 @@ export default function UserProfilePage() {
           )}
         </div>
         <div className="p-5 lg:mr-16 flex flex-col gap-1 h-48 w-96">
-          <div className="text-xl text-black">
+          <div className="text-xl flex justify-between text-black">
             {userProfile?.name}
+            {/* Show Edit Profile button only if it's the logged-in user's profile */}
+            {isOwnProfile && (
+              <button
+                onClick={() => window.location.href = `/user/edit`} // Redirect to edit profile page
+                className="text-sm rounded-full px-2 border border-black text-black"
+              >
+                Edit Profile
+              </button>
+            )}
           </div>
-          <div className="text-black text-md w-full">
-            {userProfile?.bio}
-          </div>
+          <div className="text-black text-md w-full">{userProfile?.bio}</div>
           <div className="text-black flex items-center gap-2">
-          <IoLocationOutline className="text-md"/>
+            <IoLocationOutline className="text-md" />
             {userProfile?.city}
           </div>
           <div className="text-black flex items-center gap-2">
-          <AiOutlineLink className="text-gray-600"/>
-            <div className="text-blue-500 text-sm curso">
-            {userProfile?.website}
-            </div>
+            <AiOutlineLink className="text-gray-600" />
+            <div className="text-blue-500 text-sm cursor-pointer">{userProfile?.website}</div>
           </div>
-          <div className="text-gray-500 flex text-md items-center gap-2  ">
-          <SlCalender className="text-sm text-gray-600"/>
-
-            Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"} {/* Show formatted date */}
+          <div className="text-gray-500 flex text-md items-center gap-2">
+            <SlCalender className="text-sm text-gray-600" />
+            Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"}
           </div>
         </div>
       </div>
-      <div className="bg-white ">
+      <div className="bg-white">
         <div>
           <div className="text-black text-2xl">Posts</div>
           <div className="mt-8">
