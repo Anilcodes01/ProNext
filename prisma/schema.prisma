@@ -26,6 +26,10 @@ model User {
   bookmarks Bookmark[]
   polls     Poll[]
   pollVotes PollVote[]
+
+  following   Follow[]  @relation("Following")
+  followers   Follow[]  @relation("Followers")
+  
 }
 
 model Post {
@@ -39,6 +43,7 @@ model Post {
   likes     Like[]
   comments  Comment[]
   bookmarks Bookmark[]
+  
 }
 
 model Article {
@@ -108,4 +113,17 @@ model PollVote {
   option    PollOption @relation(fields: [optionId], references: [id])
   optionId  String
   createdAt DateTime   @default(now())
+}
+
+model Follow {
+  id         String  @id @default(cuid())
+  followerId String
+  followingId String
+  createdAt  DateTime @default(now())
+
+  // Relations
+  follower   User  @relation("Following", fields: [followerId], references: [id])
+  following  User  @relation("Followers", fields: [followingId], references: [id])
+
+  @@unique([followerId, followingId])
 }
