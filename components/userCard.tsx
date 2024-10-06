@@ -67,6 +67,15 @@ export default function UserCard() {
             <Skeleton />
             <Skeleton />
             <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
+            <Skeleton />
           </>
         ) : users.length > 0 ? (
           users.map((user) => (

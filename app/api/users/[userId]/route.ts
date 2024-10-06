@@ -16,7 +16,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         createdAt: true, 
         bio: true,
         website: true,
-        city: true
+        city: true,
       },
     });
 
@@ -27,8 +27,23 @@ export async function GET(request: Request, { params }: { params: { userId: stri
       );
     }
 
+    // Fetch the followers count (users following this user)
+    const followersCount = await prisma.follow.count({
+      where: { followingId: userId },
+    });
+
+    // Fetch the following count (users this user is following)
+    const followingCount = await prisma.follow.count({
+      where: { followerId: userId },
+    });
+
     return NextResponse.json(
-      { message: 'User fetched successfully', user },
+      {
+        message: 'User fetched successfully',
+        user,
+        followersCount,
+        followingCount,
+      },
       { status: 200 }
     );
   } catch (error) {

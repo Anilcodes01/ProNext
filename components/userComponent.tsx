@@ -9,7 +9,7 @@ import Image from "next/image";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineLink } from "react-icons/ai";
 import { SlCalender } from "react-icons/sl";
-import { useSession } from "next-auth/react"; // Import NextAuth session
+import { useSession } from "next-auth/react"; 
 
 interface Post {
   id: string;
@@ -41,17 +41,27 @@ interface UserProfile {
 export default function UserProfilePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [followersCount, setFollowersCount] = useState<number | null>(null);
+  const [followingCount, setFollowingCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const { userId } = useParams(); // Get userId from the URL parameters
-  const { data: session } = useSession(); // Access the current session
+  const { userId } = useParams(); 
+  const { data: session } = useSession(); 
 
   useEffect(() => {
     if (!userId) return;
 
     const fetchUserData = async () => {
       try {
+        const userResponse = await axios.get(`/api/users/${userId}`, {
+          headers: {
+            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
+            Pragma: "no-cache",
+            Expires: "0",
+          },
+        });
+
         const response = await axios.get(`/api/post/fetchUserPost/${userId}`, {
           headers: {
             "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
@@ -63,8 +73,11 @@ export default function UserProfilePage() {
         const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
         setPosts(fetchedPosts);
 
-        const userResponse = await axios.get(`/api/users/${userId}`);
-        setUserProfile(userResponse.data.user);
+        const userData = userResponse.data.user;
+        setUserProfile(userData);
+
+        setFollowersCount(userResponse.data.followersCount); 
+        setFollowingCount(userResponse.data.followingCount); 
       } catch (error) {
         console.error("Failed to fetch user data", error);
         setError("Failed to fetch user data");
@@ -79,6 +92,7 @@ export default function UserProfilePage() {
   if (error) {
     return <p className="text-red-500">{error}</p>;
   }
+
 
   if (loading) {
     return (
@@ -106,7 +120,6 @@ export default function UserProfilePage() {
     );
   }
 
-  // Format the createdAt date
   const formatDate = (dateString: string) => {
     const options: Intl.DateTimeFormatOptions = {
       year: 'numeric',
@@ -116,7 +129,6 @@ export default function UserProfilePage() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  // Check if the logged-in user is viewing their own profile
   const isOwnProfile = session?.user?.id === userId;
 
   return (
@@ -138,10 +150,9 @@ export default function UserProfilePage() {
         <div className="p-5 lg:mr-16 flex flex-col gap-1 h-48 w-96">
           <div className="text-xl flex justify-between text-black">
             {userProfile?.name}
-            {/* Show Edit Profile button only if it's the logged-in user's profile */}
             {isOwnProfile && (
               <button
-                onClick={() => window.location.href = `/user/edit`} // Redirect to edit profile page
+                onClick={() => window.location.href = `/user/edit`} 
                 className="text-sm rounded-full px-2 border border-black text-black"
               >
                 Edit Profile
@@ -149,17 +160,29 @@ export default function UserProfilePage() {
             )}
           </div>
           <div className="text-black text-md w-full">{userProfile?.bio}</div>
+
           <div className="text-black flex items-center gap-2">
             <IoLocationOutline className="text-md" />
             {userProfile?.city}
           </div>
+          
           <div className="text-black flex items-center gap-2">
             <AiOutlineLink className="text-gray-600" />
             <div className="text-blue-500 text-sm cursor-pointer">{userProfile?.website}</div>
           </div>
+
           <div className="text-gray-500 flex text-md items-center gap-2">
             <SlCalender className="text-sm text-gray-600" />
             Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"}
+          </div>
+
+          <div className="flex gap-4 text-sm text-black mt-4">
+            <div>
+              <span className=" text-sm text-black">{followersCount}</span> Followers
+            </div>
+            <div>
+              <span className="text-sm text-black">{followingCount}</span> Following
+            </div>
           </div>
         </div>
       </div>
