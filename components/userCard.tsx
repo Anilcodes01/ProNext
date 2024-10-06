@@ -13,6 +13,10 @@ interface User {
   avatarUrl: string | null;
 }
 
+interface Follow {
+  followingId: string;
+}
+
 export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]); // List of users the logged-in user is following
@@ -29,7 +33,7 @@ export default function UserCard() {
         setUsers(usersResponse.data.users);
         setFollowing(
           followingResponse.data.following.map(
-            (follow: any) => follow.followingId
+            (follow: Follow) => follow.followingId // Specify the type here
           )
         ); // Extract following user IDs
       } catch (error) {
@@ -66,13 +70,12 @@ export default function UserCard() {
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div className="flex rounded-lg border pr-2 w-full">
+            <div key={user.id} className="flex rounded-lg border pr-2 w-full"> {/* Add the key prop here */}
               <div
                 onClick={() => {
                   router.push(`/user/${user.id}`);
                 }}
-                key={user.id}
-                className="  cursor-pointer w-full bg-white p-2 w-auto  flex items-center gap-2"
+                className="cursor-pointer w-full bg-white p-2 w-auto flex items-center gap-2"
               >
                 {user.avatarUrl ? (
                   <Image
