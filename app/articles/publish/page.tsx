@@ -43,11 +43,7 @@ export default function WriteArticle() {
     }
   };
 
-  if(loading) {
-    return <div>
-      loading...
-    </div>
-  }
+  console.log(loading)
 
   return (
     <div className="bg-white  min-h-screen">

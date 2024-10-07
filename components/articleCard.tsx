@@ -48,7 +48,7 @@ export default function ArticleCard({ article }: ArticleProps) {
       </div>
       <div className="flex flex-col items-start">
       <div className="text-xl text-black font-semibold">{article.title}</div>
-      <p className="text-gray-400  mt-2">{article.description}</p>
+      <p className="text-gray-600  mt-2">{article.description}</p>
       </div>
     </div>
     </Link>
