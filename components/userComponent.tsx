@@ -10,6 +10,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineLink } from "react-icons/ai";
 import { SlCalender } from "react-icons/sl";
 import { useSession } from "next-auth/react"; 
+import ArticleCard from "./articleCard";
 
 interface Post {
   id: string;
@@ -29,6 +30,20 @@ interface Post {
   isBookmarked: boolean;
 }
 
+interface Article {
+  id: string;
+  title: string;
+  description: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  user: {
+    name: string;
+    avatarUrl?: string | null;
+  };
+}
+
 interface UserProfile {
   name: string;
   avatarUrl?: string;
@@ -45,7 +60,9 @@ export default function UserProfilePage() {
   const [followingCount, setFollowingCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
+  const [articles, setArticles] = useState<Article[]>([]); // New state for articles
+  const [viewMode, setViewMode] = useState<"posts" | "articles">("posts");
+  
   const { userId } = useParams(); 
   const { data: session } = useSession(); 
 
@@ -88,6 +105,22 @@ export default function UserProfilePage() {
 
     fetchUserData();
   }, [userId]);
+
+  const fetchArticles = async () => {
+    try {
+      const response = await axios.get(`/api/articles/fetchUserArticles/${userId}`);
+      setArticles(response.data.userArticles);
+    } catch (error) {
+      setError("Failed to fetch articles");
+    }
+  };
+
+  const handleViewModeChange = (mode: "posts" | "articles") => {
+    setViewMode(mode);
+    if (mode === "articles" && articles.length === 0) {
+      fetchArticles(); // Fetch articles if switching to articles view
+    }
+  };
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
@@ -188,12 +221,28 @@ export default function UserProfilePage() {
       </div>
       <div className="bg-white">
         <div>
-          <div className="text-black text-2xl">Posts</div>
-          <div className="mt-8">
-            {posts.map((post, index) => (
-              <PostCard key={post.id ?? `post-${index}`} post={post} />
-            ))}
-          </div>
+        <div className="flex gap-4">
+        <button
+          className={`px-4 py-2 ${viewMode === "posts" ? "bg-blue-500 rounded-full text-white" : "bg-gray-200 text-black rounded-full"}`}
+          onClick={() => handleViewModeChange("posts")}
+        >
+          Posts
+        </button>
+        <button
+          className={`px-4 py-2 ${viewMode === "articles" ? "bg-blue-500 rounded-full text-white" : "bg-gray-200 text-black rounded-full "}`}
+          onClick={() => handleViewModeChange("articles")}
+        >
+          Articles
+        </button>
+      </div>
+          {/* Display posts or articles based on viewMode */}
+      <div className="mt-8">
+        {viewMode === "posts" ? (
+          posts.map((post) => <PostCard key={post.id} post={post} />)
+        ) : (
+          articles.map((article) => <ArticleCard key={article.id} article={article} />)
+        )}
+      </div>
         </div>
       </div>
     </div>

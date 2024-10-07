@@ -39,14 +39,14 @@ export default function ArticleCard({ article }: ArticleProps) {
           <FaUserCircle className="w-6 h-6 text-black" />
         )}
         <div className="ml-2">
-          <div className="text-lg font-semibold">
+          <div className="text-lg text-black font-semibold">
             {article.user?.name || "Unknown User"}
           </div>
         </div>
       </div>
       <div className="flex flex-col items-start">
-      <div className="text-xl font-semibold">{article.title}</div>
-      <p className="text-gray-400 mt-2">{article.description}</p>
+      <div className="text-xl text-black font-semibold">{article.title}</div>
+      <p className="text-gray-400  mt-2">{article.description}</p>
       </div>
     </div>
   );
