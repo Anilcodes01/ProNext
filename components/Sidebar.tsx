@@ -11,7 +11,7 @@ import { GoBookmark } from "react-icons/go";
 export default function Sidebar() {
     const router = useRouter();
 
-    return <div className="bg-white  mt-  flex flex-col items-center  h-full text-black">
+    return <div className="bg-white   w-full flex flex-col items-center  h-full text-black">
         <div className="flex flex-col w-full text-center p-4 gap-4">
            <div className="flex gap-2 mt-4  w-full items-center justify-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
            <GoHome size={24}/>

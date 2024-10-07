@@ -63,14 +63,14 @@ export default function FullArticlePage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div>
+      <div >
         <Appbar />
       </div>
       <div className="flex">
-        <div className="mt-16 w-52">
+        <div className="mt-16 w-52 lg:w-52">
           <Sidebar />
         </div>
-        <div className=" p-8 border-l mt-16  border-gray-200 lg:ml-16 ">
+        <div className=" p-8 border-l mt-16  border-gray-200 lg:ml-36 ">
           <div
             onClick={() => {
               router.push("/articles");
