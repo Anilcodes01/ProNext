@@ -112,6 +112,7 @@ export default function UserProfilePage() {
       setArticles(response.data.userArticles);
     } catch (error) {
       setError("Failed to fetch articles");
+      console.log(error)
     }
   };
 
