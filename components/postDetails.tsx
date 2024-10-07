@@ -50,7 +50,6 @@ export default function PostDetail() {
   const { data: session } = useSession();
   
 
-  const userId = session?.user.id
   const { id } = useParams(); 
 
   useEffect(() => {
