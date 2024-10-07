@@ -8,6 +8,7 @@ import {
   FaHeart,
   FaRegCommentAlt,
   FaRegBookmark,
+  FaBookmark,
 } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
@@ -17,6 +18,7 @@ import { useSession } from "next-auth/react";
 
 // Interface for User
 interface User {
+  id: string; // Add id to User interface
   name: string;
   avatarUrl?: string;
 }
@@ -39,6 +41,7 @@ interface Post {
   isLiked: boolean;
   likeCount: number;
   comments: Comment[];
+  isBookmarked: boolean; // New field for bookmark status
 }
 
 export default function PostDetail() {
@@ -102,6 +105,57 @@ export default function PostDetail() {
     }
   };
 
+  // Handler for like functionality
+  const handleLikeToggle = async () => {
+    try {
+      const endpoint = post?.isLiked
+        ? `/api/post/unlike`
+        : `/api/post/like`;
+  
+      await axios.post(endpoint, {
+        postId: post?.id,
+        userId: session?.user.id, // Replace with the actual user ID from the session
+      });
+  
+      setPost((prevPost) => {
+        if (!prevPost) return null;
+        return {
+          ...prevPost,
+          isLiked: !prevPost.isLiked,
+          likeCount: prevPost.isLiked
+            ? prevPost.likeCount - 1
+            : prevPost.likeCount + 1,
+        };
+      });
+    } catch (error) {
+      console.error("Error toggling like:", error);
+    }
+  };
+  
+
+  // Handler for bookmark functionality
+  const handleBookmarkToggle = async () => {
+    try {
+      const endpoint = post?.isBookmarked
+        ? `/api/post/unbookmark`
+        : `/api/post/bookmark`;
+  
+      await axios.post(endpoint, {
+        postId: post?.id,
+        userId: session?.user.id, // Replace with the actual user ID from the session
+      });
+  
+      setPost((prevPost) => {
+        if (!prevPost) return null;
+        return {
+          ...prevPost,
+          isBookmarked: !prevPost.isBookmarked,
+        };
+      });
+    } catch (error) {
+      console.error("Error toggling bookmark:", error);
+    }
+  };
   
 
   if (loading)
@@ -159,23 +213,41 @@ export default function PostDetail() {
         )}
 
         <div className="flex gap-8">
-          <button className="gap-1 flex items-center text-gray-400 hover:text-red-600">
-            {post.isLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+          {/* Like Button */}
+          <button
+            className="gap-1 flex items-center text-gray-400 hover:text-red-600"
+            onClick={handleLikeToggle}
+          >
+            {post.isLiked ? (
+              <FaHeart size={20} className="text-red-600" />
+            ) : (
+              <FaRegHeart size={20} />
+            )}
             <span>{post.likeCount}</span>
           </button>
 
+          {/* Comment Button */}
           <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
             <span>{post.comments?.length || 0} Comments</span>
           </button>
 
+          {/* Share Button */}
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
             <IoMdShare size={18} />
             <span>Share</span>
           </button>
 
-          <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-            <FaRegBookmark size={18} />
+          {/* Bookmark Button */}
+          <button
+            className="text-gray-400 gap-1 hover:text-green-600 flex items-center"
+            onClick={handleBookmarkToggle}
+          >
+            {post.isBookmarked ? (
+              <FaBookmark size={18} className="text-green-600" />
+            ) : (
+              <FaRegBookmark size={18} />
+            )}
             <span>Save</span>
           </button>
         </div>
