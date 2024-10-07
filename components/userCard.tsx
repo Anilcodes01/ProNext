@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import FollowButton from "./follow"; // Import the FollowButton
+import FollowButton from "./follow"; 
 
 interface User {
   id: string;
@@ -19,7 +19,7 @@ interface Follow {
 
 export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
-  const [following, setFollowing] = useState<string[]>([]); // List of users the logged-in user is following
+  const [following, setFollowing] = useState<string[]>([]); 
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
@@ -27,15 +27,15 @@ export default function UserCard() {
     async function fetchUsersAndFollowing() {
       try {
         const [usersResponse, followingResponse] = await Promise.all([
-          axios.get("/api/users"), // Fetch all users
-          axios.get("/api/follow"), // Fetch the list of users the logged-in user is following
+          axios.get("/api/users"), 
+          axios.get("/api/follow"), 
         ]);
         setUsers(usersResponse.data.users);
         setFollowing(
           followingResponse.data.following.map(
-            (follow: Follow) => follow.followingId // Specify the type here
+            (follow: Follow) => follow.followingId 
           )
-        ); // Extract following user IDs
+        ); 
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -79,7 +79,7 @@ export default function UserCard() {
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="flex rounded-lg border pr-2 w-full"> {/* Add the key prop here */}
+            <div key={user.id} className="flex rounded-lg border pr-2 w-full"> 
               <div
                 onClick={() => {
                   router.push(`/user/${user.id}`);
@@ -87,13 +87,15 @@ export default function UserCard() {
                 className="cursor-pointer w-full bg-white p-2 w-auto flex items-center gap-2"
               >
                 {user.avatarUrl ? (
-                  <Image
-                    src={user.avatarUrl}
-                    alt={user.name || "null"}
-                    width={28}
-                    height={28}
-                    className="rounded-full object-cover"
-                  />
+                   <div className="w-8 h-8 rounded-full overflow-hidden"> 
+                   <Image
+                     src={user.avatarUrl}
+                     alt={user.name || "null"}
+                     width={32} 
+                     height={32}
+                     className="object-cover w-full h-full" 
+                   />
+                 </div>
                 ) : (
                   <FaUserCircle className="w-8 h-8 text-gray-400" />
                 )}
@@ -103,8 +105,8 @@ export default function UserCard() {
               </div>
 
               <FollowButton
-                isFollowing={following.includes(user.id)} // Pass if the current user is following this user
-                followingId={user.id} // Pass the ID of the user being followed/unfollowed
+                isFollowing={following.includes(user.id)} 
+                followingId={user.id} 
               />
             </div>
           ))

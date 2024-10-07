@@ -169,7 +169,7 @@ export default function UserProfilePage() {
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
       <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
-        <div className="rounded-full h-48 w-48">
+        <div className="rounded-full h-48 w-48 overflow-y-hidden">
           {userProfile?.avatarUrl ? (
             <Image
               src={userProfile.avatarUrl}
@@ -202,19 +202,22 @@ export default function UserProfilePage() {
           </div>
 
           <div className="text-black flex items-center gap-2">
-  <AiOutlineLink className="text-gray-600" />
-  {userProfile?.website && (
-    <a
-      href={userProfile.website.startsWith('http') ? userProfile.website : `https://${userProfile.website}`}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500 text-sm cursor-pointer"
-    >
-      {new URL(userProfile.website.startsWith('http') ? userProfile.website : `https://${userProfile.website}`).hostname.replace('www.', '')}
-    </a>
-  )}
-</div>
-
+            <AiOutlineLink className="text-gray-600" />
+            {userProfile?.website && (
+              <a
+                href={
+                  userProfile.website.startsWith("http")
+                    ? userProfile.website
+                    : `https://${userProfile.website}`
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500 text-sm cursor-pointer"
+              >
+                {userProfile.website}
+              </a>
+            )}
+          </div>
 
           <div className="text-gray-500 flex text-md items-center gap-2">
             <SlCalender className="text-sm text-gray-600" />
