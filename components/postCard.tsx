@@ -35,7 +35,7 @@ interface Post {
 }
 
 export default function PostCard({ post }: { post: Post }) {
-  const [liked, setLiked] = useState(post.isLiked); // Set the initial like status from the post
+  const [liked, setLiked] = useState(post.isLiked); 
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [bookmarked, setBookmarked] = useState(post.isBookmarked);
   const router = useRouter();
