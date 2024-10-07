@@ -1,5 +1,6 @@
 import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
+import Link from "next/link";
 
 interface ArticleProps {
   article: {
@@ -25,6 +26,7 @@ export default function ArticleCard({ article }: ArticleProps) {
   }
 
   return (
+    <Link href={`/articles/${article.id}`} passHref>
     <div className="bg-white-800 cursor-pointer items-start border mt-4 rounded-lg w-full p-4">
       <div className="flex items-center mb-4">
         {article.user && article.user.avatarUrl ? (
@@ -49,5 +51,6 @@ export default function ArticleCard({ article }: ArticleProps) {
       <p className="text-gray-400  mt-2">{article.description}</p>
       </div>
     </div>
+    </Link>
   );
 }
