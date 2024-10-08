@@ -3,7 +3,7 @@ import { GoHome } from "react-icons/go";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { CgPoll } from "react-icons/cg";
-import { CiChat1 } from "react-icons/ci";
+import { FiMessageSquare } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { GoBookmark } from "react-icons/go";
 
@@ -20,7 +20,7 @@ export default function Sidebar() {
            }}  className="text-xl  w-full items-center  flex ">Home</button>
            </div>
            <div className="flex gap-2 w-full items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
-           <CiChat1 size={24}  />
+           <FiMessageSquare size={22}  />
            <button className="text-xl ">Messages</button>
            </div>
            <div   className="flex gap-2 items-center w-full cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
