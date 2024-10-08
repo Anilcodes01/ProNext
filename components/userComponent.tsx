@@ -11,7 +11,6 @@ import { AiOutlineLink } from "react-icons/ai";
 import { SlCalender } from "react-icons/sl";
 import { useSession } from "next-auth/react";
 import ArticleCard from "./articleCard";
-import { useRouter } from "next/navigation";
 import FollowButton from "./follow";
 
 interface Post {
