@@ -263,12 +263,12 @@ export default function UserProfilePage() {
             <SlCalender className="text-md" />
             Joined {formatDate(userProfile?.createdAt || "")}
           </div>
-          <div className="text-black flex items-center gap-8">
-            <div className="cursor-pointer">
-              <span className="font-semibold">{followersCount}</span> Followers
+          <div className="text-black flex items-center mt-3 gap-8">
+            <div className="cursor-pointer text-sm">
+              <span className="">{followersCount}</span> Followers
             </div>
-            <div className="cursor-pointer">
-              <span className="font-semibold">{followingCount}</span> Following
+            <div className="cursor-pointer text-sm">
+              <span className="">{followingCount}</span> Following
             </div>
           </div>
         </div>
@@ -278,7 +278,7 @@ export default function UserProfilePage() {
           onClick={() => handleViewModeChange("posts")}
           className={`${
             viewMode === "posts"
-              ? "border-b-4 border-blue-500"
+              ? "border-b-4 text-blue-400 border-blue-500"
               : "border-none text-gray-500"
           } py-2`}
         >
@@ -288,7 +288,7 @@ export default function UserProfilePage() {
           onClick={() => handleViewModeChange("articles")}
           className={`${
             viewMode === "articles"
-              ? "border-b-4 border-blue-500"
+              ? "border-b-4 text-blue-400 border-blue-500"
               : "border-none text-gray-500"
           } py-2`}
         >
