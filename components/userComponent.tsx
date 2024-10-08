@@ -11,6 +11,8 @@ import { AiOutlineLink } from "react-icons/ai";
 import { SlCalender } from "react-icons/sl";
 import { useSession } from "next-auth/react";
 import ArticleCard from "./articleCard";
+import { useRouter } from "next/navigation";
+import FollowButton from "./follow";
 
 interface Post {
   id: string;
@@ -21,6 +23,7 @@ interface Post {
   updatedAt: string;
   userId: string;
   user: {
+    id: string;
     name: string;
     avatarUrl?: string;
   };
@@ -45,6 +48,7 @@ interface Article {
 }
 
 interface UserProfile {
+  id: string;
   name: string;
   avatarUrl?: string;
   createdAt: string;
@@ -53,18 +57,52 @@ interface UserProfile {
   city?: string;
 }
 
+interface Follow {
+  followingId: string;
+}
+
+interface User {
+  id: string;
+  name: string | null;
+  avatarUrl: string | null;
+}
+
 export default function UserProfilePage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [followersCount, setFollowersCount] = useState<number | null>(null);
   const [followingCount, setFollowingCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
   const [articles, setArticles] = useState<Article[]>([]); // New state for articles
   const [viewMode, setViewMode] = useState<"posts" | "articles">("posts");
-
+  const [users, setUsers] = useState<User[]>([]);
+  const [following, setFollowing] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
   const { userId } = useParams();
   const { data: session } = useSession();
+
+  useEffect(() => {
+    async function fetchUsersAndFollowing() {
+      try {
+        const [usersResponse, followingResponse] = await Promise.all([
+          axios.get("/api/users"),
+          axios.get("/api/follow"),
+        ]);
+        setUsers(usersResponse.data.users);
+        setFollowing(
+          followingResponse.data.following.map(
+            (follow: Follow) => follow.followingId
+          )
+        );
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUsersAndFollowing();
+  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -78,6 +116,8 @@ export default function UserProfilePage() {
             Expires: "0",
           },
         });
+
+        console.log("User response:", userResponse.data);
 
         const response = await axios.get(`/api/post/fetchUserPost/${userId}`, {
           headers: {
@@ -183,15 +223,22 @@ export default function UserProfilePage() {
           )}
         </div>
         <div className="p-5 lg:mr-16 flex flex-col gap-1 h-48 w-96">
-          <div className="text-xl flex justify-between text-black">
+          <div className="text-xl flex justify-between items-center text-black">
             {userProfile?.name}
-            {isOwnProfile && (
+            {isOwnProfile ? (
               <button
                 onClick={() => (window.location.href = `/user/edit`)}
                 className="text-sm rounded-full px-2 border border-black text-black"
               >
                 Edit Profile
               </button>
+            ) : (
+              userProfile?.id && (
+                <FollowButton
+                  isFollowing={following.includes(userProfile.id)}
+                  followingId={userProfile.id}
+                />
+              )
             )}
           </div>
           <div className="text-black text-md w-full">{userProfile?.bio}</div>
@@ -203,73 +250,64 @@ export default function UserProfilePage() {
 
           <div className="text-black flex items-center gap-2">
             <AiOutlineLink className="text-gray-600" />
-            {userProfile?.website && (
-              <a
-                href={
-                  userProfile.website.startsWith("http")
-                    ? userProfile.website
-                    : `https://${userProfile.website}`
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 text-sm cursor-pointer"
-              >
-                {userProfile.website}
-              </a>
-            )}
+            <a
+              href={userProfile?.website}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500"
+            >
+              {userProfile?.website}
+            </a>
           </div>
-
-          <div className="text-gray-500 flex text-md items-center gap-2">
-            <SlCalender className="text-sm text-gray-600" />
-            Joined: {userProfile ? formatDate(userProfile.createdAt) : "N/A"}
+          <div className="text-black flex items-center gap-2">
+            <SlCalender className="text-md" />
+            Joined {formatDate(userProfile?.createdAt || "")}
           </div>
-
-          <div className="flex gap-4 text-sm text-black mt-4">
-            <div>
-              <span className=" text-sm text-black">{followersCount}</span>{" "}
-              Followers
+          <div className="text-black flex items-center gap-8">
+            <div className="cursor-pointer">
+              <span className="font-semibold">{followersCount}</span> Followers
             </div>
-            <div>
-              <span className="text-sm text-black">{followingCount}</span>{" "}
-              Following
+            <div className="cursor-pointer">
+              <span className="font-semibold">{followingCount}</span> Following
             </div>
           </div>
         </div>
       </div>
-      <div className="bg-white">
-        <div>
-          <div className="flex gap-4">
-            <button
-              className={`px-4 py-2 ${
-                viewMode === "posts"
-                  ? "bg-blue-500 rounded-full text-white"
-                  : "bg-gray-200 text-black rounded-full"
-              }`}
-              onClick={() => handleViewModeChange("posts")}
-            >
-              Posts
-            </button>
-            <button
-              className={`px-4 py-2 ${
-                viewMode === "articles"
-                  ? "bg-blue-500 rounded-full text-white"
-                  : "bg-gray-200 text-black rounded-full "
-              }`}
-              onClick={() => handleViewModeChange("articles")}
-            >
-              Articles
-            </button>
-          </div>
-          {/* Display posts or articles based on viewMode */}
-          <div className="mt-8">
-            {viewMode === "posts"
-              ? posts.map((post) => <PostCard key={post.id} post={post} />)
-              : articles.map((article) => (
-                  <ArticleCard key={article.id} article={article} />
-                ))}
-          </div>
-        </div>
+      <div className="flex gap-6">
+        <button
+          onClick={() => handleViewModeChange("posts")}
+          className={`${
+            viewMode === "posts"
+              ? "border-b-4 border-blue-500"
+              : "border-none text-gray-500"
+          } py-2`}
+        >
+          Posts
+        </button>
+        <button
+          onClick={() => handleViewModeChange("articles")}
+          className={`${
+            viewMode === "articles"
+              ? "border-b-4 border-blue-500"
+              : "border-none text-gray-500"
+          } py-2`}
+        >
+          Articles
+        </button>
       </div>
+      {viewMode === "posts" ? (
+        <div className="flex flex-col gap-4 p-2">
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} />
+          ))}
+        </div>
+      ) : (
+        <div className="flex flex-col gap-4 p-2">
+          {articles.map((article) => (
+            <ArticleCard key={article.id} article={article} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

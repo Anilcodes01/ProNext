@@ -31,7 +31,7 @@ export default function FollowButton({ isFollowing, followingId }: FollowButtonP
     <button
       onClick={handleFollow}
       disabled={loading}
-      className={`p-1 text-sm font-medium rounded-full ${isFollowingState ? "text-red-500" : "text-blue-500"}`}
+      className={` text-sm font-medium   rounded-full ${isFollowingState ? "text-red-500" : "text-blue-500"}`}
     >
       {loading ? "Loading..." : isFollowingState ? "Unfollow" : "Follow"}
     </button>
