@@ -78,9 +78,10 @@ export default function UserProfilePage() {
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
   const { userId } = useParams();
   const { data: session } = useSession();
+
+  console.log(users)
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
