@@ -4,18 +4,33 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const { postId } = await req.json();
 
+  // Validate that postId is provided
+  if (!postId) {
+    return NextResponse.json(
+      { message: "Post ID is required" },
+      { status: 400 }
+    );
+  }
+
   try {
+    // Delete all bookmarks associated with the post
+    await prisma.bookmark.deleteMany({
+      where: { postId },
+    });
+
+    // Delete all likes associated with the post
     await prisma.like.deleteMany({
       where: { postId },
     });
 
+    // Delete the post
     const deletedPost = await prisma.post.delete({
       where: { id: postId },
     });
 
     return NextResponse.json(
       {
-        message: "Post deleted successfully...",
+        message: "Post deleted successfully",
         deletedPost,
       },
       { status: 200 }
@@ -24,8 +39,8 @@ export async function POST(req: Request) {
     console.error("Error while deleting the post:", error);
     return NextResponse.json(
       {
-        message: "Error while deleting the post...",
-        error,
+        message: "Error while deleting the post",
+        error
       },
       { status: 500 }
     );

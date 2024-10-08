@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
 import PostList from "./postList"; // Import the new PostList component
-import PostSkeleton from "./postSkeleton";
+
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -88,14 +88,118 @@ export default function MainContent() {
 
   if (loading) {
     return (
-      <div className="w-full">
-        <PostSkeleton />
+      <div className="w-full sm:p-8 p-4">
+       
+        <div className="text-2xl sm:text-3xl w-full text-black font-bold">
+          Welcome back, {session?.user?.name}!
+        </div>
+        <div className="border border-gray-200 w-full bg-white rounded-xl mt-8 p-1">
+          <textarea
+            value={postContent}
+            onChange={(e) => setPostContent(e.target.value)}
+            className="outline-none border text-black bg-gray-200 text-black w-full h-20 sm:h-30 text-lg rounded-lg p-2 resize-none"
+            placeholder="What's on your mind?..."
+          ></textarea>
+          {previewUrl && (
+            <div className="relative w-full h-48 mt-2 sm:h-60">
+              <Image
+                src={previewUrl}
+                alt="Preview"
+                layout="fill"
+                objectFit="cover"
+                className="rounded-lg"
+              />
+              <button
+                onClick={handleRemoveImage}
+                className="absolute top-2 right-2 bg-red-500 rounded-full p-1"
+              >
+                <IoMdClose size={20} color="white" />
+              </button>
+            </div>
+          )}
+
+          {showEmojiPicker && (
+            <div className="absolute z-10">
+              <EmojiPicker onEmojiClick={handleEmojiSelect} />
+            </div>
+          )}
+
+          <div className="flex justify-between mt-2 flex-wrap">
+            <div className="flex gap-4 ml-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageSelect}
+                className="hidden"
+                ref={fileInputRef}
+              />
+              <button
+                onClick={() => fileInputRef.current?.click()}
+                title="Media"
+              >
+                <FaImage
+                  size={20}
+                  className="text-green-600 hover:text-green-800 font-bold"
+                />
+              </button>
+              <button
+                title="Emoji"
+                onClick={() => setShowEmojiPicker((prev) => !prev)}
+              >
+                <MdOutlineEmojiEmotions
+                  size={24}
+                  className="text-green-600 hover:text-green-800 font-bold"
+                />
+              </button>
+              <button
+                title="Poll"
+                onClick={() => {
+                  router.push("/polls");
+                }}
+              >
+                <LiaPollSolid
+                  size={26}
+                  className="text-green-600 hover:text-green-800 font-bold"
+                />
+              </button>
+              <button
+                title="article"
+                onClick={() => {
+                  router.push("/articles/publish");
+                }}
+              >
+                <MdOutlineArticle
+                  size={26}
+                  className="text-green-600 hover:text-green-800 font-bold"
+                />
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={handlePostSubmission}
+                className="border text-green-800 hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
+              >
+                Post
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="mt-6">
+          <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+          <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+          <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+          <div className="h-32 bg-gray-200 rounded-lg dark-gray-300 w-full mb-4"></div>
+        </div>
       </div>
     );
   }
 
   if (error) {
-    return <div>Error...</div>;
+    return (
+      <div className="text-black m-5 text-xl min-h-screen">
+        Error...Something went wrong, Please try again!
+      </div>
+    );
   }
 
   return (
