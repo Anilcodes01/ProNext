@@ -234,10 +234,12 @@ export default function UserProfilePage() {
               </button>
             ) : (
               userProfile?.id && (
-                <FollowButton
+               <div className="border rounded-full px-2 flex hover:bg-slate-100 text-center py-1">
+                 <FollowButton
                   isFollowing={following.includes(userProfile.id)}
                   followingId={userProfile.id}
                 />
+               </div>
               )
             )}
           </div>
