@@ -25,7 +25,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="bg-white  shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-neutral-50  shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
       {/* User Info */}
       <div className="flex items-center mb-4">
         {project.user && project.user.avatarUrl ? (
@@ -80,7 +80,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           onClick={() => {
             window.open(project.projectLink, "_blank");
           }}
-          className="border w-full hover:bg-slate-100  rounded p-2"
+          className="border w-full hover:bg-slate-100 bg-white rounded p-2"
         >
           Live Link
         </button>
@@ -88,7 +88,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           onClick={() => {
             window.open(project.projectRepoLink, "_blank");
           }}
-          className="border w-full hover:bg-slate-100  rounded p-2"
+          className="border w-full hover:bg-slate-100 bg-white  rounded p-2"
         >
           Repo Link
         </button>
