@@ -27,7 +27,7 @@ export default function ArticleCard({ article }: ArticleProps) {
 
   return (
     <Link href={`/articles/${article.id}`} passHref>
-    <div className="bg-white-800 cursor-pointer items-start border mt-4 rounded-lg w-full p-4">
+    <div className="bg-white-800 cursor-pointer hover:bg-gray-100 items-start border mt-4 rounded-lg w-full p-4">
       <div className="flex items-center mb-4">
         {article.user && article.user.avatarUrl ? (
           <Image
