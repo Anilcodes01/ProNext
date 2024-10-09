@@ -25,7 +25,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="bg-white shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-white  shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
       {/* User Info */}
       <div className="flex items-center mb-4">
         {project.user && project.user.avatarUrl ? (
