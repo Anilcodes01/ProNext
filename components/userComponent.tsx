@@ -56,6 +56,8 @@ interface Project {
   createdAt: string;
   image: string;
   userId: string;
+  projectLink: string;
+  projectRepoLink: string;
   user: {
     name: string;
     avatarUrl: string;
