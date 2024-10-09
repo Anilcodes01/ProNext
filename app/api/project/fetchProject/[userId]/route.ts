@@ -35,12 +35,12 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error while fetching Projects:", error);
     return NextResponse.json(
       {
         message: "Error while fetching Projects...",
-        error: error.message || "Unknown error",
+        error
       },
       { status: 500 }
     );
