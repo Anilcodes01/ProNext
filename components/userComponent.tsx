@@ -12,6 +12,7 @@ import { SlCalender } from "react-icons/sl";
 import { useSession } from "next-auth/react";
 import ArticleCard from "./articleCard";
 import FollowButton from "./follow";
+import ProjectCard from "./projectCard";
 
 interface Post {
   id: string;
@@ -46,6 +47,19 @@ interface Article {
   };
 }
 
+interface Project {
+  id: string;
+  projectName: string;
+  projectDescription: string;
+  createdAt: string;
+  image: string;
+  userId: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+  };
+}
+
 interface UserProfile {
   id: string;
   name: string;
@@ -72,15 +86,18 @@ export default function UserProfilePage() {
   const [followersCount, setFollowersCount] = useState<number | null>(null);
   const [followingCount, setFollowingCount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [articles, setArticles] = useState<Article[]>([]); // New state for articles
-  const [viewMode, setViewMode] = useState<"posts" | "articles">("posts");
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [viewMode, setViewMode] = useState<"posts" | "articles" | "projects">(
+    "posts"
+  );
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { userId } = useParams();
   const { data: session } = useSession();
 
-  console.log(users)
+  console.log(users);
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
@@ -160,10 +177,22 @@ export default function UserProfilePage() {
     }
   };
 
-  const handleViewModeChange = (mode: "posts" | "articles") => {
+  const fetchProjects = async () => {
+    try {
+      const response = await axios.get(`/api/project/fetchProject/${userId}`);
+      setProjects(response.data.projects);
+    } catch (error) {
+      setError("Failed to fetch Projects");
+      console.log(error);
+    }
+  };
+
+  const handleViewModeChange = (mode: "posts" | "articles" | "projects") => {
     setViewMode(mode);
     if (mode === "articles" && articles.length === 0) {
-      fetchArticles(); // Fetch articles if switching to articles view
+      fetchArticles();
+    } else if (mode === "projects" && projects.length === 0) {
+      fetchProjects();
     }
   };
 
@@ -234,12 +263,12 @@ export default function UserProfilePage() {
               </button>
             ) : (
               userProfile?.id && (
-               <div className="border rounded-full px-2 flex hover:bg-slate-100 text-center py-1">
-                 <FollowButton
-                  isFollowing={following.includes(userProfile.id)}
-                  followingId={userProfile.id}
-                />
-               </div>
+                <div className="border rounded-full px-2 flex hover:bg-slate-100 text-center py-1">
+                  <FollowButton
+                    isFollowing={following.includes(userProfile.id)}
+                    followingId={userProfile.id}
+                  />
+                </div>
               )
             )}
           </div>
@@ -296,20 +325,39 @@ export default function UserProfilePage() {
         >
           Articles
         </button>
+        <button
+          onClick={() => handleViewModeChange("projects")}
+          className={`${
+            viewMode === "projects"
+              ? "border-b-4 text-blue-400 border-blue-500"
+              : "border-none text-gray-500"
+          } py-2`}
+        >
+          Projects
+        </button>
       </div>
-      {viewMode === "posts" ? (
-        <div className="flex flex-col gap-4 p-2">
+      {viewMode === "posts" && (
+        <div>
           {posts.map((post) => (
             <PostCard key={post.id} post={post} />
           ))}
         </div>
-      ) : (
-        <div className="flex flex-col gap-4 p-2">
+      )}
+      {viewMode === "articles" && (
+        <div>
           {articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
           ))}
         </div>
       )}
+     {viewMode === "projects" && (
+  <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+    {projects.map((project) => (
+      <ProjectCard key={project.id} project={project} />
+    ))}
+  </div>
+)}
+
     </div>
   );
 }

@@ -26,10 +26,10 @@ model User {
   bookmarks Bookmark[]
   polls     Poll[]
   pollVotes PollVote[]
+  projects  Project[]
 
-  following   Follow[]  @relation("Following")
-  followers   Follow[]  @relation("Followers")
-  
+  following Follow[] @relation("Following")
+  followers Follow[] @relation("Followers")
 }
 
 model Post {
@@ -43,7 +43,6 @@ model Post {
   likes     Like[]
   comments  Comment[]
   bookmarks Bookmark[]
-  
 }
 
 model Article {
@@ -55,6 +54,17 @@ model Article {
   updatedAt   DateTime @updatedAt()
   userId      String
   user        User     @relation(fields: [userId], references: [id])
+}
+
+model Project {
+  id                 String   @id @default(uuid())
+  projectName        String
+  projectDescription String
+  image              String
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt()
+  userId             String
+  user               User     @relation(fields: [userId], references: [id])
 }
 
 model Like {
@@ -116,14 +126,14 @@ model PollVote {
 }
 
 model Follow {
-  id         String  @id @default(cuid())
-  followerId String
+  id          String   @id @default(cuid())
+  followerId  String
   followingId String
-  createdAt  DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   // Relations
-  follower   User  @relation("Following", fields: [followerId], references: [id])
-  following  User  @relation("Followers", fields: [followingId], references: [id])
+  follower  User @relation("Following", fields: [followerId], references: [id])
+  following User @relation("Followers", fields: [followingId], references: [id])
 
   @@unique([followerId, followingId])
 }
