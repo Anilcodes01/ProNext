@@ -19,11 +19,7 @@ interface ProjectCardProps {
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   if (!project) {
-    return (
-      <div>
-        Error, project data is missing.
-      </div>
-    );
+    return <div>Error, project data is missing.</div>;
   }
 
   return (
@@ -46,7 +42,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             <div className="text-lg text-gray-900 font-semibold">
               {project.user?.name || "Unknown User"}
             </div>
-            <div className="text-sm text-gray-500">Posted on {new Date(project.createdAt).toLocaleDateString()}</div>
+            <div className="text-sm text-gray-500">
+              Posted on{" "}
+              {new Date(project.createdAt).toLocaleDateString(undefined, {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </div>
           </div>
         </div>
 
@@ -57,14 +60,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             alt={project.projectName}
             width={500}
             height={400}
-            quality={90}  
+            quality={90}
             className="rounded"
           />
         </div>
 
         {/* Project Details */}
         <div className="flex flex-col items-start">
-          <h3 className="text-2xl font-bold text-gray-900">{project.projectName}</h3>
+          <h3 className="text-2xl font-bold text-gray-900">
+            {project.projectName}
+          </h3>
           <p className="text-gray-600 mt-2 line-clamp-3">
             {project.projectDescription}
           </p>

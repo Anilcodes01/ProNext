@@ -14,6 +14,7 @@ import ArticleCard from "./articleCard";
 import FollowButton from "./follow";
 import ProjectCard from "./projectCard";
 
+
 interface Post {
   id: string;
   title?: string;
@@ -351,11 +352,18 @@ export default function UserProfilePage() {
         </div>
       )}
      {viewMode === "projects" && (
-  <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+ <div className="flex flex-col text-black">
+  <div className="flex gap-1 border py-1 rounded w-36 justify-center">
+    
+    <button>Upload Project</button>
+  </div>
+   <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+    
     {projects.map((project) => (
       <ProjectCard key={project.id} project={project} />
     ))}
   </div>
+ </div>
 )}
 
     </div>
