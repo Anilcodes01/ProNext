@@ -366,7 +366,7 @@ export default function UserProfilePage() {
       router.push('/user/project/upload')
     }} >Upload Project</button>
   </div>
-   <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+   <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-6">
     
     {projects.map((project) => (
       <ProjectCard key={project.id} project={project} />
