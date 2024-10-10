@@ -1,22 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { toast, Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function EditProfileForm() {
-  const { data: session } = useSession(); // Get the current session
-  const [name, setName] = useState(session?.user?.name || "");
-  const [bio, setBio] = useState(session?.user?.bio || "");
-  const [city, setCity] = useState(session?.user?.city || "");
-  const [website, setWebsite] = useState(session?.user?.website || "");
-  const [avatar, setAvatar] = useState<File | null>(null); // For profile image
+  const { data: session, status } = useSession(); 
+  const [name, setName] = useState("");
+  const [bio, setBio] = useState("");
+  const [city, setCity] = useState("");
+  const [website, setWebsite] = useState("");
+  const [avatar, setAvatar] = useState<File | null>(null); 
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
   const userId = session?.user.id;
+
+
+  useEffect(() => {
+    if (session) {
+      setName(session.user.name || "");
+      setBio(session.user.bio || "");
+      setCity(session.user.city || "");
+      setWebsite(session.user.website || "");
+    }
+  }, [session]);
 
   const handleSubmit = async () => {
     setIsLoading(true);
