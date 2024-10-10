@@ -62,7 +62,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="bg-neutral-50 shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-neutral-50 shadow-lg mt-4  hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
       {/* User Info */}
       <div className="flex items-center mb-4">
         {project.user && project.user.avatarUrl ? (
@@ -105,21 +105,17 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Details */}
       <div className="flex flex-col items-start">
-        <h3 className="text-2xl font-bold text-gray-900">{project.projectName}</h3>
-        <p className="text-gray-600 mt-2 line-clamp-3">{project.projectDescription}</p>
-      </div>
-
-      {/* Tech Stack */}
-      <div className="mt-4">
-        <h4 className="text-lg font-semibold text-gray-900">Tech Stack</h4>
+       <div className="flex items-center gap-4 w-full  justify-between">
+       <h3 className="text-2xl font-bold text-gray-900">{project.projectName}</h3>
+        <div className="">
         {loading ? (
           <p className="text-gray-500">Loading tech stack...</p>
         ) : techStack && Object.keys(techStack).length > 0 ? (
-          <ul className="mt-2 flex flex-wrap gap-2">
+          <ul className="flex flex-wrap gap-2 mr-6">
             {Object.keys(techStack).map((language) => (
               <li
                 key={language}
-                className="bg-gray-200 px-3 py-1 rounded-full text-sm font-medium text-gray-700"
+                className="bg-gray-200 px-3 py-1 cursor-pointer hover:bg-gray-300 rounded-full text-sm font-medium text-gray-700"
               >
                 {language}
               </li>
@@ -129,6 +125,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           <p className="text-gray-500">Failed to fetch tech stack data...</p>
         )}
       </div>
+       </div>
+        <p className="text-gray-600 mt-4 line-clamp-3">{project.projectDescription}</p>
+      </div>
+
+      {/* Tech Stack */}
+     
 
       {/* Links */}
       <div className="flex justify-between mt-4 gap-8">
