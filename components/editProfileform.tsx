@@ -7,7 +7,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 export default function EditProfileForm() {
-  const { data: session, status } = useSession(); 
+  const { data: session } = useSession(); 
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [city, setCity] = useState("");
