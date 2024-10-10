@@ -33,16 +33,18 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       throw new Error("Invalid GitHub URL");
     }
   
-    const [_, owner, repo] = match;
+    const owner = match[1];
+    const repo = match[2];
   
     try {
       const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/languages`);
-      return response.data; 
+      return response.data;
     } catch (error) {
       console.error("Error fetching tech stack:", error);
       return null;
     }
   };
+  
 
   useEffect(() => {
     if (project.projectRepoLink) {
@@ -124,7 +126,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             ))}
           </ul>
         ) : (
-          <p className="text-gray-500">No tech stack available.</p>
+          <p className="text-gray-500">Failed to fetch tech stack data...</p>
         )}
       </div>
 
