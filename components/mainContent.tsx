@@ -11,6 +11,7 @@ import { MdOutlineArticle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
+import { FaUserCircle } from "react-icons/fa";
 import PostList from "./postList"; // Import the new PostList component
 
 
@@ -207,13 +208,28 @@ export default function MainContent() {
       <div className="text-2xl sm:text-3xl w-full text-black font-bold">
         Welcome back, {session?.user?.name}!
       </div>
-      <div className="border border-gray-200 w-full bg-white rounded-xl mt-8 p-1">
+      <div className="border border-gray-200  w-full bg-white rounded-xl mt-8 p-4">
+     <div className="flex items-start border-b border-gray-200">
+     <div>
+            {session?.user.avatarUrl ? (
+              <Image
+                src={session.user.avatarUrl}
+                alt="User Profile Picture"
+                width={40}
+                height={40}
+                className="rounded-full cursor-pointer border"
+              />
+            ) : (
+              <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
+            )}
+          </div>
         <textarea
           value={postContent}
           onChange={(e) => setPostContent(e.target.value)}
-          className="outline-none border text-black bg-gray-200 text-black w-full h-20 sm:h-30 text-lg rounded-lg p-2 resize-none"
+          className="outline-none   text-black  text-black w-full h-20 sm:h-30 text-lg  p-2 resize-none"
           placeholder="What's on your mind?..."
         ></textarea>
+     </div>
         {previewUrl && (
           <div className="relative w-full h-48 mt-2 sm:h-60">
             <Image
@@ -225,9 +241,9 @@ export default function MainContent() {
             />
             <button
               onClick={handleRemoveImage}
-              className="absolute top-2 right-2 bg-red-500 rounded-full p-1"
+              className="absolute top-2 right-2 hover:1bg-gray-100  rounded-full p-1"
             >
-              <IoMdClose size={20} color="white" />
+              <IoMdClose size={20} color="black" />
             </button>
           </div>
         )}
