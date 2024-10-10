@@ -97,7 +97,9 @@ export default function Sidebar() {
               <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
             )}
           </div>
-          <button className="text-xl">Profile</button>
+          <button className="text-xl">
+            {session?.user.name}
+          </button>
         </div>
       </div>
     </div>
