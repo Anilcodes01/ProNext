@@ -92,7 +92,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Project Image */}
-      <div className="relative h-60 border mr-6 rounded overflow-hidden mb-4">
+      <div className=" h-60 border mr-6 rounded overflow-hidden mb-4">
         <Image
           src={project.image}
           alt={project.projectName}
