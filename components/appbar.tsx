@@ -60,7 +60,7 @@ export default function Appbar() {
   };
 
   return (
-    <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
+    <div className="bg-white  text-black fixed border-b w-full justify-between h-16 flex items-center">
       <button
         onClick={() => router.push("/")}
         className="text-3xl font-bold ml-8"

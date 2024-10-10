@@ -9,12 +9,43 @@ import { GoBookmark } from "react-icons/go";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+interface UserProfile {
+    id: string;
+    name: string;
+    avatarUrl?: string;
+    createdAt: string;
+    bio?: string;
+    website?: string;
+    city?: string;
+  }
 
 export default function Sidebar() {
+    const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
 
-  const userId = session?.user.id;
+  const userId = session?.user?.id;
+
+  useEffect(() => {
+    if (userId) {
+      const fetchUserData = async () => {
+        try {
+          const response = await axios.get(`/api/users/${userId}`);
+          const userData = response.data.user;
+          console.log(userData)
+          setUserProfile(userData);
+          
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+      
+      fetchUserData(); 
+    }
+  }, [userId]); 
 
   return (
     <div className="bg-white   w-full flex flex-col items-center  h-screen text-black">
@@ -97,8 +128,8 @@ export default function Sidebar() {
               <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
             )}
           </div>
-          <button className="text-xl">
-            {session?.user.name}
+          <button className="text-xl text-black">
+            {userProfile?.name}
           </button>
         </div>
       </div>
