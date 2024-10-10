@@ -1,6 +1,8 @@
 "use client";
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import axios from 'axios'
 
 interface ProjectCardProps {
   project: {
@@ -20,12 +22,45 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
+  const [techStack, setTechStack] = useState<{ [key: string]: number } | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const fetchTechStack = async (repoUrl: string) => {
+    const regex = /github\.com\/([^/]+)\/([^/]+)/;
+    const match = repoUrl.match(regex);
+  
+    if (!match) {
+      throw new Error("Invalid GitHub URL");
+    }
+  
+    const [_, owner, repo] = match;
+  
+    try {
+      const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/languages`);
+      return response.data; 
+    } catch (error) {
+      console.error("Error fetching tech stack:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (project.projectRepoLink) {
+      fetchTechStack(project.projectRepoLink)
+        .then((stack) => {
+          setTechStack(stack);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    }
+  }, [project.projectRepoLink]);
+
   if (!project) {
     return <div>Error, project data is missing.</div>;
   }
 
   return (
-    <div className="bg-neutral-50  shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-neutral-50 shadow-lg mt-4 cursor-pointer hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
       {/* User Info */}
       <div className="flex items-center mb-4">
         {project.user && project.user.avatarUrl ? (
@@ -55,7 +90,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Project Image */}
-      <div className="relative  h-60 border mr-6 rounded overflow-hidden mb-4">
+      <div className="relative h-60 border mr-6 rounded overflow-hidden mb-4">
         <Image
           src={project.image}
           alt={project.projectName}
@@ -68,13 +103,32 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Details */}
       <div className="flex flex-col items-start">
-        <h3 className="text-2xl font-bold text-gray-900">
-          {project.projectName}
-        </h3>
-        <p className="text-gray-600 mt-2 line-clamp-3">
-          {project.projectDescription}
-        </p>
+        <h3 className="text-2xl font-bold text-gray-900">{project.projectName}</h3>
+        <p className="text-gray-600 mt-2 line-clamp-3">{project.projectDescription}</p>
       </div>
+
+      {/* Tech Stack */}
+      <div className="mt-4">
+        <h4 className="text-lg font-semibold text-gray-900">Tech Stack</h4>
+        {loading ? (
+          <p className="text-gray-500">Loading tech stack...</p>
+        ) : techStack && Object.keys(techStack).length > 0 ? (
+          <ul className="mt-2 flex flex-wrap gap-2">
+            {Object.keys(techStack).map((language) => (
+              <li
+                key={language}
+                className="bg-gray-200 px-3 py-1 rounded-full text-sm font-medium text-gray-700"
+              >
+                {language}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No tech stack available.</p>
+        )}
+      </div>
+
+      {/* Links */}
       <div className="flex justify-between mt-4 gap-8">
         <button
           onClick={() => {
