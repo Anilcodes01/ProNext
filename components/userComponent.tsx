@@ -241,8 +241,8 @@ export default function UserProfilePage() {
   const isOwnProfile = session?.user?.id === userId;
 
   return (
-    <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
-      <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
+    <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-4 lg:p-5">
+      <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 lg:p-5">
         <div className="rounded-full h-48 w-48 overflow-y-hidden">
           {userProfile?.avatarUrl ? (
             <Image
@@ -256,7 +256,7 @@ export default function UserProfilePage() {
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
         </div>
-        <div className="p-5 lg:mr-16 flex flex-col gap-1 h-48 w-96">
+        <div className="lg:p-5 pt-2 lg:mr-16 flex flex-col gap-1 h-48 w-96">
           <div className="text-xl flex justify-between items-center text-black">
             {userProfile?.name}
             {isOwnProfile ? (

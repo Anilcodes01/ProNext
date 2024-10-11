@@ -10,7 +10,7 @@ export default function BookmarkPage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div>
+      <div className="h-16">
         <Appbar />
       </div>
       <div className="flex">

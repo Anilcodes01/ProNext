@@ -10,12 +10,15 @@ export default function UserProfile() {
             <Appbar />
         </div>
         <div>
-            <div className=" fixed w-52  lg:w-80 h-full ">
+            <div className="hidden md:block fixed w-52 lg:w-80 h-full">
                 <Sidebar />
             </div>
-            <div className="ml-52 border-l  overflow-x-hidden lg:ml-80 border-r border-gray-200  ">
+            <div className=" ml-0  md:ml-52 overflow-x-hidden lg:ml-80 border-l border-gray-200">
                <UserComponent />
             </div>
         </div>
+        <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
+        <Sidebar isMobile={true} />
+      </div>
     </div>
 }
