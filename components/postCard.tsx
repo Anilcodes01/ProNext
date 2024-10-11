@@ -122,7 +122,7 @@ export default function PostCard({ post }: { post: Post }) {
         </div>
       </div>
 
-      <div className="mt-2 ml-8 mr-8">
+      <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-4">
         <div
           onClick={handlePostClick}
           className="whitespace-pre-wrap text-black"
