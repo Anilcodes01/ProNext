@@ -98,17 +98,9 @@ export default function Sidebar() {
             Aritcles
           </button>
         </div>
-        <div
-          onClick={() => {
-            router.push("/polls");
-          }}
-          className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black"
-        >
-          <CgPoll size={24} />
-          <button className="text-xl">Polls</button>
-        </div>
+      
       </div>
-      <div className="text-black  w-full mt-48 p-4 mt-2 flex flex-col gap-2">
+      <div className="text-black  w-full mt-64 p-4 mt-2 flex flex-col gap-2">
         <div
           onClick={() => {
             router.push(`/user/${userId}`);

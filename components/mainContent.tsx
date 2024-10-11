@@ -278,17 +278,7 @@ export default function MainContent() {
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-            <button
-              title="Poll"
-              onClick={() => {
-                router.push("/polls");
-              }}
-            >
-              <LiaPollSolid
-                size={26}
-                className="text-green-600 hover:text-green-800 font-bold"
-              />
-            </button>
+           
             <button
               title="article"
               onClick={() => {
