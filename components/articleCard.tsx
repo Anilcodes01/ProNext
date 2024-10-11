@@ -62,8 +62,8 @@ export default function ArticleCard({ article }: ArticleProps) {
               <Image
                 src={article.image}
                 alt={article.title}
-                width={300} // Adjusted width for better aspect ratio
-                height={300} // Adjusted height for better aspect ratio
+                width={200} 
+                height={200} 
                 className="rounded-lg border object-cover"
               />
             </div>
