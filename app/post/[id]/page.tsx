@@ -12,14 +12,14 @@ export default function Post() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div>
+      <div className="h-16">
         <Appbar />
       </div>
       <div className="flex">
-        <div className=" fixed w-52 mt-16  lg:w-80 h-full ">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="ml-52 min-h-screen p-6 border-l mt-16 w-full lg:ml-80 border-r border-gray-200 lg:mr-52 ">
+        <div className="w-full lg:p-5 p-4 md:p-5 ml-0 md:ml-52 lg:ml-80 border-l border-gray-200">
           
         <div onClick={() => {
                 router.push('/')
@@ -34,6 +34,7 @@ export default function Post() {
           <PostDetail />
         </div>
       </div>
+     
     </div>
   );
 }

@@ -10,11 +10,11 @@ export default function Articles() {
   const router = useRouter();
   return (
     <div className="bg-white text-black min-h-screen">
-      <div>
+      <div className="h-16">
         <Appbar />
       </div>
-      <div className="flex min-h-screen">
-        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
+      <div className="flex ">
+        <div className="hidden md:block  fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
         <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">

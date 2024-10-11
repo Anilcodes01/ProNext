@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import FollowButton from "./follow"; 
+import { FaArrowLeft } from "react-icons/fa6";
 
 interface User {
   id: string;
@@ -57,8 +58,16 @@ export default function UserCard() {
 
   return (
     <div className="bg-white text-black rounded-lg p-4">
+      {/* Mobile Back Button */}
+      <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center md:hidden">
+        <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
+          <FaArrowLeft size={20} className="text-black" />
+        </div>
+        <div className="text-xl text-black font-bold">Post</div>
+      </div>
+
       <h2 className="text-2xl font-semibold mb-4">All Users</h2>
-      <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {loading ? (
           <>
             <Skeleton />
@@ -84,18 +93,18 @@ export default function UserCard() {
                 onClick={() => {
                   router.push(`/user/${user.id}`);
                 }}
-                className="cursor-pointer w-full bg-white p-2 w-auto flex items-center gap-2"
+                className="cursor-pointer w-full bg-white p-2 flex items-center gap-2"
               >
                 {user.avatarUrl ? (
                    <div className="w-8 h-8 rounded-full overflow-hidden"> 
-                   <Image
-                     src={user.avatarUrl}
-                     alt={user.name || "null"}
-                     width={32} 
-                     height={32}
-                     className="object-cover w-full h-full" 
-                   />
-                 </div>
+                     <Image
+                       src={user.avatarUrl}
+                       alt={user.name || "null"}
+                       width={32} 
+                       height={32}
+                       className="object-cover w-full h-full" 
+                     />
+                   </div>
                 ) : (
                   <FaUserCircle className="w-8 h-8 text-gray-400" />
                 )}
