@@ -2,7 +2,6 @@
 import { GoHome } from "react-icons/go";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { CgPoll } from "react-icons/cg";
 import { FiMessageSquare } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { GoBookmark } from "react-icons/go";
