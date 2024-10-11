@@ -1,64 +1,75 @@
 import { prisma } from "@/app/lib/prisma";
+import cloudinary from "cloudinary";
 import { NextResponse } from "next/server";
+import stream from "stream";
+
+// Configure Cloudinary
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
 export async function POST(req: Request) {
   try {
-    const { title, description, content, userId } = await req.json();
+    // Parse the incoming form data (image, title, description, content, userId)
+    const formData = await req.formData();
+    const title = formData.get("title") as string;
+    const description = formData.get("description") as string;
+    const content = formData.get("content") as string;
+    const userId = formData.get("userId") as string;
+    const image = formData.get("image") as File | null;
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
+    let imageUrl = null;
 
-    if (!user) {
-      return NextResponse.json(
-        {
-          message: "User not found!",
-        },
-        { status: 404 }
-      );
+    // If an image is uploaded, upload it to Cloudinary
+    if (image) {
+      const buffer = Buffer.from(await image.arrayBuffer());
+
+      // Upload image to Cloudinary via stream
+      imageUrl = await new Promise<string>((resolve, reject) => {
+        const uploadStream = cloudinary.v2.uploader.upload_stream(
+          {
+            folder: "articles", // Folder name for storing images in Cloudinary
+          },
+          (error, result) => {
+            if (error) {
+              console.error("Cloudinary upload error:", error);
+              reject(new Error("Failed to upload image to Cloudinary"));
+            }
+            if (result) {
+              resolve(result.secure_url); // Get the secure Cloudinary URL
+            } else {
+              reject(new Error("Upload result is undefined"));
+            }
+          }
+        );
+
+        const readableStream = new stream.PassThrough();
+        readableStream.end(buffer);
+        readableStream.pipe(uploadStream); // Pipe the buffer stream to Cloudinary
+      });
     }
 
+    // Save article to the database using Prisma
     const newArticle = await prisma.article.create({
       data: {
-        title,
-        description,
-        content,
-        userId,
+        title: title ,
+        description: description ,
+        content: content ,
+        image: imageUrl || null, // Cloudinary image URL if an image was uploaded
+        userId: userId, // Associate the article with the user
       },
       include: {
-        user: {
-          select: {
-            name: true,
-            avatarUrl: true,
-          },
-        },
+        user: true, // Include user information with the article response
       },
     });
 
-    // Trigger on-demand revalidation
-    try {
-      const revalidateRes = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/revalidate?secret=${process.env.REVALIDATION_TOKEN}&path=/articles`,
-        { method: 'GET' }
-      );
-      
-      if (!revalidateRes.ok) {
-        console.error('Failed to revalidate:', await revalidateRes.text());
-      }
-    } catch (revalidateError) {
-      console.error('Error during revalidation:', revalidateError);
-    }
-
-    return NextResponse.json(
-      { message: "Article created successfully!", newArticle },
-      { status: 200 }
-    );
+    return NextResponse.json({ newArticle }, { status: 200 });
   } catch (error) {
+    console.error("Error while publishing article!", error);
     return NextResponse.json(
-      {
-        message: "Error while creating Article!",
-        error,
-      },
+      { message: "Error while publishing article!" },
       { status: 500 }
     );
   }

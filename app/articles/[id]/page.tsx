@@ -101,14 +101,22 @@ export default function FullArticlePage() {
               <FaUserCircle className="w-8 h-8 text-black" />
             )}
             <div className="ml-4 text-xl text-black">{article.user.name}</div>
+            <div className="text-sm text-black ml-2 mt-1">
+            {" . "}
+            {new Date(article.createdAt).toLocaleDateString(undefined, {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </div>
           </div>
           {article.image && (
             <Image
               src={article.image}
               alt={article.title}
-              width={800}
-              height={400}
-              className="my-4 rounded-lg object-cover"
+              width={1000}
+              height={500}
+              className="my-8 rounded-lg lg:ml-16 border object-cover"
             />
           )}
           <div className="text-black text-lg mt-8">

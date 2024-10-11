@@ -10,6 +10,7 @@ export async function GET() {
         id: true,
         title: true,
         description: true,
+        image: true,
         content: true,
         createdAt: true,
         updatedAt: true,
