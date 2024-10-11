@@ -17,8 +17,6 @@ export default function UserProfile() {
                <UserComponent />
             </div>
         </div>
-        <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
-        <Sidebar isMobile={true} />
-      </div>
+        
     </div>
 }

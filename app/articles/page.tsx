@@ -19,12 +19,12 @@ export default function Articles() {
         </div>
         <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
           <div className="flex items-center justify-between">
-            <div className="text-4xl font-bold mt-16">All Articles</div>
+            <div className="text-4xl font-bold ">All Articles</div>
             <button
               onClick={() => {
                 router.push("/articles/publish");
               }}
-              className="text-black mt-16 hover:bg-slate-100 text-xl border rounded py-1 px-4"
+              className="text-black  hover:bg-slate-100 text-xl border rounded py-1 px-4"
             >
               Write{" "}
             </button>
@@ -34,9 +34,7 @@ export default function Articles() {
           </Suspense>
         </div>
       </div>
-      <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
-        <Sidebar isMobile={true} />
-      </div>
+      
     </div>
   );
 }

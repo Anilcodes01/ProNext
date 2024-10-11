@@ -16,6 +16,7 @@ import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 
 
+
 interface Post {
   id: string;
   title?: string;
@@ -257,12 +258,12 @@ export default function UserProfilePage() {
           )}
         </div>
         <div className="lg:p-5 pt-2 lg:mr-16 flex flex-col gap-1 h-48 w-96">
-          <div className="text-xl flex justify-between items-center text-black">
+          <div className="text-xl flex  justify-between items-center text-black">
             {userProfile?.name}
             {isOwnProfile ? (
               <button
                 onClick={() => (window.location.href = `/user/edit`)}
-                className="text-sm rounded-full px-2 border border-black text-black"
+                className="text-sm rounded-full px-2 mr-8 lg:mr-0 border border-black text-black"
               >
                 Edit Profile
               </button>
