@@ -63,14 +63,14 @@ export default function FullArticlePage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div >
+      <div className="h-16">
         <Appbar />
       </div>
       <div className="flex">
-        <div className="mt-16 fixed w-52 lg:w-52">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className=" p-8 border-l mt-16 ml-52 border-gray-200 lg:ml-80 ">
+        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
           <div
             onClick={() => {
               router.push("/articles");
@@ -123,6 +123,9 @@ export default function FullArticlePage() {
             <p className="whitespace-pre-wrap ">{article.content}</p>
           </div>
         </div>
+      </div>
+      <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
+        <Sidebar isMobile={true} />
       </div>
     </div>
   );

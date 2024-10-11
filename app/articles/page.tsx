@@ -14,10 +14,10 @@ export default function Articles() {
         <Appbar />
       </div>
       <div className="flex min-h-screen">
-        <div className="fixed w-52 mt-16 lg:w-80 h-full ">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="ml-52 border-l w-full min-h-screen lg:ml-80 border-r border-gray-200 lg:mr-52 p-8">
+        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
           <div className="flex items-center justify-between">
             <div className="text-4xl font-bold mt-16">All Articles</div>
             <button
@@ -33,6 +33,9 @@ export default function Articles() {
             <ArticleList />
           </Suspense>
         </div>
+      </div>
+      <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
+        <Sidebar isMobile={true} />
       </div>
     </div>
   );

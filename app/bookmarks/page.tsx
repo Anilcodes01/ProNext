@@ -14,10 +14,10 @@ export default function BookmarkPage() {
         <Appbar />
       </div>
       <div className="flex">
-        <div className=" fixed w-52 mt-16 lg:w-80 h-full ">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="ml-52 min-h-screen p-6 border-l mt-12 w-full lg:ml-80 border-r border-gray-200 lg:mr-52 ">
+        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
           <div
             onClick={() => {
               router.push("/");
@@ -34,6 +34,9 @@ export default function BookmarkPage() {
           </div>
           <BookmarkComponent />
         </div>
+      </div>
+      <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
+        <Sidebar isMobile={true} />
       </div>
     </div>
   );
