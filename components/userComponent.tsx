@@ -263,7 +263,7 @@ export default function UserProfilePage() {
             {isOwnProfile ? (
               <button
                 onClick={() => (window.location.href = `/user/edit`)}
-                className="text-sm rounded-full px-2 mr-8 lg:mr-0 border border-black text-black"
+                className="text-sm rounded-full px-2 mr-12 lg:mr-0 border border-black text-black"
               >
                 Edit Profile
               </button>
@@ -278,7 +278,7 @@ export default function UserProfilePage() {
               )
             )}
           </div>
-          <div className="text-black text-md w-full">{userProfile?.bio}</div>
+          <div className="text-black mr-8 text-md lg:w-full">{userProfile?.bio}</div>
 
           <div className="text-black flex items-center gap-2">
             <IoLocationOutline className="text-md" />

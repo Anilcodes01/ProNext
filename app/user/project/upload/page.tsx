@@ -50,10 +50,10 @@ export default function UploadProject() {
         <Appbar />
     </div>
     <div className="flex">
-        <div className="fixed w-52  lg:w-80 h-full">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
             <Sidebar />
         </div>
-        <div className="ml-52 border-l w-full lg:mr-52 min-h-screen overflow-x-hidden lg:ml-80 border-r border-gray-200  ">
+        <div className="w-full ml-0 md:ml-52 lg:ml-80 border-l  border-gray-200">
         <div className="min-h-screen flex w-full flex-col  p-5">
       <form
         className="flex flex-col gap-4 border w-full p-5 rounded-md w-full max-w-xl"

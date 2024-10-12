@@ -54,7 +54,7 @@ export default function Appbar() {
   };
 
   return (
-    <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
+    <div className="bg-white text-black z-50 fixed border-b w-full justify-between h-16 flex items-center">
       <button onClick={() => router.push("/")} className="text-3xl font-bold ml-8">
         Rezin
       </button>
@@ -102,7 +102,7 @@ export default function Appbar() {
       <span className="block sm:hidden rounded-full  ">
         <TbSearch
           size={28}
-          className="cursor-pointer ml-28  rounded-full   hover:bg-slate-200 "
+          className="cursor-pointer ml-20  rounded-full   hover:bg-slate-200 "
           onClick={() => router.push("/search")} // Redirect to search page
         />
       </span>

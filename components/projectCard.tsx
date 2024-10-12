@@ -2,7 +2,7 @@
 import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import axios from "axios";
 
 interface ProjectCardProps {
   project: {
@@ -22,29 +22,32 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const [techStack, setTechStack] = useState<{ [key: string]: number } | null>(null);
+  const [techStack, setTechStack] = useState<{ [key: string]: number } | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchTechStack = async (repoUrl: string) => {
     const regex = /github\.com\/([^/]+)\/([^/]+)/;
     const match = repoUrl.match(regex);
-  
+
     if (!match) {
       throw new Error("Invalid GitHub URL");
     }
-  
+
     const owner = match[1];
     const repo = match[2];
-  
+
     try {
-      const response = await axios.get(`https://api.github.com/repos/${owner}/${repo}/languages`);
+      const response = await axios.get(
+        `https://api.github.com/repos/${owner}/${repo}/languages`
+      );
       return response.data;
     } catch (error) {
       console.error("Error fetching tech stack:", error);
       return null;
     }
   };
-  
 
   useEffect(() => {
     if (project.projectRepoLink) {
@@ -62,7 +65,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="bg-neutral-50 shadow-lg mt-4  hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-neutral-50 shadow-lg mt-4 hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
       {/* User Info */}
       <div className="flex items-center mb-4">
         {project.user && project.user.avatarUrl ? (
@@ -92,12 +95,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Project Image */}
-      <div className=" h-60 border mr-6 rounded overflow-hidden mb-4">
+      <div className="relative w-full h-40 z-10 md:h-80 lg:h-80 rounded overflow-hidden mb-4">
         <Image
           src={project.image}
           alt={project.projectName}
-          width={500}
-          height={400}
+          layout="fill" // Use fill layout for responsive images
+          objectFit="contain" // Ensures the image covers the entire container
           quality={90}
           className="rounded"
         />
@@ -105,32 +108,35 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Project Details */}
       <div className="flex flex-col items-start">
-       <div className="flex items-center gap-4 w-full  justify-between">
-       <h3 className="text-2xl font-bold text-gray-900">{project.projectName}</h3>
-        <div className="">
-        {loading ? (
-          <p className="text-gray-500">Loading tech stack...</p>
-        ) : techStack && Object.keys(techStack).length > 0 ? (
-          <ul className="flex flex-wrap gap-2 mr-6">
-            {Object.keys(techStack).map((language) => (
-              <li
-                key={language}
-                className="bg-gray-200 px-3 py-1 cursor-pointer hover:bg-gray-300 rounded-full text-sm font-medium text-gray-700"
-              >
-                {language}
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="text-gray-500">Failed to fetch tech stack data...</p>
-        )}
-      </div>
-       </div>
-        <p className="text-gray-600 mt-4 line-clamp-3">{project.projectDescription}</p>
-      </div>
+        <div className="flex items-center gap-4 w-full justify-between">
+          <h3 className="text-2xl font-bold text-gray-900">
+            {project.projectName}
+          </h3>
 
-      {/* Tech Stack */}
-     
+          {/* Tech Stack - Visible only on medium screens and above */}
+          <div className="hidden md:block">
+            {loading ? (
+              <p className="text-gray-500">Loading tech stack...</p>
+            ) : techStack && Object.keys(techStack).length > 0 ? (
+              <ul className="flex flex-wrap gap-2 mr-6">
+                {Object.keys(techStack).map((language) => (
+                  <li
+                    key={language}
+                    className="bg-gray-200 px-3 py-1 cursor-pointer hover:bg-gray-300 rounded-full text-sm font-medium text-gray-700"
+                  >
+                    {language}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500">Failed to fetch tech stack data...</p>
+            )}
+          </div>
+        </div>
+        <p className="text-gray-600 mt-4 line-clamp-3">
+          {project.projectDescription}
+        </p>
+      </div>
 
       {/* Links */}
       <div className="flex justify-between mt-4 gap-8">
@@ -146,7 +152,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           onClick={() => {
             window.open(project.projectRepoLink, "_blank");
           }}
-          className="border w-full hover:bg-slate-100 bg-white  rounded p-2"
+          className="border w-full hover:bg-slate-100 bg-white rounded p-2"
         >
           Repo Link
         </button>
