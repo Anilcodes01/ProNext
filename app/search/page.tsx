@@ -3,9 +3,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { MdOutlineNotifications } from "react-icons/md"; // Import search icon
 import { FaUserCircle } from "react-icons/fa";
-import { TbSearch } from "react-icons/tb";
 import { signOut } from "next-auth/react";
 import axios from "axios";
 
@@ -15,7 +13,7 @@ type User = {
   avatarUrl?: string;
 };
 
-export default function Appbar() {
+export default function Search() {
   const { data: session } = useSession();
   const userId = session?.user.id;
   const router = useRouter();
@@ -53,13 +51,15 @@ export default function Appbar() {
   };
 
   return (
-    <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
-      <button onClick={() => router.push("/")} className="text-3xl font-bold ml-8">
+    <div className="bg-white min-h-screen">
+        <div>
+        <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
+      <button onClick={() => router.push("/")} className="text-3xl font-bold ml-4">
         Rezin
       </button>
 
       {/* Search bar for larger screens */}
-      <div className="w-1/2 relative hidden sm:block">
+      <div className="w-1/2 relative  sm:block">
         <form className="max-w-md mx-auto">
           <div className="relative">
             <input
@@ -97,19 +97,13 @@ export default function Appbar() {
         )}
       </div>
 
-      {/* Search icon for mobile screens */}
-      <span className="block sm:hidden rounded-full  ">
-        <TbSearch
-          size={28}
-          className="cursor-pointer ml-28  rounded-full   hover:bg-slate-200 "
-          onClick={() => router.push("/search")} // Redirect to search page
-        />
-      </span>
+      
+     
 
-      <div className="mr-8 justify-between flex">
-        <MdOutlineNotifications size={28} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
+      <div className="mr-8 flex">
+       
         <div>
-          <div className="relative flex items-center ml-4 ">
+          <div className="relative flex items-center ml-4 sm:ml-8">
             {session?.user ? (
               <>
                 <div onClick={handleDropdownToggle} className="flex items-center">
@@ -119,7 +113,7 @@ export default function Appbar() {
                       alt="User Profile Picture"
                       width={28}
                       height={28}
-                      className="rounded-full w-full cursor-pointer border"
+                      className="rounded-full cursor-pointer border"
                     />
                   ) : (
                     <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
@@ -179,6 +173,8 @@ export default function Appbar() {
           </div>
         </div>
       </div>
+    </div>
+        </div>
     </div>
   );
 }
