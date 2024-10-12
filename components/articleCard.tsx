@@ -27,7 +27,8 @@ export default function ArticleCard({ article }: ArticleProps) {
 
   return (
     <Link href={`/articles/${article.id}`} passHref>
-      <div className="bg-white cursor-pointer hover:bg-gray-100 items-start border mt-4 rounded-lg w-full p-4">
+      <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 rounded-lg w-full p-4">
+        {/* User Info */}
         <div className="flex items-center mb-4">
           {article.user && article.user.avatarUrl ? (
             <Image
@@ -46,8 +47,11 @@ export default function ArticleCard({ article }: ArticleProps) {
             </div>
           </div>
         </div>
-        <div className="flex">
-          <div className={`flex flex-col ${article.image ? "w-3/4" : "w-full"}`}>
+
+        {/* Article Content */}
+        <div className="flex flex-col md:flex-row">
+          {/* Article Text */}
+          <div className={`flex flex-col ${article.image ? "w-full md:w-3/4" : "w-full"} mb-4 md:mb-0`}>
             <div className="text-xl text-black font-semibold">
               {article.title}
             </div>
@@ -57,17 +61,19 @@ export default function ArticleCard({ article }: ArticleProps) {
                 : article.description}
             </p>
           </div>
-          {article.image ? (
-            <div className="flex w-1/4 justify-center items-center ml-4">
+
+          {/* Article Image (Visible only if available) */}
+          {article.image && (
+            <div className="w-full md:w-1/4 mt-4 md:mt-0 md:ml-4 flex justify-center items-center">
               <Image
                 src={article.image}
                 alt={article.title}
-                width={200} 
-                height={200} 
-                className="rounded-lg border object-cover"
+                width={200}
+                height={200}
+                className="rounded-lg border object-cover w-full md:w-auto"
               />
             </div>
-          ) : null}
+          )}
         </div>
       </div>
     </Link>

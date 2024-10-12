@@ -58,11 +58,11 @@ export default function WriteArticle() {
       <div>
         <Appbar />
       </div>
-      <div className="p-16 flex flex-col items-center">
+      <div className="lg:p-16 p-2 flex flex-col items-center">
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="p-4 rounded-lg text-4xl mt-16 outline-none text-black w-full font-bold"
+          className="pt-4  rounded-lg text-4xl mt-16 outline-none text-black w-full font-bold"
           type="text"
           placeholder="Title..."
         />
