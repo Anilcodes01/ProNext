@@ -26,6 +26,7 @@ export default function Search() {
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  console.log(isSearching)
 
   const handleDropdownClose = () => {
     setDropdownOpen(false);
