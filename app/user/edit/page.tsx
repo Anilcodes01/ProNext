@@ -61,7 +61,7 @@ export default function EditProfilePage() {
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="w-full ml-0 md:ml-52 lg:ml-80  border-l border-gray-200">
+        <div className="w-full ml-0 md:ml-52 lg:ml-80 h-screen lg:mr-52 border-r border-l border-gray-200">
           <EditProfileForm />
         </div>
       </div>

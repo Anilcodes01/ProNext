@@ -23,7 +23,6 @@ export default function Search() {
   const [searchResults, setSearchResults] = useState<User[]>([]); // To store the search results
   const [isSearching, setIsSearching] = useState(false); // To track if searching is ongoing
 
-  console.log(isSearching)
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -53,58 +52,58 @@ export default function Search() {
 
   return (
     <div className="bg-white min-h-screen">
-        <div>
-        <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
-      <button onClick={() => router.push("/")} className="text-3xl font-bold ml-4">
-        Rezin
-      </button>
+      <div className="bg-white text-black fixed border-b w-full justify-between h-16 flex items-center">
+        <button onClick={() => router.push("/")} className="text-2xl font-bold ml-2">
+          Rezin
+        </button>
 
-      {/* Search bar for larger screens */}
-      <div className="w-1/2 relative  sm:block">
-        <form className="max-w-md mx-auto">
-          <div className="relative">
-            <input
-              type="search"
-              id="default-search"
-              className="block w-full p-2 bg-slate-100 ps-10 text-sm text-black outline-none rounded-full"
-              placeholder="Search developers..."
-              value={searchQuery}
-              onChange={handleSearchChange}
-              required
-            />
-          </div>
-        </form>
+        {/* Search bar */}
+        <div className="relative sm:block ">
+          <form className="">
+            <div className="relative">
+              <input
+                type="search"
+                id="default-search"
+                className="block w-full h-8 p-2 bg-slate-100 text-start text-sm text-black outline-none rounded-full"
+                placeholder="Search developers..."
+                value={searchQuery}
+                onChange={handleSearchChange}
+                required
+              />
+            </div>
+          </form>
 
-        {/* Search results dropdown */}
-        {searchResults.length > 0 && (
-          <div className="absolute w-full bg-white border rounded-lg shadow-lg mt-2 z-10">
-            {searchResults.map((user) => (
-              <div
-                key={user.id}
-                className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => router.push(`/user/${user.id}`)}
-              >
-                {user.avatarUrl ? (
-                  <Image src={user.avatarUrl} alt={user.name} width={28} height={28} className="rounded-full" />
-                ) : (
-                  <FaUserCircle size={28} className="text-gray-500" />
-                )}
-                <div className="ml-2">
-                  <p className="font-semibold">{user.name}</p>
+          {/* Search results dropdown */}
+          {/* {searchResults.length > 0 && (
+            <div className="absolute w-full bg-white border rounded-lg shadow-lg mt-2 z-10">
+              {searchResults.map((user) => (
+                <div
+                  key={user.id}
+                  className="flex items-center p-2 hover:bg-gray-100 cursor-pointer"
+                  onClick={() => router.push(`/user/${user.id}`)}
+                >
+                  {user.avatarUrl ? (
+                    <Image
+                      src={user.avatarUrl}
+                      alt={user.name}
+                      width={28}
+                      height={28}
+                      className="rounded-full"
+                    />
+                  ) : (
+                    <FaUserCircle size={28} className="text-gray-500" />
+                  )}
+                  <div className="ml-2">
+                    <p className="font-semibold">{user.name}</p>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )} */}
+        </div>
 
-      
-     
-
-      <div className="mr-8 flex">
-       
-        <div>
-          <div className="relative flex items-center ml-4 sm:ml-8">
+        <div className="mr-8 flex">
+          <div className="relative flex items-center ml-4 sm:ml-4">
             {session?.user ? (
               <>
                 <div onClick={handleDropdownToggle} className="flex items-center">
@@ -174,8 +173,32 @@ export default function Search() {
           </div>
         </div>
       </div>
-    </div>
+
+      {/* Display searched users below */}
+      {searchResults.length > 0 && (
+        <div className=" flex overflow-y-hidden  gap-4 pt-20 pl-4 ">
+          {searchResults.map((user) => (
+            <div
+              key={user.id}
+              onClick={() => router.push(`/user/${user.id}`)}
+              className="flex flex-col items-center cursor-pointer"
+            >
+              {user.avatarUrl ? (
+                <Image
+                  src={user.avatarUrl}
+                  alt={user.name}
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+              ) : (
+                <FaUserCircle size={40} className="text-gray-400" />
+              )}
+              <p className="mt-2 text-center text-black text-xs">{user.name}</p>
+            </div>
+          ))}
         </div>
+      )}
     </div>
   );
 }

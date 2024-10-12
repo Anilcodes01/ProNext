@@ -17,7 +17,7 @@ export default function Articles() {
         <div className="hidden md:block  fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
+        <div className="w-full ml-0 md:ml-52 lg:ml-80  lg:mr-52 border-r p-4  border-l border-gray-200">
           <div className="flex items-center justify-between">
             <div className="text-4xl font-bold ">All Articles</div>
             <button

@@ -17,7 +17,7 @@ export default function Home() {
           <Sidebar />
         </div>
         {/* Main content taking full width on mobile */}
-        <div className="w-full ml-0 md:ml-52 lg:ml-80 border-l border-gray-200">
+        <div className="w-full ml-0 md:ml-52 lg:ml-80  lg:mr-52 border-r border-l border-gray-200">
           <MainContent />
         </div>
       </div>
