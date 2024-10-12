@@ -48,7 +48,8 @@ export async function GET(
     return NextResponse.json({
       ...post,
       likeCount: post.likes.length, // Calculate like count
-      comments: post.comments, // Return comments
+      comments: post.comments,
+       // Return comments
     });
   } catch (error) {
     console.error("Error fetching post:", error);

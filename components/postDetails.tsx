@@ -168,17 +168,17 @@ export default function PostDetail() {
 
           <button className="text-gray-400 gap-1 hover:text-green-400 flex items-center">
             <FaRegCommentAlt size={18} />
-            <span>{post.comments?.length || 0} Comments</span>
+            <span>{post.comments?.length || 0} </span>
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
             <IoMdShare size={18} />
-            <span>Share</span>
+            
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
             <FaRegBookmark size={18} />
-            <span>Save</span>
+            
           </button>
         </div>
       </div>
