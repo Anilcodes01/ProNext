@@ -55,7 +55,7 @@ export default function Appbar() {
 
   return (
     <div className="bg-white text-black z-50 fixed border-b w-full justify-between h-16 flex items-center">
-      <button onClick={() => router.push("/")} className="text-3xl font-bold ml-8">
+      <button onClick={() => router.push("/")} className="lg:text-3xl text-2xl ml-4 font-bold lg:ml-8">
         Rezin
       </button>
 
