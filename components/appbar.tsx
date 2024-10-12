@@ -101,17 +101,17 @@ export default function Appbar() {
       {/* Search icon for mobile screens */}
       <span className="block sm:hidden rounded-full  ">
         <TbSearch
-          size={28}
-          className="cursor-pointer ml-20  rounded-full   hover:bg-slate-200 "
+          size={24}
+          className="cursor-pointer ml-28  rounded-full   hover:bg-slate-200 "
           onClick={() => router.push("/search")} // Redirect to search page
         />
       </span>
 
 
-      <div className="mr-8 justify-between flex">
-        <MdOutlineNotifications size={28} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
+      <div className="mr-4 lg:mr-8 justify-between flex">
+        <MdOutlineNotifications size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
         <div>
-          <div className="relative flex items-center ml-4 ">
+          <div className="relative flex items-center lg:ml-4 ml-4 ">
             {session?.user ? (
               <>
                 <div onClick={handleDropdownToggle} className="flex items-center">
@@ -119,8 +119,8 @@ export default function Appbar() {
                     <Image
                       src={session.user.avatarUrl}
                       alt="User Profile Picture"
-                      width={28}
-                      height={28}
+                      width={24}
+                      height={24}
                       className="rounded-full w-full cursor-pointer border"
                     />
                   ) : (
