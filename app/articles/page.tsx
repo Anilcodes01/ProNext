@@ -5,6 +5,7 @@ import Appbar from "@/components/appbar";
 import AllArticleSkeleton from "@/components/allArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
+import { BsPencilSquare } from "react-icons/bs";
 
 export default function Articles() {
   const router = useRouter();
@@ -24,9 +25,9 @@ export default function Articles() {
               onClick={() => {
                 router.push("/articles/publish");
               }}
-              className="text-black  hover:bg-slate-100 text-xl border rounded py-1 px-4"
+              className="text-black  hover:bg-slate-100 text-xl rounded py-1 px-2"
             >
-              Write{" "}
+             <BsPencilSquare />
             </button>
           </div>
           <Suspense fallback={<AllArticleSkeleton />}>

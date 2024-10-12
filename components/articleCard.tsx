@@ -41,10 +41,18 @@ export default function ArticleCard({ article }: ArticleProps) {
           ) : (
             <FaUserCircle className="w-6 h-6 text-black" />
           )}
-          <div className="ml-2">
+          <div className="ml-2 flex">
             <div className="text-lg text-black font-semibold">
               {article.user?.name || "Unknown User"}
             </div>
+            <div className="text-sm text-black ml-2 mt-1">
+            {" . "}
+            {new Date(article.createdAt).toLocaleDateString(undefined, {
+              day: "numeric",
+              month: "short",
+              year: "numeric",
+            })}
+          </div>
           </div>
         </div>
 

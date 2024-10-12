@@ -310,7 +310,7 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
-      <div className="flex mt-4 gap-6">
+      <div className="flex mt-6 gap-6">
         <button
           onClick={() => handleViewModeChange("posts")}
           className={`${

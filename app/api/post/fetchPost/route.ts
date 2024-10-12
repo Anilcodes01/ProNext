@@ -18,6 +18,7 @@ export const GET = async () => {
         userId: true,
         user: {
           select: {
+            id: true,
             name: true,
             avatarUrl: true,
           },
