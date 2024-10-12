@@ -61,11 +61,11 @@ export default function Search() {
         {/* Search bar */}
         <div className="relative sm:block ">
           <form className="">
-            <div className="relative">
+            <div className="relative ml-3">
               <input
                 type="search"
                 id="default-search"
-                className="block w-full h-8 p-2 bg-slate-100 text-start text-sm text-black outline-none rounded-full"
+                className="block w-full h-8  p-2 bg-slate-100 text-start text-sm text-black outline-none rounded-full"
                 placeholder="Search developers..."
                 value={searchQuery}
                 onChange={handleSearchChange}
