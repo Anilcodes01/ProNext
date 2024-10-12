@@ -12,6 +12,7 @@ interface Post {
   updatedAt: string;
   userId: string;
   user: {
+    id: string;
     name: string;
     avatarUrl?: string ; // Allow null for optional avatars
   };
