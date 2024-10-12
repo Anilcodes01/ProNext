@@ -257,7 +257,7 @@ export default function UserProfilePage() {
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
         </div>
-        <div className="lg:p-5 pt-2 lg:mr-16 flex flex-col gap-1 h-48 w-96">
+        <div className="lg:p-5 pt-2 lg:mr-16 flex flex-col gap-1 w-96">
           <div className="text-xl flex  justify-between items-center text-black">
             {userProfile?.name}
             {isOwnProfile ? (
@@ -280,22 +280,27 @@ export default function UserProfilePage() {
           </div>
           <div className="text-black mr-8 text-md w-5/6  lg:w-full">{userProfile?.bio}</div>
 
-          <div className="text-black flex items-center gap-2">
-            <IoLocationOutline className="text-md" />
-            {userProfile?.city}
-          </div>
+          {userProfile?.city && (
+  <div className="text-black flex items-center gap-2">
+    <IoLocationOutline className="text-md" />
+    {userProfile.city}
+  </div>
+)}
 
-          <div className="text-black flex items-center gap-2">
-            <AiOutlineLink className="text-gray-600" />
-            <a
-              href={userProfile?.website}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-blue-500"
-            >
-              {userProfile?.website}
-            </a>
-          </div>
+{userProfile?.website && (
+  <div className="text-black flex items-center gap-2">
+    <AiOutlineLink className="text-gray-600" />
+    <a
+      href={userProfile.website}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-blue-500"
+    >
+      {userProfile.website}
+    </a>
+  </div>
+)}
+
           <div className="text-black flex items-center gap-2">
             <SlCalender className="text-md" />
             Joined {formatDate(userProfile?.createdAt || "")}
@@ -310,7 +315,7 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
-      <div className="flex mt-6 gap-6">
+      <div className="flex  gap-6">
         <button
           onClick={() => handleViewModeChange("posts")}
           className={`${
