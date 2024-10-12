@@ -29,6 +29,7 @@ export default function Appbar() {
     setDropdownOpen(!dropdownOpen);
   };
 
+  console.log(isSearching)
   const handleDropdownClose = () => {
     setDropdownOpen(false);
   };
@@ -105,6 +106,7 @@ export default function Appbar() {
           onClick={() => router.push("/search")} // Redirect to search page
         />
       </span>
+
 
       <div className="mr-8 justify-between flex">
         <MdOutlineNotifications size={28} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
