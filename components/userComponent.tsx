@@ -278,7 +278,7 @@ export default function UserProfilePage() {
               )
             )}
           </div>
-          <div className="text-black mr-8 text-md lg:w-full">{userProfile?.bio}</div>
+          <div className="text-black mr-8 text-md w-5/6  lg:w-full">{userProfile?.bio}</div>
 
           <div className="text-black flex items-center gap-2">
             <IoLocationOutline className="text-md" />
@@ -310,7 +310,7 @@ export default function UserProfilePage() {
           </div>
         </div>
       </div>
-      <div className="flex gap-6">
+      <div className="flex mt-4 gap-6">
         <button
           onClick={() => handleViewModeChange("posts")}
           className={`${

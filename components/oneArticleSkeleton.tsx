@@ -8,10 +8,10 @@ export default function OneArticleSkeleton() {
         <Appbar />
       </div>
       <div className="flex min-h-screen">
-        <div className="fixed w-52 mt-16 lg:w-80 h-full ">
+        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="ml-52 border-l w-full min-h-screen lg:ml-80 mt-16  border-gray-200  p-8">
+        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l lg:p-8 mt-16 border-gray-200">
           <div className="">
             <div className="flex gap-4 cursor-pointer items-center">
               <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center  rounded-full ">
