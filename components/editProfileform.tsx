@@ -66,8 +66,8 @@ export default function EditProfileForm() {
   return (
     <div className="p-8">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="text-2xl ml-4 text-black font-bold">Edit Profile</div>
-      <div className="flex text-black p-5 w-full flex-col gap-4">
+      <div className="text-2xl  text-black font-bold">Edit Profile</div>
+      <div className="flex text-black pt-4 w-full flex-col gap-4">
         <div className="flex flex-col">
           <label htmlFor="name">Name</label>
           <input
