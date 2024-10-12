@@ -71,21 +71,14 @@ export default function FullArticlePage() {
           <Sidebar />
         </div>
         <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
-          <div
-            onClick={() => {
-              router.push("/articles");
-            }}
-            className="flex gap-4    cursor-pointer items-center"
-          >
-            <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center  rounded-full ">
-              <FaArrowLeft
-                size={20}
-                className="text-black rounded-full cursor-pointer"
-              />
-            </div>
-            <div className="text-xl text-black font-bold">Articles</div>
-          </div>
-          <div className="  text-5xl font-bold text-black mt-4">
+        <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex">
+  <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
+    <FaArrowLeft size={20} className="text-black" />
+  </div>
+  <div className="text-xl text-black font-bold">Aticles</div>
+</div>
+
+          <div className="  text-5xl font-bold text-black lg:mt-4">
             {article.title}
           </div>
           <div className="flex mt-4 items-center my-4">
@@ -124,9 +117,7 @@ export default function FullArticlePage() {
           </div>
         </div>
       </div>
-      <div className="md:hidden fixed bottom-0 w-full bg-white border-t border-gray-200">
-        <Sidebar isMobile={true} />
-      </div>
+      
     </div>
   );
 }

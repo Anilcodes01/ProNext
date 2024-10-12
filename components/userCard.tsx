@@ -59,12 +59,13 @@ export default function UserCard() {
   return (
     <div className="bg-white text-black rounded-lg p-4">
       {/* Mobile Back Button */}
-      <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center md:hidden">
-        <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
-          <FaArrowLeft size={20} className="text-black" />
-        </div>
-        <div className="text-xl text-black font-bold">Post</div>
-      </div>
+      <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex">
+  <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
+    <FaArrowLeft size={20} className="text-black" />
+  </div>
+  <div className="text-xl text-black font-bold">Post</div>
+</div>
+
 
       <h2 className="text-2xl font-semibold mb-4">All Users</h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
