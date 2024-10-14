@@ -204,7 +204,7 @@ export default function MainContent() {
   }
 
   return (
-    <div className="p-2 lg:p-4 md:p-4 w-full">
+    <div className="p-4  w-full">
       <div className="text-2xl sm:text-3xl w-full text-black font-bold">
         Welcome back, {session?.user?.name}!
       </div>
