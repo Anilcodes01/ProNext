@@ -125,12 +125,13 @@ export default function PostDetail() {
         <div className="flex items-center mb-4">
           {post.user?.avatarUrl ? (
             <Image
-              src={post.user.avatarUrl}
-              alt="User Profile"
-              width={40}
-              height={40}
-              className="rounded-full object-cover"
-            />
+            src={post.user.avatarUrl}
+            alt="User Profile"
+            width={250}
+            height={250}
+            quality={75}
+            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+          />
           ) : (
             <FaUserCircle className="w-10 h-10 text-gray-500" />
           )}
