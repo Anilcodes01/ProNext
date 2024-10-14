@@ -244,14 +244,14 @@ export default function UserProfilePage() {
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-4 lg:p-5">
       <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 lg:p-5">
-        <div className="rounded-full h-48 w-48 overflow-y-hidden">
+        <div className="rounded-full w-[192px] h-[192px] overflow-hidden">
           {userProfile?.avatarUrl ? (
             <Image
               src={userProfile.avatarUrl}
               alt="User Avatar"
-              width={192}
-              height={192}
-              className="rounded-full object-cover"
+              width={384}
+              height={384}
+              className="rounded-full h-full w-full object-cover"
             />
           ) : (
             <FaUserCircle className="h-full w-full text-gray-500" />

@@ -101,8 +101,8 @@ export default function UserCard() {
                      <Image
                        src={user.avatarUrl}
                        alt={user.name || "null"}
-                       width={32} 
-                       height={32}
+                       width={200} 
+                       height={200}
                        className="object-cover w-full h-full" 
                      />
                    </div>

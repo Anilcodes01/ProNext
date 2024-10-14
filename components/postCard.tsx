@@ -98,8 +98,8 @@ export default function PostCard({ post }: { post: Post }) {
             <Image
               src={post.user.avatarUrl}
               alt="User Profile"
-              width={34}
-              height={34}
+              width={250}
+              height={250}
               quality={75}
               className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
             />

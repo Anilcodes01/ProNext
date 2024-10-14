@@ -32,12 +32,13 @@ export default function ArticleCard({ article }: ArticleProps) {
         <div className="flex items-center mb-4">
           {article.user && article.user.avatarUrl ? (
             <Image
-              src={article.user.avatarUrl}
-              alt="User Profile"
-              width={34}
-              height={34}
-              className="rounded-full text-black object-cover"
-            />
+            src={article.user.avatarUrl}
+            alt="User Profile"
+            width={384}
+            height={384}
+            quality={75}
+            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+          />
           ) : (
             <FaUserCircle className="w-6 h-6 text-black" />
           )}

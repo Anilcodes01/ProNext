@@ -215,9 +215,9 @@ export default function MainContent() {
               <Image
                 src={session.user.avatarUrl}
                 alt="User Profile Picture"
-                width={40}
-                height={40}
-                className="rounded-full cursor-pointer border"
+                width={192}
+                height={192}
+                className="rounded-full w-10 h-10 object-cover overflow-hidden cursor-pointer "
               />
             ) : (
               <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
