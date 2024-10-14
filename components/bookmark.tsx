@@ -55,7 +55,7 @@ export default function BookmarkComponent() {
   }
 
   if (bookmarkedPosts.length === 0) {
-    return <div>No bookmarks yet.</div>;
+    return <div className="text-gray-800">No bookmarks yet...!</div>;
   }
 
   return (
