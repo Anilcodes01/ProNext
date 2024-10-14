@@ -92,7 +92,7 @@ export default function PostCard({ post }: { post: Post }) {
 
   return (
     <div className="bg-white mt-4 cursor-pointer hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
-      <div className="flex items-center">
+      <div className="flex items-center  overflow-hidden">
         {post.user?.avatarUrl ? (
           <Link href={`/user/${post.user.id}`} passHref>
             <Image
@@ -101,7 +101,7 @@ export default function PostCard({ post }: { post: Post }) {
               width={34}
               height={34}
               quality={75}
-              className="rounded-full object-cover cursor-pointer" // Add cursor pointer for clarity
+              className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
             />
           </Link>
         ) : (

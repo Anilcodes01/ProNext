@@ -123,7 +123,7 @@ export default function FullArticlePage() {
           <div className=" text-2xl lg:text-5xl font-bold text-black lg:mt-4">
             {article.title}
           </div>
-          <div className="flex mt-4 items-center my-4">
+          <div className="flex mt-4  items-center my-4">
             {article.user && article.user.avatarUrl ? (
               <Image
                 src={article.user.avatarUrl}
@@ -145,7 +145,7 @@ export default function FullArticlePage() {
             })}
           </div>
           
-         <div className=" ml-16 lg:ml-4 md:ml-4  ">
+         <div className=" ml-16 lg:ml-4  md:ml-4  ">
          <FollowButton
                 isFollowing={following.includes(article.user.id)} 
                 followingId={article.user.id} 
