@@ -47,7 +47,7 @@ export default function UserCard() {
   }, []);
 
   const Skeleton = () => (
-    <div className="border bg-gray-200 p-2 w-auto rounded-full flex items-center gap-2 animate-pulse">
+    <div className="border bg-gray-200 p-2 w-auto rounded-xl flex items-center gap-2 animate-pulse">
       <div className="bg-gray-200 rounded-full w-8 h-8"></div>
       <div className="flex justify-between gap-2 w-full">
         <div className="bg-gray-200 h-6 rounded-lg w-1/2"></div>
@@ -109,7 +109,7 @@ export default function UserCard() {
                 ) : (
                   <FaUserCircle className="w-8 h-8 text-gray-400" />
                 )}
-                <div className="text-xl font-medium">
+                <div className="lg:text-xl text-lg  font-medium">
                   {user.name || "Unnamed User"}
                 </div>
               </div>
