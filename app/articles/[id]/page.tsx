@@ -126,26 +126,29 @@ export default function FullArticlePage() {
           <div className="flex mt-4  items-center my-4">
             {article.user && article.user.avatarUrl ? (
               <Image
-                src={article.user.avatarUrl}
-                alt="User Profile"
-                width={28}
-                height={28}
-                className="rounded-full object-cover"
-              />
+              src={article.user.avatarUrl}
+              alt="User Profile"
+              width={250}
+              height={250}
+              quality={75}
+              className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+            />
             ) : (
-              <FaUserCircle className="w-8 h-8 text-black" />
+              <FaUserCircle className="w-10 h-10 text-black" />
             )}
-            <div className="ml-4 text-xl text-black">{article.user.name}</div>
-            <div className="text-sm text-black ml-2 mt-1">
-            {" . "}
+            <div className="lg:flex items-center">
+            <div className="ml-4 lg:mb-1 text-xl text-black">{article.user.name}</div>
+            <div className="text-sm text-black ml-4 ">
+            {"   "}
             {new Date(article.createdAt).toLocaleDateString(undefined, {
               day: "numeric",
               month: "short",
               year: "numeric",
             })}
           </div>
+            </div>
           
-         <div className=" ml-16 lg:ml-4  md:ml-4  ">
+         <div className=" ml-32 lg:ml-8  md:ml-8 lg:mb-1 ">
          <FollowButton
                 isFollowing={following.includes(article.user.id)} 
                 followingId={article.user.id} 
