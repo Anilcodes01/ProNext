@@ -349,16 +349,27 @@ export default function UserProfilePage() {
       </div>
       {viewMode === "posts" && (
         <div>
-          {posts.map((post) => (
+        {posts.length > 0 ? (
+          posts.map((post) => (
             <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+          ))
+        ) : (
+          <p className="text-gray-800 ">No posts yet...!</p>
+        )}
+      </div>
       )}
       {viewMode === "articles" && (
         <div>
-          {articles.map((article) => (
+         {articles.length > 0 ? (
+          articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
-          ))}
+          ))
+         ) : (
+          <div className="flex gap-4">
+            <p className="text-gray-800">No articles yet...!</p>
+            
+          </div>
+         )}
         </div>
       )}
 
@@ -374,9 +385,13 @@ export default function UserProfilePage() {
   </div>
    <div className="grid grid-cols-1 sm:grid-cols-1  lg:grid-cols-2 gap-6">
     
-    {projects.map((project) => (
-      <ProjectCard key={project.id} project={project} />
-    ))}
+   {projects.length > 0 ? (
+      projects.map((project) => (
+        <ProjectCard key={project.id} project={project} />
+      ))
+    ) : (
+      <p className="text-gray-800 mt-5 ml-1">No projects yet...!</p>
+    )}
   </div>
  </div>
 )}

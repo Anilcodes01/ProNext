@@ -47,7 +47,7 @@ export default function UserCard() {
   }, []);
 
   const Skeleton = () => (
-    <div className="border bg-gray-200 p-2 w-auto rounded-lg flex items-center gap-2 animate-pulse">
+    <div className="border bg-gray-200 p-2 w-auto rounded-full flex items-center gap-2 animate-pulse">
       <div className="bg-gray-200 rounded-full w-8 h-8"></div>
       <div className="flex justify-between gap-2 w-full">
         <div className="bg-gray-200 h-6 rounded-lg w-1/2"></div>
@@ -57,7 +57,7 @@ export default function UserCard() {
   );
 
   return (
-    <div className="bg-white text-black rounded-lg p-4">
+    <div className="bg-white text-black  p-4">
       {/* Mobile Back Button */}
       <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex">
   <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
@@ -89,7 +89,7 @@ export default function UserCard() {
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="flex rounded-lg border pr-2 w-full"> 
+            <div key={user.id} className="flex rounded-xl pl-2 border pr-2 w-full"> 
               <div
                 onClick={() => {
                   router.push(`/user/${user.id}`);
