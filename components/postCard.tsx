@@ -91,7 +91,7 @@ export default function PostCard({ post }: { post: Post }) {
   };
 
   return (
-    <div className="bg-white mt-4 cursor-pointer hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
+    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-100  md:hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
       <div className="flex items-center  overflow-hidden">
         {post.user?.avatarUrl ? (
           <Link href={`/user/${post.user.id}`} passHref>
