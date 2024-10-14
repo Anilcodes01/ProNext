@@ -15,8 +15,6 @@ import FollowButton from "./follow";
 import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 
-
-
 interface Post {
   id: string;
   title?: string;
@@ -101,7 +99,7 @@ export default function UserProfilePage() {
   const [loading, setLoading] = useState(true);
   const { userId } = useParams();
   const { data: session } = useSession();
-  const router = useRouter()
+  const router = useRouter();
 
   console.log(users);
 
@@ -278,28 +276,30 @@ export default function UserProfilePage() {
               )
             )}
           </div>
-          <div className="text-black mr-8 text-md w-5/6  lg:w-full">{userProfile?.bio}</div>
+          <div className="text-black mr-8 text-md w-5/6  lg:w-full">
+            {userProfile?.bio}
+          </div>
 
           {userProfile?.city && (
-  <div className="text-black flex items-center gap-2">
-    <IoLocationOutline className="text-md" />
-    {userProfile.city}
-  </div>
-)}
+            <div className="text-black flex items-center gap-2">
+              <IoLocationOutline className="text-md" />
+              {userProfile.city}
+            </div>
+          )}
 
-{userProfile?.website && (
-  <div className="text-black flex items-center gap-2">
-    <AiOutlineLink className="text-gray-600" />
-    <a
-      href={userProfile.website}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="text-blue-500"
-    >
-      {userProfile.website}
-    </a>
-  </div>
-)}
+          {userProfile?.website && (
+            <div className="text-black flex items-center gap-2">
+              <AiOutlineLink className="text-gray-600" />
+              <a
+                href={userProfile.website}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-500"
+              >
+                {userProfile.website}
+              </a>
+            </div>
+          )}
 
           <div className="text-black flex items-center gap-2">
             <SlCalender className="text-md" />
@@ -349,53 +349,37 @@ export default function UserProfilePage() {
       </div>
       {viewMode === "posts" && (
         <div>
-        {posts.length > 0 ? (
-          posts.map((post) => (
+          {posts.map((post) => (
             <PostCard key={post.id} post={post} />
-          ))
-        ) : (
-          <p className="text-gray-800 ">No posts yet...!</p>
-        )}
-      </div>
+          ))}
+        </div>
       )}
       {viewMode === "articles" && (
         <div>
-         {articles.length > 0 ? (
-          articles.map((article) => (
+          {articles.map((article) => (
             <ArticleCard key={article.id} article={article} />
-          ))
-         ) : (
-          <div className="flex gap-4">
-            <p className="text-gray-800">No articles yet...!</p>
-            
-          </div>
-         )}
+          ))}
         </div>
       )}
 
-
-
-     {viewMode === "projects" && (
- <div className="flex flex-col text-black">
-  <div className="flex gap-1 border py-1 rounded w-36 justify-center">
-    
-    <button onClick={() => {
-      router.push('/user/project/upload')
-    }} >Upload Project</button>
-  </div>
-   <div className="grid grid-cols-1 sm:grid-cols-1  lg:grid-cols-2 gap-6">
-    
-   {projects.length > 0 ? (
-      projects.map((project) => (
-        <ProjectCard key={project.id} project={project} />
-      ))
-    ) : (
-      <p className="text-gray-800 mt-5 ml-1">No projects yet...!</p>
-    )}
-  </div>
- </div>
-)}
-
+      {viewMode === "projects" && (
+        <div className="flex flex-col text-black">
+          <div className="flex gap-1 border py-1 rounded w-36 justify-center">
+            <button
+              onClick={() => {
+                router.push("/user/project/upload");
+              }}
+            >
+              Upload Project
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-1  lg:grid-cols-2 gap-6">
+            {projects.map((project) => (
+              <ProjectCard key={project.id} project={project} />
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
