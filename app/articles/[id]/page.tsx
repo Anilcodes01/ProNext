@@ -8,6 +8,7 @@ import Appbar from "@/components/appbar";
 import OneArticleSkeleton from "@/components/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import { FaArrowLeft } from "react-icons/fa6";
+import FollowButton from "@/components/follow";
 
 interface Article {
   id: string;
@@ -19,17 +20,58 @@ interface Article {
   updatedAt: string;
   userId: string;
   user: {
+    id: string;
     name: string;
     avatarUrl?: string | null;
   };
 }
 
+
+interface User {
+  id: string;
+  name: string | null;
+  avatarUrl: string | null;
+}
+
+interface Follow {
+  followingId: string;
+}
+
+
 export default function FullArticlePage() {
   const [article, setArticle] = useState<Article | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [following, setFollowing] = useState<string[]>([]); 
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   const { id } = useParams();
+
+  console.log(loading)
+  console.log(users)
+
+  useEffect(() => {
+    async function fetchUsersAndFollowing() {
+      try {
+        const [usersResponse, followingResponse] = await Promise.all([
+          axios.get("/api/users"), 
+          axios.get("/api/follow"), 
+        ]);
+        setUsers(usersResponse.data.users);
+        setFollowing(
+          followingResponse.data.following.map(
+            (follow: Follow) => follow.followingId 
+          )
+        ); 
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchUsersAndFollowing();
+  }, []);
 
   useEffect(() => {
     if (id) {
@@ -78,7 +120,7 @@ export default function FullArticlePage() {
   <div className="text-xl text-black font-bold">Aticles</div>
 </div>
 
-          <div className="  text-5xl font-bold text-black lg:mt-4">
+          <div className=" text-2xl lg:text-5xl font-bold text-black lg:mt-4">
             {article.title}
           </div>
           <div className="flex mt-4 items-center my-4">
@@ -102,6 +144,13 @@ export default function FullArticlePage() {
               year: "numeric",
             })}
           </div>
+          
+         <div className=" ml-16 lg:ml-4 md:ml-4  ">
+         <FollowButton
+                isFollowing={following.includes(article.user.id)} 
+                followingId={article.user.id} 
+              />
+         </div>
           </div>
           {article.image && (
             <Image

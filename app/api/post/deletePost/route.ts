@@ -18,6 +18,10 @@ export async function POST(req: Request) {
       where: { postId },
     });
 
+    await prisma.comment.deleteMany({
+      where: {postId}
+    })
+
     // Delete all likes associated with the post
     await prisma.like.deleteMany({
       where: { postId },
