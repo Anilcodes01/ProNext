@@ -210,7 +210,7 @@ export default function MainContent() {
       </div>
       <div className="border border-gray-200  w-full bg-white rounded-xl mt-8 p-4">
      <div className="flex items-start border-b border-gray-200">
-     <div>
+     <div className="h-10 w-10 overflow-hidden">
             {session?.user.avatarUrl ? (
               <Image
                 src={session.user.avatarUrl}

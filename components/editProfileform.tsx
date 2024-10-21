@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useSession } from "next-auth/react";
@@ -9,7 +7,7 @@ import Image from "next/image";
 import { FiCamera } from "react-icons/fi"; // Importing the camera icon
 
 export default function EditProfileForm() {
-  const { data: session } = useSession();
+  const { data: session, update: updateSession } = useSession(); // Add update method from useSession
   const [name, setName] = useState("");
   const [bio, setBio] = useState("");
   const [city, setCity] = useState("");
@@ -64,13 +62,30 @@ export default function EditProfileForm() {
       );
 
       if (response.status === 200) {
-        toast.success("Profile data changed successfully!");
+        toast.success("Profile updated successfully!");
+
+        // Manually update the session after the profile is updated
+        if (session) {
+          await updateSession({
+            ...session, // Spread the current session
+            user: {
+              ...session.user, // Use optional chaining if necessary
+              name: name,
+              bio: bio,
+              city: city,
+              website: website,
+              avatarUrl: response.data.user.avatarUrl, // Update avatar URL
+            },
+          });
+        } else {
+          console.error("Session is null, cannot update user information");
+        }
+        
+
         router.push(`/user/${userId}`);
       } else {
-        toast.error("Error while changing data, Please try again!");
+        toast.error("Error while updating profile, Please try again!");
       }
-
-      console.log("Profile updated:", response.data);
     } catch (error) {
       console.error("Failed to update profile:", error);
     } finally {
@@ -121,6 +136,7 @@ export default function EditProfileForm() {
           />
         </div>
 
+        {/* Other profile fields */}
         <div className="flex flex-col">
           <label htmlFor="name">Name</label>
           <input
