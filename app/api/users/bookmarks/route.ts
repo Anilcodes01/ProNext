@@ -18,19 +18,19 @@ export const GET = async () => {
 
     const userId = session.user.id;
 
-    // Step 1: Fetch bookmarked post IDs for the user
+   
     const bookmarkedPosts = await prisma.bookmark.findMany({
       where: {
         userId: userId,
       },
       select: {
-        postId: true, // Assuming bookmark has a postId field
+        postId: true, 
       },
     });
 
     const postIds = bookmarkedPosts.map((bookmark) => bookmark.postId);
 
-    // Step 2: Fetch posts using the extracted post IDs and order by createdAt
+
     const posts = await prisma.post.findMany({
       where: {
         id: { in: postIds },
@@ -60,11 +60,11 @@ export const GET = async () => {
         },
       },
       orderBy: {
-        createdAt: 'desc', // Order posts by createdAt in descending order
+        createdAt: 'desc', 
       },
     });
 
-    // Step 3: Transform posts to include additional fields
+    
     const transformedPosts = posts.map((post) => {
       return {
         ...post,

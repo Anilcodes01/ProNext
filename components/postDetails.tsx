@@ -5,6 +5,7 @@ import Image from "next/image";
 import {
   FaUserCircle,
   FaRegHeart,
+  FaBookmark,
   FaHeart,
   FaRegCommentAlt,
   FaRegBookmark,
@@ -39,9 +40,11 @@ interface Post {
   isLiked: boolean;
   likeCount: number;
   comments: Comment[];
+  isBookmarked: boolean;
 }
 
 export default function PostDetail() {
+ 
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -163,7 +166,7 @@ export default function PostDetail() {
 
         <div className="flex gap-8">
           <button className="gap-1 flex items-center text-gray-400 hover:text-red-600">
-            {post.isLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+            {post.isLiked ? <FaHeart size={20} className="text-red-600" /> : <FaRegHeart size={20} />}
             <span>{post.likeCount}</span>
           </button>
 
@@ -178,7 +181,7 @@ export default function PostDetail() {
           </button>
 
           <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-            <FaRegBookmark size={18} />
+          {post.isBookmarked ? <FaBookmark size={18} className="text-green-600" /> : <FaRegBookmark size={18} />}
             
           </button>
         </div>

@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/app/lib/prisma"; // Adjust the path to your Prisma client
+import { prisma } from "@/app/lib/prisma";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/lib/authOptions";
 
-// The GET method for fetching a single post by ID
 export async function GET(
   request: Request,
   { params }: { params: { id: string } }
@@ -9,20 +10,21 @@ export async function GET(
   const { id } = params;
 
   try {
-    // Fetch the post by ID from the database using Prisma
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id ?? null;
+
     const post = await prisma.post.findUnique({
       where: { id: String(id) },
       include: {
         user: {
-          // Fetch user details
           select: {
             name: true,
             avatarUrl: true,
           },
         },
-        likes: true, // Fetch likes to calculate like count
+        likes: true, // Fetch likes for the post
+        bookmarks: true, // Fetch bookmarks for the post
         comments: {
-          // Fetch comments with user details
           orderBy: { createdAt: "desc" },
           select: {
             id: true,
@@ -39,17 +41,23 @@ export async function GET(
       },
     });
 
-    // If the post is not found, return a 404 response
     if (!post) {
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
-    // Return the post data along with like count and comments
+    // Check if the current logged-in user has liked the post
+    const isLiked = userId ? post.likes.some((like) => like.userId === userId) : false;
+
+    // Check if the current logged-in user has bookmarked the post
+    const isBookmarked = userId ? post.bookmarks.some((bookmark) => bookmark.userId === userId) : false;
+
+    // Return the post data along with the like count, bookmark status, and whether the post is liked by the current user
     return NextResponse.json({
       ...post,
       likeCount: post.likes.length, // Calculate like count
-      comments: post.comments,
-       // Return comments
+      comments: post.comments, // Return comments
+      isLiked, // Whether the logged-in user liked this post
+      isBookmarked, // Whether the logged-in user bookmarked this post
     });
   } catch (error) {
     console.error("Error fetching post:", error);
