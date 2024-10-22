@@ -123,7 +123,7 @@ export default function PostDetail() {
   });
 
   return (
-    <div className="container mx-auto my-4 bg-white">
+    <div className="container mx-auto my-4 md:min-h-screen lg:min-h-screen bg-white">
       <div className="border border-gray-200 p-5 rounded-xl">
         <div className="flex items-center mb-4">
           {post.user?.avatarUrl ? (
