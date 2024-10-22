@@ -109,78 +109,80 @@ export default function Appbar() {
 
 
       <div className="mr-4 lg:mr-8 justify-between flex">
-        <MdOutlineNotifications size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
-        <div>
-          <div className="relative flex items-center lg:ml-4 ml-4 ">
-            {session?.user ? (
-              <>
-                <div onClick={handleDropdownToggle} className="flex h-10 w-10 overflow-hidden  items-center">
-                  {session?.user.avatarUrl ? (
-                    <Image
-                      src={session.user.avatarUrl}
-                      alt="User Profile Picture"
-                      width={192}
-                      height={192}
-                      className="rounded-full h-10 w-10 overflow-hidden object-cover cursor-pointer "
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
-                      {session.user.name?.charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                </div>
-                {dropdownOpen && (
-                  <div
-                    className="absolute right-0 mt-64 w-48 bg-white border rounded-lg shadow-lg"
-                    onMouseLeave={handleDropdownClose}
-                  >
-                    <div className="p-4 flex flex-col  cursor-pointer items-center">
-                      {session.user.avatarUrl ? (
-                        <Image
-                          src={session.user.avatarUrl}
-                          alt="User Profile Picture"
-                          width={40}
-                          height={40}
-                          className="rounded-full h-12 w-12 overflow-hidden object-cover  cursor-pointer border"
-                        />
-                      ) : (
-                        <FaUserCircle size={40} className="text-gray-500" />
-                      )}
-                      <div className="mt-2 text-center">
-                        <p className="font-semibold">{session.user.name}</p>
-                        <p className="text-sm text-gray-600">{session.user.email}</p>
-                      </div>
-                      <div className="flex flex-col w-full mt-4">
-                        <button
-                          onClick={() => {
-                            router.push(`/user/${userId}`);
-                          }}
-                          className="border hover:bg-gray-100 rounded-lg text-black w-full"
-                        >
-                          Profile
-                        </button>
-                        <button
-                          onClick={() => {
-                            signOut({ callbackUrl: "/auth/signin" });
-                            handleDropdownClose();
-                          }}
-                          className="mt-2 px-4 border hover:bg-gray-100 text-black rounded-lg"
-                        >
-                          Sign out
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </>
+  <MdOutlineNotifications size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
+  <div>
+    <div className="relative flex items-center lg:ml-4 ml-4">
+      {session?.user ? (
+        <>
+          <div onClick={handleDropdownToggle} className="flex h-10 w-10 overflow-hidden items-center">
+            {session?.user.avatarUrl ? (
+              <Image
+                src={session.user.avatarUrl}
+                alt="User Profile Picture"
+                width={192}
+                height={192}
+                className="rounded-full h-10 w-10 overflow-hidden object-cover cursor-pointer"
+              />
             ) : (
-              <div onClick={() => router.push("/auth/signin")} className="hidden cursor-pointer sm:block">
-                Signin
+              <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                {session.user.name?.charAt(0).toUpperCase()}
               </div>
             )}
           </div>
+          {dropdownOpen && (
+            <div
+              className="absolute right-0 mt-64 w-48 bg-white border rounded-lg shadow-lg"
+              onMouseLeave={handleDropdownClose}
+            >
+              <div className="p-4 flex flex-col cursor-pointer items-center">
+                {session.user.avatarUrl ? (
+                  <Image
+                    src={session.user.avatarUrl}
+                    alt="User Profile Picture"
+                    width={40}
+                    height={40}
+                    className="rounded-full h-12 w-12 overflow-hidden object-cover cursor-pointer border"
+                  />
+                ) : (
+                  <FaUserCircle size={40} className="text-gray-500" />
+                )}
+                <div className="mt-2 text-center">
+                  <p className="font-semibold">{session.user.name}</p>
+                  <p className="text-sm text-gray-600">{session.user.email}</p>
+                </div>
+                <div className="flex flex-col w-full mt-4">
+                  <button
+                    onClick={() => {
+                      router.push(`/user/${userId}`);
+                    }}
+                    className="border hover:bg-gray-100 rounded-lg text-black w-full"
+                  >
+                    Profile
+                  </button>
+                  <button
+                    onClick={() => {
+                      signOut({ callbackUrl: "/auth/signin" });
+                      handleDropdownClose();
+                    }}
+                    className="mt-2 px-4 border hover:bg-gray-100 text-black rounded-lg"
+                  >
+                    Sign out
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </>
+      ) : (
+        <div onClick={() => router.push("/auth/signin")} className="cursor-pointer sm:block block">
+          {/* Make sure it's visible on all screens */}
+          Signin
         </div>
-      </div>
+      )}
+    </div>
+  </div>
+</div>
+
     </div>
   );
 }
