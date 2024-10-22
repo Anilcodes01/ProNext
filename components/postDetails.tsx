@@ -220,9 +220,9 @@ export default function PostDetail() {
                   <Image
                     src={comment.user.avatarUrl}
                     alt={comment.user.name}
-                    width={24}
-                    height={24}
-                    className="rounded-full object-cover"
+                    width={152}
+                    height={152}
+                    className="rounded-full h-8 w-8  object-cover"
                   />
                 ) : (
                   <FaUserCircle className="w-6 h-6 text-gray-500" />
