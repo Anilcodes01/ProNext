@@ -14,7 +14,6 @@ import { EmojiClickData } from "emoji-picker-react";
 import { FaUserCircle } from "react-icons/fa";
 import PostList from "./postList"; // Import the new PostList component
 
-
 export default function MainContent() {
   const { data: session } = useSession();
   const [postContent, setPostContent] = useState("");
@@ -90,7 +89,6 @@ export default function MainContent() {
   if (loading) {
     return (
       <div className="w-full sm:p-8 p-4">
-       
         <div className="text-2xl sm:text-3xl w-full text-black font-bold">
           Welcome back, {session?.user?.name}!
         </div>
@@ -197,8 +195,17 @@ export default function MainContent() {
 
   if (error) {
     return (
-      <div className="text-black m-5 text-xl min-h-screen">
-        Error...Something went wrong, Please try again!
+      <div className="text-black m-5  text-xl  min-h-screen">
+        <div>Please signin first to create a Post...!</div>
+        <button
+        onClick={() => {
+          router.push('/auth/signin')
+        }}
+          type="button"
+          className="text-white mt-5 ml-24 bg-gray-800 hover:bg-gray-900   font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-70 dark:border-gray-700"
+        >
+          Signin
+        </button>
       </div>
     );
   }
@@ -209,8 +216,8 @@ export default function MainContent() {
         Welcome back, {session?.user?.name}!
       </div>
       <div className="border border-gray-200  w-full bg-white rounded-xl mt-8 p-4">
-     <div className="flex items-start border-b border-gray-200">
-     <div className="h-10 w-10 overflow-hidden">
+        <div className="flex items-start border-b border-gray-200">
+          <div className="h-10 w-10 overflow-hidden">
             {session?.user.avatarUrl ? (
               <Image
                 src={session.user.avatarUrl}
@@ -223,13 +230,13 @@ export default function MainContent() {
               <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
             )}
           </div>
-        <textarea
-          value={postContent}
-          onChange={(e) => setPostContent(e.target.value)}
-          className="outline-none   text-black  text-black w-full h-20 sm:h-30 text-lg  p-2 resize-none"
-          placeholder="What's on your mind?..."
-        ></textarea>
-     </div>
+          <textarea
+            value={postContent}
+            onChange={(e) => setPostContent(e.target.value)}
+            className="outline-none   text-black  w-full h-20 sm:h-30 text-lg  p-2 resize-none"
+            placeholder="What's on your mind?..."
+          ></textarea>
+        </div>
         {previewUrl && (
           <div className="relative w-full h-48 mt-2 sm:h-60">
             <Image
@@ -278,7 +285,7 @@ export default function MainContent() {
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-           
+
             <button
               title="article"
               onClick={() => {
