@@ -112,9 +112,9 @@ export default function Search() {
                     <Image
                       src={session.user.avatarUrl}
                       alt="User Profile Picture"
-                      width={28}
-                      height={28}
-                      className="rounded-full cursor-pointer border"
+                      width={192}
+                      height={192}
+                      className="rounded-full h-10 w-10 object-cover cursor-pointer border"
                     />
                   ) : (
                     <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
@@ -132,9 +132,9 @@ export default function Search() {
                         <Image
                           src={session.user.avatarUrl}
                           alt="User Profile Picture"
-                          width={40}
-                          height={40}
-                          className="rounded-full cursor-pointer border"
+                          width={192}
+                          height={192}
+                          className="rounded-full w-12 h-12 object-cover cursor-pointer border"
                         />
                       ) : (
                         <FaUserCircle size={40} className="text-gray-500" />
@@ -188,9 +188,9 @@ export default function Search() {
                 <Image
                   src={user.avatarUrl}
                   alt={user.name}
-                  width={40}
-                  height={40}
-                  className="rounded-full"
+                  width={192}
+                  height={192}
+                  className="rounded-full h-10 w-10 object-cover"
                 />
               ) : (
                 <FaUserCircle size={40} className="text-gray-400" />
