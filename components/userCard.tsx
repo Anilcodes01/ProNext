@@ -137,7 +137,7 @@ export default function UserCard() {
      {/* User Details Card */}
 {hoveredUser && hoveredUserPosition && (
   <div
-    className="absolute z-10 w-96 bg-white border rounded-lg shadow-lg p-4 transition-transform duration-300 ease-in-out"
+    className="absolute z-10 max-w-96 min-w-64 bg-white border rounded-lg shadow-lg p-4 transition-transform duration-300 ease-in-out"
     style={{
       top: `${hoveredUserPosition.top + window.scrollY}px`, // Adjust for scrolling
       left: `${hoveredUserPosition.left + window.scrollX}px`, // Adjust for scrolling
