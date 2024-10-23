@@ -25,6 +25,8 @@ interface Article {
     name: string;
     avatarUrl?: string | null;
   };
+  liked: boolean; 
+  likeCount: number;
 }
 
 interface User {
@@ -50,8 +52,7 @@ export default function FullArticlePage() {
   console.log(users)
   const { id } = useParams();
   console.log(loading)
-  console.log(setInitialLiked)
-  console.log(setInitialLikeCount)
+
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
@@ -90,6 +91,8 @@ export default function FullArticlePage() {
       setArticle(articleData);
 
       // Fetch like status and like count for this article
+      setInitialLiked(articleData.liked); 
+      setInitialLikeCount(articleData.likeCount); 
     } catch (error) {
       console.error("Error fetching article", error);
       setError("Failed to fetch article. Please try again later.");
