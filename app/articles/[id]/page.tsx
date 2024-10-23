@@ -47,7 +47,11 @@ export default function FullArticlePage() {
   const [initialLikeCount, setInitialLikeCount] = useState(0); // Keep track of like count
 
   const router = useRouter();
+  console.log(users)
   const { id } = useParams();
+  console.log(loading)
+  console.log(setInitialLiked)
+  console.log(setInitialLikeCount)
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
