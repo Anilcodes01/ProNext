@@ -159,7 +159,7 @@ export default function PostCard({ post }: { post: Post }) {
 
           {/* Bookmark Button */}
           <button
-            className={`text-gray-400 gap-1 flex hover:text-green-600 items-center ${bookmarked ? "text-green-600" : "text-gray-400"}`}
+            className={` gap-1 flex  items-center ${bookmarked ? "text-green-600" : "text-gray-400"} hover:text-green-600`}
             onClick={handleBookmarkToggle}
           >
             {bookmarked ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
