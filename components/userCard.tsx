@@ -7,11 +7,15 @@ import { useEffect, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
 import FollowButton from "./follow"; 
 import { FaArrowLeft } from "react-icons/fa6";
+import { IoLocationOutline } from "react-icons/io5";
 
 interface User {
   id: string;
   name: string | null;
   avatarUrl: string | null;
+  bio: string;
+  website: string;
+  city: string;
 }
 
 interface Follow {
@@ -22,6 +26,8 @@ export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]); 
   const [loading, setLoading] = useState(true);
+  const [hoveredUser, setHoveredUser] = useState<User | null>(null); // State for hovered user
+  const [hoveredUserPosition, setHoveredUserPosition] = useState<{ top: number; left: number } | null>(null); // Position of the hovered user
   const router = useRouter();
 
   useEffect(() => {
@@ -32,6 +38,7 @@ export default function UserCard() {
           axios.get("/api/follow"), 
         ]);
         setUsers(usersResponse.data.users);
+        console.log(usersResponse.data)
         setFollowing(
           followingResponse.data.following.map(
             (follow: Follow) => follow.followingId 
@@ -56,60 +63,57 @@ export default function UserCard() {
     </div>
   );
 
+  const handleMouseEnter = (event: React.MouseEvent, user: User) => {
+    const { top, left } = event.currentTarget.getBoundingClientRect();
+    setHoveredUserPosition({ top, left });
+    setHoveredUser(user);
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredUser(null);
+    setHoveredUserPosition(null);
+  };
+
   return (
-    <div className="bg-white text-black  p-4">
+    <div className="bg-white text-black p-4 relative"> {/* Make this relative for absolute positioning */}
       {/* Mobile Back Button */}
       <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex">
-  <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
-    <FaArrowLeft size={20} className="text-black" />
-  </div>
-  <div className="text-xl text-black font-bold">Post</div>
-</div>
-
+        <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
+          <FaArrowLeft size={20} className="text-black" />
+        </div>
+        <div className="text-xl text-black font-bold">Post</div>
+      </div>
 
       <h2 className="text-2xl font-semibold mb-4">All Users</h2>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
         {loading ? (
           <>
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
-            <Skeleton />
+            {[...Array(15)].map((_, index) => <Skeleton key={index} />)}
           </>
         ) : users.length > 0 ? (
           users.map((user) => (
-            <div key={user.id} className="flex rounded-xl pl-2 border pr-2 w-full"> 
+            <div key={user.id} onClick={() => {
+              router.push(`/user/${user.id}`)
+            }} className="flex rounded-xl pl-2 border pr-2 w-full">
               <div
-                onClick={() => {
-                  router.push(`/user/${user.id}`);
-                }}
+                 // Clear hovered user on mouse leave
                 className="cursor-pointer w-full bg-white p-2 flex items-center gap-2"
               >
                 {user.avatarUrl ? (
-                   <div className="w-8 h-8 rounded-full overflow-hidden"> 
-                     <Image
-                       src={user.avatarUrl}
-                       alt={user.name || "null"}
-                       width={200} 
-                       height={200}
-                       className="object-cover w-full h-full" 
-                     />
-                   </div>
+                  <div onMouseEnter={(event) => handleMouseEnter(event, user)} // Set hovered user on mouse enter
+                  onMouseLeave={handleMouseLeave} className="w-8 h-8 rounded-full overflow-hidden"> 
+                    <Image
+                      src={user.avatarUrl}
+                      alt={user.name || "null"}
+                      width={200} 
+                      height={200}
+                      className="object-cover w-full h-full" 
+                    />
+                  </div>
                 ) : (
                   <FaUserCircle className="w-8 h-8 text-gray-400" />
                 )}
-                <div className="lg:text-xl text-lg  font-medium">
+                <div className="lg:text-xl text-lg font-medium">
                   {user.name || "Unnamed User"}
                 </div>
               </div>
@@ -128,6 +132,54 @@ export default function UserCard() {
           </>
         )}
       </div>
+
+      {/* User Details Card */}
+     {/* User Details Card */}
+{hoveredUser && hoveredUserPosition && (
+  <div
+    className="absolute z-10 w-96 bg-white border rounded-lg shadow-lg p-4 transition-transform duration-300 ease-in-out"
+    style={{
+      top: `${hoveredUserPosition.top + window.scrollY}px`, // Adjust for scrolling
+      left: `${hoveredUserPosition.left + window.scrollX}px`, // Adjust for scrolling
+      transform: 'translate(-50%, -100%)', // Center the card horizontally, place above the avatar
+      opacity: 1,
+    }}
+  >
+    <div className="flex flex-col items-start">
+      {hoveredUser.avatarUrl ? (
+        <Image
+          src={hoveredUser.avatarUrl}
+          alt={hoveredUser.name || "User Avatar"}
+          width={192}
+          height={192}
+          className="rounded-full h-20 w-20 object-cover"
+        />
+      ) : (
+        <FaUserCircle className="w-20 h-20 text-gray-400" />
+      )}
+      <div className="flex flex-col">
+        <h2 className="font-bold text-lg">{hoveredUser.name || "Unnamed User"}</h2>
+        <div className="flex gap-1">
+        <IoLocationOutline />
+        <p className="text-black text-sm">
+          {hoveredUser.city ? hoveredUser.city : "No city data"}
+        </p>
+        </div>
+        <p className="text-sm">{hoveredUser.bio || "No bio available."}</p>
+        <p className="text-sm">
+          {hoveredUser.website ? (
+            <a href={hoveredUser.website} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+              {hoveredUser.website}
+            </a>
+          ) : (
+            "No website available."
+          )}
+        </p>
+      </div>
+    </div>
+  </div>
+)}
+
     </div>
   );
 }

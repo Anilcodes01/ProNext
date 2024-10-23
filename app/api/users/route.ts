@@ -10,6 +10,9 @@ export async function GET() {
         id: true,
         name: true,
         avatarUrl: true,
+        bio: true,
+        website: true,
+        city: true
       },
     });
     return NextResponse.json(
