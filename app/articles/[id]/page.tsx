@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import Appbar from "@/components/appbar";
 import OneArticleSkeleton from "@/components/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
@@ -27,6 +27,7 @@ interface Article {
   };
   liked: boolean; 
   likeCount: number;
+  isBookmarked: boolean; // Ensure this is provided by your API response
 }
 
 interface User {
@@ -46,13 +47,14 @@ export default function FullArticlePage() {
   const [following, setFollowing] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [initialLiked, setInitialLiked] = useState(false);
-  const [initialLikeCount, setInitialLikeCount] = useState(0); // Keep track of like count
+  const [initialLikeCount, setInitialLikeCount] = useState(0);
+  const [isBookmarked, setIsBookmarked] = useState(false); // Initialize as false
 
   const router = useRouter();
-  console.log(users)
   const { id } = useParams();
-  console.log(loading)
 
+  console.log(users)
+  console.log(loading)
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
@@ -62,11 +64,7 @@ export default function FullArticlePage() {
           axios.get("/api/follow"),
         ]);
         setUsers(usersResponse.data.users);
-        setFollowing(
-          followingResponse.data.following.map(
-            (follow: Follow) => follow.followingId
-          )
-        );
+        setFollowing(followingResponse.data.following.map((follow: Follow) => follow.followingId));
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -84,18 +82,33 @@ export default function FullArticlePage() {
 
   const fetchArticle = async (articleId: string) => {
     try {
-      const response = await axios.get(
-        `/api/articles/fetchOneArticle/${articleId}`
-      );
+      const response = await axios.get(`/api/articles/fetchOneArticle/${articleId}`);
       const articleData = response.data.article;
       setArticle(articleData);
-
-      // Fetch like status and like count for this article
-      setInitialLiked(articleData.liked); 
-      setInitialLikeCount(articleData.likeCount); 
+      console.log(articleData)
+      setInitialLiked(articleData.liked);
+      setInitialLikeCount(articleData.likeCount);
+      setIsBookmarked(articleData.isBookmarked); // Set initial bookmark status from API response
     } catch (error) {
       console.error("Error fetching article", error);
       setError("Failed to fetch article. Please try again later.");
+    }
+  };
+
+  const handleBookmark = async () => {
+    if (!article) return;
+
+    try {
+      if (isBookmarked) {
+        await axios.post(`/api/articles/unbookmark`, { articleId: article.id });
+        setIsBookmarked(false);
+      } else {
+        await axios.post(`/api/articles/bookmark`, { articleId: article.id });
+        setIsBookmarked(true);
+      }
+    } catch (error) {
+      console.error("Error updating bookmark status:", error);
+      setError("Failed to update bookmark status. Please try again later.");
     }
   };
 
@@ -142,7 +155,7 @@ export default function FullArticlePage() {
                 width={250}
                 height={250}
                 quality={75}
-                className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+                className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer"
               />
             ) : (
               <FaUserCircle className="w-10 h-10 text-black" />
@@ -167,12 +180,19 @@ export default function FullArticlePage() {
               />
             </div>
           </div>
-          <div className="border-t border-b p-2 lg:ml-8 lg:mr-16">
+          <div className="border-t flex justify-between border-b p-2 lg:ml-8 lg:mr-16">
             <LikeButton
               articleId={article?.id || ""}
-              initialLiked={initialLiked} // Pass fetched liked state
-              initialLikeCount={initialLikeCount} // Pass fetched like count
+              initialLiked={initialLiked}
+              initialLikeCount={initialLikeCount}
             />
+            <div onClick={handleBookmark} className="cursor-pointer">
+              {isBookmarked ? (
+                <FaBookmark className="text-green-500" />
+              ) : (
+                <FaRegBookmark className="text-black" />
+              )}
+            </div>
           </div>
 
           {article.image && (
@@ -186,7 +206,7 @@ export default function FullArticlePage() {
           )}
 
           <div className="text-black text-lg mt-8">
-            <p className="whitespace-pre-wrap ">{article.content}</p>
+            <p className="whitespace-pre-wrap">{article.content}</p>
           </div>
         </div>
       </div>

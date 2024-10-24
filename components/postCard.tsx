@@ -15,10 +15,10 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; // Import Link
+import Link from "next/link"; 
 
 interface User {
-  id: string; // Add user ID to the User interface
+  id: string; 
   name: string;
   avatarUrl?: string;
 }

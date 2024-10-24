@@ -56,7 +56,8 @@ model Article {
   userId      String
   user        User     @relation(fields: [userId], references: [id])
 
-  likes Like[]
+  likes     Like[]
+  bookmarks Bookmark[]
 }
 
 model Project {
@@ -72,18 +73,7 @@ model Project {
   user               User     @relation(fields: [userId], references: [id])
 }
 
-model Like {
-  id     String @id @default(uuid())
-  postId String?
-  post   Post?   @relation(fields: [postId], references: [id])
-  articleId String?
-  article Article? @relation(fields: [articleId], references: [id])
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
 
-    @@unique([postId, userId])
-  @@unique([articleId, userId])
-}
 
 model Comment {
   id        String   @id @default(uuid())
@@ -93,17 +83,35 @@ model Comment {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+
+
+}
+
+model Like {
+  id        String   @id @default(uuid())
+  postId    String?
+  post      Post?    @relation(fields: [postId], references: [id])
+  articleId String?
+  article   Article? @relation(fields: [articleId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([postId, userId])
+  @@unique([articleId, userId])
 }
 
 model Bookmark {
   id        String   @id @default(uuid())
   userId    String
-  postId    String
+  postId    String?
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
-  post      Post     @relation(fields: [postId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  articleId String?
+  article   Article? @relation(fields: [articleId], references: [id])
 
   @@unique([userId, postId])
+  @@unique([articleId, userId])
 }
 
 model Poll {
