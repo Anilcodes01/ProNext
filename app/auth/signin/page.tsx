@@ -41,7 +41,7 @@ export default function Signup() {
   const handleGoogleSignin = async () => {
     try {
       await signIn("google", {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/",
       });
       toast.success("Successfully signed in with Google!");
     } catch (error) {
