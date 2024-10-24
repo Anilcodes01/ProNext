@@ -85,7 +85,7 @@ export default function Appbar() {
                 onClick={() => router.push(`/user/${user.id}`)}
               >
                 {user.avatarUrl ? (
-                  <Image src={user.avatarUrl} alt={user.name} width={28} height={28} className="rounded-full" />
+                  <Image src={user.avatarUrl} alt={user.name} width={192} height={192} className="rounded-full h-10 w-10 object-cover" />
                 ) : (
                   <FaUserCircle size={28} className="text-gray-500" />
                 )}
@@ -139,8 +139,8 @@ export default function Appbar() {
                   <Image
                     src={session.user.avatarUrl}
                     alt="User Profile Picture"
-                    width={40}
-                    height={40}
+                    width={192}
+                    height={192}
                     className="rounded-full h-12 w-12 overflow-hidden object-cover cursor-pointer border"
                   />
                 ) : (
