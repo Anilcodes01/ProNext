@@ -68,7 +68,7 @@ export default function BookmarkComponent() {
 
   if (loading) {
     return (
-      <div role="status" className="animate-pulse pt-4 pl-4">
+      <div role="status" className="animate-pulse pt-4 ">
         
         <div className="bg-gray-300 mt-8 rounded-xl h-32 w-full"></div>
       </div>
@@ -84,15 +84,15 @@ export default function BookmarkComponent() {
   return (
     <div className="container mx-auto min-h-screen mt-4">
       
-      <div className="flex   mb-4">
+      <div className="flex bg-gray-300 rounded-lg   mb-4">
         <button
-          className={`px-4 py-2 w-full rounded-md ${view === "posts" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 w-full rounded-xl ${view === "posts" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setView("posts")}
         >
           Posts
         </button>
         <button
-          className={`px-4 w-full py-2 ml-2 rounded-md ${view === "articles" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 w-full py-2 ml-2 rounded-xl ${view === "articles" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
           onClick={() => setView("articles")}
         >
           Articles
