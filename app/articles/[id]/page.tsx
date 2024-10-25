@@ -3,7 +3,12 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { FaUserCircle, FaRegBookmark, FaBookmark, FaArrowLeft } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaRegBookmark,
+  FaBookmark,
+  FaArrowLeft,
+} from "react-icons/fa";
 import Appbar from "@/components/appbar";
 import OneArticleSkeleton from "@/components/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
@@ -52,6 +57,9 @@ export default function FullArticlePage() {
   const router = useRouter();
   const { id } = useParams();
 
+  console.log(users);
+  console.log(loading);
+
   useEffect(() => {
     async function fetchUsersAndFollowing() {
       try {
@@ -60,7 +68,11 @@ export default function FullArticlePage() {
           axios.get("/api/follow"),
         ]);
         setUsers(usersResponse.data.users);
-        setFollowing(followingResponse.data.following.map((follow: Follow) => follow.followingId));
+        setFollowing(
+          followingResponse.data.following.map(
+            (follow: Follow) => follow.followingId
+          )
+        );
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -78,7 +90,9 @@ export default function FullArticlePage() {
 
   const fetchArticle = async (articleId: string) => {
     try {
-      const response = await axios.get(`/api/articles/fetchOneArticle/${articleId}`);
+      const response = await axios.get(
+        `/api/articles/fetchOneArticle/${articleId}`
+      );
       const articleData = response.data.article;
       setArticle(articleData);
       setInitialLiked(articleData.liked);
