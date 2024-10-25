@@ -209,9 +209,9 @@ export default function UserProfilePage() {
       <div className="min-h-screen">
         <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-5">
           {/* Loading Skeleton */}
-          <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 p-5">
+          <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 ">
             <div className="rounded-full h-48 w-48 bg-gray-200 animate-pulse" />
-            <div className="p-5 lg:mr-16 h-48 w-96">
+            <div className="p lg:mr-16 h-48 w-96">
               <div className="h-8 bg-gray-200 animate-pulse w-32 rounded mb-2" />
               <div className="h-6 bg-gray-200 animate-pulse rounded mb-2" />
               <div className="h-6 bg-gray-200 animate-pulse rounded w-64 mb-2" />
