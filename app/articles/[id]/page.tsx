@@ -3,11 +3,10 @@ import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import Image from "next/image";
-import { FaUserCircle, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import { FaUserCircle, FaRegBookmark, FaBookmark, FaArrowLeft } from "react-icons/fa";
 import Appbar from "@/components/appbar";
 import OneArticleSkeleton from "@/components/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
-import { FaArrowLeft } from "react-icons/fa6";
 import FollowButton from "@/components/follow";
 import LikeButton from "@/components/LikeButton";
 
@@ -25,9 +24,9 @@ interface Article {
     name: string;
     avatarUrl?: string | null;
   };
-  liked: boolean; 
+  liked: boolean;
   likeCount: number;
-  isBookmarked: boolean; // Ensure this is provided by your API response
+  bookmarked: boolean; // Ensure this matches the backend response
 }
 
 interface User {
@@ -48,13 +47,10 @@ export default function FullArticlePage() {
   const [loading, setLoading] = useState(true);
   const [initialLiked, setInitialLiked] = useState(false);
   const [initialLikeCount, setInitialLikeCount] = useState(0);
-  const [isBookmarked, setIsBookmarked] = useState(false); // Initialize as false
+  const [isBookmarked, setIsBookmarked] = useState(false);
 
   const router = useRouter();
   const { id } = useParams();
-
-  console.log(users)
-  console.log(loading)
 
   useEffect(() => {
     async function fetchUsersAndFollowing() {
@@ -85,10 +81,9 @@ export default function FullArticlePage() {
       const response = await axios.get(`/api/articles/fetchOneArticle/${articleId}`);
       const articleData = response.data.article;
       setArticle(articleData);
-      console.log(articleData)
       setInitialLiked(articleData.liked);
       setInitialLikeCount(articleData.likeCount);
-      setIsBookmarked(articleData.isBookmarked); // Set initial bookmark status from API response
+      setIsBookmarked(articleData.bookmarked); // Set initial bookmark status from `bookmarked` key
     } catch (error) {
       console.error("Error fetching article", error);
       setError("Failed to fetch article. Please try again later.");
@@ -97,15 +92,9 @@ export default function FullArticlePage() {
 
   const handleBookmark = async () => {
     if (!article) return;
-
     try {
-      if (isBookmarked) {
-        await axios.post(`/api/articles/unbookmark`, { articleId: article.id });
-        setIsBookmarked(false);
-      } else {
-        await axios.post(`/api/articles/bookmark`, { articleId: article.id });
-        setIsBookmarked(true);
-      }
+      await axios.post(`/api/articles/bookmark`, { articleId: article.id });
+      setIsBookmarked(!isBookmarked); // Toggle after API call
     } catch (error) {
       console.error("Error updating bookmark status:", error);
       setError("Failed to update bookmark status. Please try again later.");
@@ -144,7 +133,7 @@ export default function FullArticlePage() {
             <div className="text-xl text-black font-bold">Articles</div>
           </div>
 
-          <div className=" text-2xl lg:text-5xl font-bold text-black lg:mt-4">
+          <div className="text-2xl lg:text-5xl font-bold text-black lg:mt-4">
             {article.title}
           </div>
           <div className="flex mt-4 items-center my-4">
@@ -164,7 +153,7 @@ export default function FullArticlePage() {
               <div className="ml-4 lg:mb-1 text-xl text-black">
                 {article.user.name}
               </div>
-              <div className="text-sm text-black ml-4 ">
+              <div className="text-sm text-black ml-4">
                 {new Date(article.createdAt).toLocaleDateString(undefined, {
                   day: "numeric",
                   month: "short",
@@ -173,7 +162,7 @@ export default function FullArticlePage() {
               </div>
             </div>
 
-            <div className=" ml-32 lg:ml-8  md:ml-8 lg:mb-1 ">
+            <div className="ml-32 lg:ml-8 md:ml-8 lg:mb-1">
               <FollowButton
                 isFollowing={following.includes(article.user.id)}
                 followingId={article.user.id}
@@ -182,7 +171,7 @@ export default function FullArticlePage() {
           </div>
           <div className="border-t flex justify-between border-b p-2 lg:ml-8 lg:mr-16">
             <LikeButton
-              articleId={article?.id || ""}
+              articleId={article.id || ""}
               initialLiked={initialLiked}
               initialLikeCount={initialLikeCount}
             />
