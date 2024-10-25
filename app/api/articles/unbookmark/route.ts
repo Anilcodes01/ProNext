@@ -19,7 +19,7 @@ export async function POST(req: Request) {
     const { articleId } = await req.json();
     const userId = session.user.id;
 
-    const unbookmark = await prisma.bookmark.deleteMany({
+    await prisma.bookmark.deleteMany({
       where: {
         articleId,
         userId,
