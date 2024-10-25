@@ -28,41 +28,39 @@ export const GET = async () => {
       },
     });
 
-    const postIds = bookmarkedPosts.map((bookmark) => bookmark.postId);
+    const postIds = bookmarkedPosts
+    .map((bookmark) => bookmark.postId)
+    .filter((id): id is string => id !== null); 
 
 
     const posts = await prisma.post.findMany({
+  where: {
+    id: { in: postIds },
+  },
+  include: {
+    user: {
+      select: {
+        name: true,
+        avatarUrl: true,
+      },
+    },
+    _count: {
+      select: {
+        likes: true,
+        comments: true,
+      },
+    },
+    likes: true, 
+    bookmarks: {
       where: {
-        id: { in: postIds },
+        userId: userId,
       },
-      include: {
-        user: {
-          select: {
-            name: true,
-            avatarUrl: true,
-          },
-        },
-        _count: {
-          select: {
-            likes: true,
-            comments: true,
-          },
-        },
-        likes: {
-          where: {
-            userId: userId,
-          },
-        },
-        bookmarks: {
-          where: {
-            userId: userId,
-          },
-        },
-      },
-      orderBy: {
-        createdAt: 'desc', 
-      },
-    });
+    },
+  },
+  orderBy: {
+    createdAt: 'desc', 
+  },
+});
 
     
     const transformedPosts = posts.map((post) => {
