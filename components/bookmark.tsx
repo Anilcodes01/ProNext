@@ -68,33 +68,35 @@ export default function BookmarkComponent() {
 
   if (loading) {
     return (
-     <div className="pt-4 ">
-      
-
-<div className="flex bg-gray-300 rounded-lg   mb-4">
-        <button
-          className={`px-4 py-2 w-full rounded-xl ${view === "posts" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
-          onClick={() => setView("posts")}
-        >
-          Posts
-        </button>
-        <button
-          className={`px-4 w-full py-2 ml-2 rounded-xl ${view === "articles" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
-          onClick={() => setView("articles")}
-        >
-          Articles
-        </button>
+      <div className="pt-4 ">
+        <div className="flex bg-gray-200 p-1 rounded-xl   mb-4">
+          <button
+            className={`px-4 py-2 w-full rounded-xl ${
+              view === "posts" ? "bg-gray-300 text-black" : "text-black"
+            }`}
+            onClick={() => setView("posts")}
+          >
+            Posts
+          </button>
+          <button
+            className={`px-4 w-full py-2 ml-2 rounded-xl ${
+              view === "articles" ? "bg-gray-300 text-black" : "text-black"
+            }`}
+            onClick={() => setView("articles")}
+          >
+            Articles
+          </button>
+        </div>
+        <div role="status" className="animate-pulse ">
+          <div className="bg-gray-300 mt-8 rounded-xl h-32 w-full"></div>
+          <div className="bg-gray-300 mt-6 rounded-xl h-32 w-full"></div>
+        </div>
       </div>
-      <div role="status" className="animate-pulse ">
-        
-        <div className="bg-gray-300 mt-8 rounded-xl h-32 w-full"></div>
-        <div className="bg-gray-300 mt-6 rounded-xl h-32 w-full"></div>
-      </div>
-     </div>
     );
   }
 
-  const bookmarksToDisplay = view === "posts" ? bookmarkedPosts : bookmarkedArticles;
+  const bookmarksToDisplay =
+    view === "posts" ? bookmarkedPosts : bookmarkedArticles;
 
   if (bookmarksToDisplay.length === 0) {
     return <div className="text-gray-800">No bookmarks yet...!</div>;
@@ -102,23 +104,26 @@ export default function BookmarkComponent() {
 
   return (
     <div className="container mx-auto min-h-screen mt-4">
-      
-      <div className="flex bg-gray-300 rounded-lg   mb-4">
+      <div className="flex bg-gray-200 p-1 rounded-xl   mb-4">
         <button
-          className={`px-4 py-2 w-full rounded-xl ${view === "posts" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 py-2 w-full rounded-xl ${
+            view === "posts" ? "bg-gray-300 text-black" : "text-black"
+          }`}
           onClick={() => setView("posts")}
         >
           Posts
         </button>
         <button
-          className={`px-4 w-full py-2 ml-2 rounded-xl ${view === "articles" ? "bg-blue-500 text-white" : "bg-gray-300"}`}
+          className={`px-4 w-full py-2 ml-2 rounded-xl ${
+            view === "articles" ? "bg-gray-300 text-black" : "text-black"
+          }`}
           onClick={() => setView("articles")}
         >
           Articles
         </button>
       </div>
       <div className="grid grid-cols-1 gap-2">
-        {bookmarksToDisplay.map((item) => 
+        {bookmarksToDisplay.map((item) =>
           view === "posts" ? (
             <PostCard key={item.id} post={item as Post} /> // Assert type for clarity
           ) : (
