@@ -309,7 +309,7 @@ export default function MainContent() {
         </div>
       </div>
 
-      {/* Render the PostList component here */}
+    
       <PostList />
     </div>
   );

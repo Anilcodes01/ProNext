@@ -241,7 +241,7 @@ export default function UserProfilePage() {
 
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden p-4 lg:p-5">
-      <div className="lg:flex lg:flex-row lg:justify-between flex flex-col gap-4 lg:p-5">
+      <div className="lg:flex lg:flex-row  lg:justify-between flex flex-col gap-4 lg:p-5">
         <div className="rounded-full w-[192px] h-[192px] overflow-hidden">
           {userProfile?.avatarUrl ? (
             <Image
@@ -255,7 +255,7 @@ export default function UserProfilePage() {
             <FaUserCircle className="h-full w-full text-gray-500" />
           )}
         </div>
-        <div className="lg:p-5 pt-2 lg:mr-16 flex flex-col gap-1 w-96">
+        <div className="lg:pl-5 md:pt-2 lg:mr-16 flex flex-col gap-1 w-96">
           <div className="text-xl flex  justify-between items-center text-black">
             {userProfile?.name}
             {isOwnProfile ? (
