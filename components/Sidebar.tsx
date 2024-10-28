@@ -74,17 +74,10 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
-          <GoBookmark onClick={() => router.push("/bookmarks")} size={24} />
-          {!isMobile && (
-            <button
-              onClick={() => router.push("/bookmarks")}
-              className="text-xl w-full flex items-start"
-            >
-              Bookmarks
-            </button>
-          )}
-        </div>
+
+
+
+
         <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
           <IoDocumentTextOutline onClick={() => {
             router.push('/articles')
@@ -98,6 +91,38 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           )}
         </div>
+
+
+        
+        {!isMobile ? (
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+            <GoBookmark onClick={() => router.push("/bookmarks")} size={24} />
+            <button onClick={() => router.push("/bookmarks")} className="text-xl w-full flex items-start">
+              Bookmarks
+            </button>
+          </div>
+        ) : (
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+             <div onClick={() => {
+              router.push(`/user/${userId}`)
+             }} className="flex h-8 w-8 overflow-hidden items-center">
+            {session?.user.avatarUrl ? (
+              <Image
+                src={session.user.avatarUrl}
+                alt="User Profile Picture"
+                width={100}
+                height={100}
+                className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
+              />
+            ) : (
+              <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                {session?.user.name?.charAt(0).toUpperCase()}
+              </div>
+            )}
+          </div>
+            
+          </div>
+        )}
       </div>
 
       {/* User profile */}
