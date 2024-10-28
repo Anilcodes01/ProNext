@@ -260,23 +260,20 @@ export default function UserProfilePage() {
           </div>
 
           {/* Tech Stack for larger screens */}
-          {userProfile?.techStack && (
-            <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 bg-slate-100 rounded-lg gap-2 p-2 lg:ml-4 shadow">
-              {userProfile.techStack.map((tech) => (
-                <div
-                  key={tech}
-                  className="flex flex-col justify-center items-center"
-                >
-                  <img
-                    src={getDeviconUrl(tech)}
-                    alt={`${tech} icon`}
-                    className="w-10 h-10 object-contain" // Ensure this fits your design
-                  />
-                  <p className="text-xs text-black">{tech}</p>
-                </div>
-              ))}
-            </div>
-          )}
+  {userProfile?.techStack && userProfile.techStack.length > 0 && (
+    <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 bg-slate-100 rounded-lg gap-2 p-2 lg:ml-4 shadow">
+      {userProfile.techStack.map((tech) => (
+        <div key={tech} className="flex flex-col justify-center items-center">
+          <img
+            src={getDeviconUrl(tech)}
+            alt={`${tech} icon`}
+            className="w-10 h-10 object-contain"
+          />
+          <p className="text-xs text-black">{tech}</p>
+        </div>
+      ))}
+    </div>
+  )}
         </div>
 
         <div className="lg:pl-5 md:pt-2 lg:mr-16 flex flex-col gap-1 w-96">
@@ -291,7 +288,7 @@ export default function UserProfilePage() {
               </button>
             ) : (
               userProfile?.id && (
-                <div className="border rounded-full px-2 flex hover:bg-slate-200 text-center py-1 transition duration-300">
+                <div className="border rounded-full px-2 mr-12 flex hover:bg-slate-200 text-center py-1 transition duration-300">
                   <FollowButton
                     isFollowing={following.includes(userProfile.id)}
                     followingId={userProfile.id}
@@ -338,24 +335,21 @@ export default function UserProfilePage() {
             </div>
           </div>
 
-          {/* Tech Stack for mobile screens */}
-          {userProfile?.techStack && (
-            <div className="grid grid-cols-4 lg:hidden md:hidden mr-14 bg-slate-100 rounded-lg gap-2 p-2 mt-4 shadow">
-              {userProfile.techStack.map((tech) => (
-                <div
-                  key={tech}
-                  className="flex flex-col justify-center items-center"
-                >
-                  <img
-                    src={getDeviconUrl(tech)}
-                    alt={`${tech} icon`}
-                    className="w-10 h-10 object-contain"
-                  />
-                  <p className="text-xs text-black">{tech}</p>
-                </div>
-              ))}
-            </div>
-          )}
+         {/* Tech Stack for mobile screens */}
+{userProfile?.techStack && userProfile.techStack.length > 0 && (
+  <div className="grid grid-cols-4 lg:hidden md:hidden mr-14 bg-slate-100 rounded-lg gap-2 p-2 mt-4 shadow">
+    {userProfile.techStack.map((tech) => (
+      <div key={tech} className="flex flex-col justify-center items-center">
+        <img
+          src={getDeviconUrl(tech)}
+          alt={`${tech} icon`}
+          className="w-10 h-10 object-contain"
+        />
+        <p className="text-xs text-black">{tech}</p>
+      </div>
+    ))}
+  </div>
+)}
         </div>
       </div>
 
