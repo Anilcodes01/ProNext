@@ -18,6 +18,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         bio: true,
         website: true,
         city: true,
+        techStack: true
       },
     });
 

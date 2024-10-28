@@ -12,7 +12,8 @@ export async function GET() {
         avatarUrl: true,
         bio: true,
         website: true,
-        city: true
+        city: true,
+        techStack: true
       },
     });
     return NextResponse.json(
