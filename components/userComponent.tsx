@@ -312,14 +312,14 @@ export default function UserProfilePage() {
           )}
 
           <div className="flex text-gray-600 mt-2 text-sm">
-            <CalendarDays className="w-4 h-4 shrink-0" />
+            <CalendarDays className="w-4 h-4 mr-2 shrink-0" />
             Joined {formatDate(userProfile?.createdAt || "")}
           </div>
 
 
         </div>
 
-        <div className="text-black flex items-center ml-4 mt-4 gap-8">
+        <div className="text-black flex items-center  mt-4 gap-8">
             <div className="cursor-pointer text-sm hover:text-blue-500 transition duration-300">
               <span className="font-bold">{followersCount}</span> Followers
             </div>
@@ -330,12 +330,12 @@ export default function UserProfilePage() {
 
 
           {userProfile?.techStack && userProfile.techStack.length > 0 && (
-  <div className="flex gap-4 mt-2 ml-4 w-full  rounded-lg  justify-items-start">
+  <div className="flex flex-wrap gap-2 mt-2 mb-2 w-full rounded-lg">
     {userProfile.techStack.map((tech) => (
       <span
         key={tech}
-        className="flex gap-1 p-1 bg-slate-100 rounded-full  items-center text-center "
-        style={{ minWidth: '8px' }} 
+        className="inline-flex gap-1 p-1 bg-slate-100 rounded-full items-center"
+        style={{ minWidth: '8px' }}
       >
         <img
           src={getDeviconUrl(tech)}
@@ -347,6 +347,7 @@ export default function UserProfilePage() {
     ))}
   </div>
 )}
+
 
 
       </div>
