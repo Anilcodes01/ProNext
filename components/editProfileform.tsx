@@ -3,8 +3,13 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import { toast, Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { AiOutlineLink } from "react-icons/ai";
 import Image from "next/image";
-import { FiCamera } from "react-icons/fi"; // Importing the camera icon
+import {
+
+  MapPin,
+} from "lucide-react";
+
 
 export default function EditProfileForm() {
   const { data: session, update: updateSession } = useSession(); // Add update method from useSession
@@ -94,13 +99,13 @@ export default function EditProfileForm() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 border m-4 rounded-lg">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="text-2xl text-black font-bold">Edit Profile</div>
       <div className="flex text-black pt-4 w-full flex-col gap-4">
         {/* Avatar Upload and Preview */}
-        <div className="flex flex-col justify-center items-center relative">
-          <div className="w-[192px] h-[192px] rounded-full overflow-hidden mt-4">
+        <div className="flex flex-col justify-center relative">
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden mt-4">
             {avatarPreview ? (
               <Image
                 src={avatarPreview}
@@ -123,9 +128,11 @@ export default function EditProfileForm() {
           {/* Icon for changing the image */}
           <label
             htmlFor="avatar"
-            className="absolute bottom-2 right-2 bg-gray-700 p-2 rounded-full cursor-pointer"
+            className="absolute bottom-2 right-2 border p-2 rounded cursor-pointer"
           >
-            <FiCamera className="text-white" size={20} />
+            <button className="text-sm ">
+              Change Avatar
+            </button>
           </label>
           <input
             type="file"
@@ -138,43 +145,54 @@ export default function EditProfileForm() {
 
         {/* Other profile fields */}
         <div className="flex flex-col">
-          <label htmlFor="name">Name</label>
+          <label className="text-sm mb-2" htmlFor="name">Name</label>
           <input
             type="text"
             id="name"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border rounded-lg bg-gray-100 outline-none px-2 py-1"
+            className="border rounded-lg text-sm outline-none px-2 py-1"
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="bio">Bio</label>
+          <label className="text-sm mb-2" htmlFor="bio">Bio</label>
           <textarea
             id="bio"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="border bg-gray-100 rounded-lg outline-none  p-2"
+            className="border rounded-lg outline-none  p-2"
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="city">City</label>
+          <label className="text-sm mb-2" htmlFor="city">Location</label>
+          <div className="flex flex-row items-center gap-2">
+          <MapPin className="w-4 h-4 shrink-0" />
           <input
             type="text"
             id="city"
             value={city}
             onChange={(e) => setCity(e.target.value)}
-            className="border bg-gray-100 rounded-lg outline-none py-1 px-2"
+            className="border w-full  rounded-lg outline-none py-1 px-2"
           />
+          </div>
         </div>
         <div className="flex flex-col">
-          <label htmlFor="website">Website</label>
+          <label className="text-sm mb-2" htmlFor="website">Website</label>
+         <div className="flex gap-2 items-center">
+         <AiOutlineLink />
           <input
             type="url"
             id="website"
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
-            className="border bg-gray-100 rounded-lg outline-none py-1 px-2"
+            className="border w-full rounded-lg outline-none py-1 px-2"
           />
+         </div>
+        </div>
+
+        <div >
+          <p className="text-sm mb-2">Join Date</p>
+          
         </div>
 
         <button

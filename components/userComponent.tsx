@@ -247,9 +247,9 @@ export default function UserProfilePage() {
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
       <div className="rounded-lg bg-white flex flex-col ">
-        <div className="bg-sky-300 h-[20vh] mb-8  pt-24 pl-4 w-full">
+        <div className="bg-sky-300 lg:h-[20vh] h-[12vh] lg:mb-8 mb-10 lg:pt-24 pl-2 pt-12 lg:pl-4 w-full">
 
-          <div className="rounded-full bg-yellow-200  w-[100px]  h-[100px] overflow-hidden shadow-lg">
+          <div className="rounded-full bg-yellow-200  lg:w-[100px] w-[80px] h-[80px] lg:h-[100px] overflow-hidden shadow-lg">
             {userProfile?.avatarUrl ? (
               <Image
                 src={userProfile.avatarUrl}
@@ -265,7 +265,7 @@ export default function UserProfilePage() {
         </div>
 
         <div className="flex justify-between items-center">
-          <div className="text-black font-bold text-2xl ml-4 mt-4 ">
+          <div className="text-black font-bold text-2xl  mt-4 ">
             {userProfile?.name}
           </div>
           {isOwnProfile ? (
@@ -287,11 +287,11 @@ export default function UserProfilePage() {
           )}
         </div>
 
-        <div className="text-black ml-4 text-sm mt-2">{userProfile?.bio}</div>
+        <div className="text-black  text-sm mt-2">{userProfile?.bio}</div>
 
-        <div className="flex gap-4">
+        <div className="flex lg:gap-4 lg:flex-row flex-col">
           {userProfile?.city && (
-            <div className="text-gray-600 text-sm mt-2 ml-4 flex items-center gap-2">
+            <div className="text-gray-600 text-sm mt-2  flex items-center gap-2">
               <MapPin className="w-4 h-4 shrink-0" />
               {userProfile.city}
             </div>
