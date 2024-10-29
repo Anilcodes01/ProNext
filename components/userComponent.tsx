@@ -6,20 +6,23 @@ import PostCard from "./postCard";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineLink } from "react-icons/ai";
-import { SlCalender } from "react-icons/sl";
 import { useSession } from "next-auth/react";
 import ArticleCard from "./articleCard";
 import FollowButton from "./follow";
 import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 import { getDeviconUrl } from "@/app/lib/getDeviconUrl";
+import {
+  CalendarDays,
+  MapPin,
+} from "lucide-react";
 
 interface Post {
   id: string;
   title?: string;
   content: string;
+  ProfilePageImage?: string;
   image?: string;
   createdAt: string;
   updatedAt: string;
@@ -243,114 +246,109 @@ export default function UserProfilePage() {
 
   return (
     <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
-      <div className="lg:flex lg:flex-row lg:justify-between flex flex-col  gap-4 lg:p-5  rounded-lg ">
-        <div className="flex gap-8">
-          <div className="rounded-full w-[192px] h-[192px] overflow-hidden shadow-lg">
+      <div className="rounded-lg bg-white flex flex-col ">
+        <div className="bg-sky-300 h-[20vh] mb-8  pt-24 pl-4 w-full">
+
+          <div className="rounded-full bg-yellow-200  w-[100px]  h-[100px] overflow-hidden shadow-lg">
             {userProfile?.avatarUrl ? (
               <Image
                 src={userProfile.avatarUrl}
                 alt="User Avatar"
                 width={384}
                 height={384}
-                className="rounded-full h-full w-full object-cover"
+                className="rounded-full  h-full w-full object-cover"
               />
             ) : (
               <FaUserCircle className="h-full w-full text-gray-300" />
             )}
           </div>
-
-          {/* Tech Stack for larger screens */}
-  {userProfile?.techStack && userProfile.techStack.length > 0 && (
-    <div className="hidden md:grid grid-cols-4 lg:grid-cols-5 bg-slate-100 rounded-lg gap-2 p-2 lg:ml-4 shadow">
-      {userProfile.techStack.map((tech) => (
-        <div key={tech} className="flex flex-col justify-center items-center">
-          <img
-            src={getDeviconUrl(tech)}
-            alt={`${tech} icon`}
-            className="w-10 h-10 object-contain"
-          />
-          <p className="text-xs text-black">{tech}</p>
-        </div>
-      ))}
-    </div>
-  )}
         </div>
 
-        <div className="lg:pl-5 md:pt-2 lg:mr-16 flex flex-col gap-1 w-96">
-          <div className="text-xl flex justify-between items-center text-black font-semibold">
+        <div className="flex justify-between items-center">
+          <div className="text-black font-bold text-2xl ml-4 mt-4 ">
             {userProfile?.name}
-            {isOwnProfile ? (
-              <button
-                onClick={() => (window.location.href = `/user/edit`)}
-                className="text-sm rounded-full px-3 py-1 mr-12 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-300"
-              >
-                Edit Profile
-              </button>
-            ) : (
-              userProfile?.id && (
-                <div className="border rounded-full px-2 mr-12 flex hover:bg-slate-200 text-center py-1 transition duration-300">
-                  <FollowButton
-                    isFollowing={following.includes(userProfile.id)}
-                    followingId={userProfile.id}
-                  />
-                </div>
-              )
-            )}
           </div>
-          <div className="text-black text-md w-5/6 lg:w-full">
-            {userProfile?.bio}
-          </div>
+          {isOwnProfile ? (
+            <button
+              onClick={() => (window.location.href = `/user/edit`)}
+              className="text-sm rounded-full  px-3 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-300"
+            >
+              Edit Profile
+            </button>
+          ) : (
+            userProfile?.id && (
+              <div className="border rounded-full px-2 mr- flex hover:bg-slate-200 text-center py-1 transition duration-300">
+                <FollowButton
+                  isFollowing={following.includes(userProfile.id)}
+                  followingId={userProfile.id}
+                />
+              </div>
+            )
+          )}
+        </div>
 
+        <div className="text-black ml-4 text-sm mt-2">{userProfile?.bio}</div>
+
+        <div className="flex gap-4">
           {userProfile?.city && (
-            <div className="text-black flex items-center gap-2">
-              <IoLocationOutline className="text-md" />
+            <div className="text-gray-600 text-sm mt-2 ml-4 flex items-center gap-2">
+              <MapPin className="w-4 h-4 shrink-0" />
               {userProfile.city}
             </div>
           )}
 
           {userProfile?.website && (
-            <div className="text-black flex items-center gap-2">
+            <div className="text-gray-600 text-sm mt-2  flex items-center gap-2">
               <AiOutlineLink className="text-gray-600" />
               <a
                 href={userProfile.website}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
+                className="text-gray-600 hover:underline"
               >
                 {userProfile.website}
               </a>
             </div>
           )}
 
-          <div className="text-black flex items-center gap-2">
-            <SlCalender className="text-md" />
+          <div className="flex text-gray-600 mt-2 text-sm">
+            <CalendarDays className="w-4 h-4 shrink-0" />
             Joined {formatDate(userProfile?.createdAt || "")}
           </div>
-          <div className="text-black flex items-center mt-3 gap-8">
+
+
+        </div>
+
+        <div className="text-black flex items-center ml-4 mt-4 gap-8">
             <div className="cursor-pointer text-sm hover:text-blue-500 transition duration-300">
-              <span>{followersCount}</span> Followers
+              <span className="font-bold">{followersCount}</span> Followers
             </div>
             <div className="cursor-pointer text-sm hover:text-blue-500 transition duration-300">
-              <span>{followingCount}</span> Following
+              <span className="font-bold">{followingCount}</span> Following
             </div>
           </div>
 
-         {/* Tech Stack for mobile screens */}
-{userProfile?.techStack && userProfile.techStack.length > 0 && (
-  <div className="grid grid-cols-4 lg:hidden md:hidden mr-14 bg-slate-100 rounded-lg gap-2 p-2 mt-4 shadow">
+
+          {userProfile?.techStack && userProfile.techStack.length > 0 && (
+  <div className="flex gap-4 mt-2 ml-4 w-full  rounded-lg  justify-items-start">
     {userProfile.techStack.map((tech) => (
-      <div key={tech} className="flex flex-col justify-center items-center">
+      <span
+        key={tech}
+        className="flex gap-1 p-1 bg-slate-100 rounded-full  items-center text-center "
+        style={{ minWidth: '8px' }} 
+      >
         <img
           src={getDeviconUrl(tech)}
           alt={`${tech} icon`}
-          className="w-10 h-10 object-contain"
+          className="w-4 h-4 object-contain"
         />
-        <p className="text-xs text-black">{tech}</p>
-      </div>
+        <p className="text-xs font-semibold text-black">{tech}</p>
+      </span>
     ))}
   </div>
 )}
-        </div>
+
+
       </div>
 
       <div className="flex gap-6 ">
