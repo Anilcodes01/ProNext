@@ -330,7 +330,7 @@ export default function UserProfilePage() {
 
 
           {userProfile?.techStack && userProfile.techStack.length > 0 && (
-  <div className="flex flex-wrap gap-2 mt-2 mb-2 w-full rounded-lg">
+  <div className="flex flex-wrap gap-2 mt-4 mb-2 w-full rounded-lg">
     {userProfile.techStack.map((tech) => (
       <span
         key={tech}
@@ -402,12 +402,12 @@ export default function UserProfilePage() {
 
       {viewMode === "projects" && (
         <div className="flex flex-col text-black">
-          <div className="flex gap-1 border py-1 rounded w-36 justify-center">
+          <div className="flex gap-1 mt-2  py-1 rounded w-36 justify-center">
             <button
               onClick={() => {
                 router.push("/user/project/upload");
               }}
-              className="bg-blue-500 text-white rounded-lg py-1 px-3 hover:bg-blue-600 transition duration-300"
+              className="bg-blue-500  text-white rounded-lg py-1 px-3 hover:bg-blue-600 transition duration-300"
             >
               Upload Project
             </button>

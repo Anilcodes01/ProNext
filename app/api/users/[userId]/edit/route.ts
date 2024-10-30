@@ -1,23 +1,23 @@
 import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { prisma } from '@/app/lib/prisma';  // Import your Prisma instance
-import { authOptions } from '@/app/lib/authOptions'; // Adjust the import path according to your setup
+import { prisma } from '@/app/lib/prisma';  
+import { authOptions } from '@/app/lib/authOptions'; 
 import cloudinary from 'cloudinary';
 
-// Configure Cloudinary
+
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// Define the type for the Cloudinary response
+
 interface CloudinaryResponse {
   secure_url: string;
-  // You can add more fields if necessary, depending on what Cloudinary returns
+  
 }
 
-// Helper function to handle Cloudinary upload using a Promise
+
 const uploadToCloudinary = (buffer: Buffer, publicId: string): Promise<CloudinaryResponse> => {
   return new Promise((resolve, reject) => {
     const uploadStream = cloudinary.v2.uploader.upload_stream(
@@ -31,11 +31,11 @@ const uploadToCloudinary = (buffer: Buffer, publicId: string): Promise<Cloudinar
         if (error) {
           reject(error);
         } else {
-          resolve(result as CloudinaryResponse);  // Ensure the result matches the expected type
+          resolve(result as CloudinaryResponse);  
         }
       }
     );
-    uploadStream.end(buffer); // Pass the buffer into the upload stream
+    uploadStream.end(buffer); 
   });
 };
 
@@ -58,10 +58,10 @@ export async function POST(request: Request, { params }: { params: { userId: str
   const bio = formData.get('bio')?.toString();
   const city = formData.get('city')?.toString();
   const website = formData.get('website')?.toString();
-  const file = formData.get('avatar'); // File object from the form data (if provided)
+  const file = formData.get('avatar');
 
   try {
-    // Retrieve the current user from the database
+    
     const currentUser = await prisma.user.findUnique({
       where: { id: currentUserId },
     });
@@ -70,7 +70,7 @@ export async function POST(request: Request, { params }: { params: { userId: str
       return NextResponse.json({ message: 'User not found' }, { status: 404 });
     }
 
-    // Prepare update data with current values as fallback and correct typing
+   
     const updateData: {
       name?: string;
       bio?: string;
@@ -84,7 +84,7 @@ export async function POST(request: Request, { params }: { params: { userId: str
       website: website || currentUser.website || undefined,
     };
 
-    // If a new avatar image is provided, upload it to Cloudinary
+    
     if (file && file instanceof File) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
@@ -95,7 +95,7 @@ export async function POST(request: Request, { params }: { params: { userId: str
       }
     }
 
-    // Update the user with the modified data
+    
     const updatedUser = await prisma.user.update({
       where: { id: currentUserId },
       data: updateData,
