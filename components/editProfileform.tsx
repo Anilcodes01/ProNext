@@ -6,8 +6,7 @@ import { toast, Toaster } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { AiOutlineLink } from "react-icons/ai";
 import Image from "next/image";
-import { MapPin , X} from "lucide-react";
-
+import { MapPin, X } from "lucide-react";
 
 export default function EditProfileForm() {
   const { data: session, update: updateSession } = useSession();
@@ -48,7 +47,6 @@ export default function EditProfileForm() {
     if (userId) fetchUserData();
   }, [userId]);
 
-  // Handle avatar changes
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0] || null;
     setAvatar(file);
@@ -61,32 +59,33 @@ export default function EditProfileForm() {
     }
   };
 
-  // Add a new skill
   const addSkill = async () => {
     if (newSkill && !skills.includes(newSkill)) {
-        try {
-            await axios.post(`/api/user/techstack`, { tech: newSkill, userId });
-            setSkills([...skills, newSkill]);
-            setNewSkill("");
-            toast.success("Skill added successfully!");
-        } catch (error) {
-            console.error("Failed to add skill:", error);
-        }
+      try {
+        await axios.post(`/api/user/techstack`, { tech: newSkill, userId });
+        setSkills([...skills, newSkill]);
+        setNewSkill("");
+        toast.success("Skill added successfully!");
+      } catch (error) {
+        console.error("Failed to add skill:", error);
+      }
     }
-};
+  };
 
-const removeSkill = async (skillToRemove: string) => {
+  const removeSkill = async (skillToRemove: string) => {
     try {
-        await axios.delete(`/api/user/techstack`, { data: { tech: skillToRemove, userId } });
-        setSkills(skills.filter(skill => skill !== skillToRemove));
-        toast.success("Skill removed successfully!");
+      await axios.delete(`/api/user/techstack`, { data: { tech: skillToRemove, userId } });
+      setSkills(skills.filter(skill => skill !== skillToRemove));
+      toast.success("Skill removed successfully!");
     } catch (error) {
-        console.error("Failed to remove skill:", error);
+      console.error("Failed to remove skill:", error);
     }
-};
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    e.preventDefault(); // Prevent form submission
+    if (isLoading) return; // Prevent multiple submissions
+    
     setIsLoading(true);
     try {
       const formData = new FormData();
@@ -105,54 +104,66 @@ const removeSkill = async (skillToRemove: string) => {
       );
 
       if (response.status === 200) {
-        toast.success("Profile updated successfully!");
-        router.push(`/user/${userId}`);
+        // Update session first
         if (session) {
           await updateSession({
             ...session,
-            user: { ...session.user, name, bio, city, website, avatarUrl: response.data.user.avatarUrl },
+            user: { 
+              ...session.user, 
+              name, 
+              bio, 
+              city, 
+              website, 
+              avatarUrl: response.data.user.avatarUrl 
+            },
           });
         }
         
-      } else {
-        toast.error("Error while updating profile, please try again!");
+        // Show success message
+        toast.success("Profile updated successfully!");
+        
+        // Navigate after a short delay to ensure session is updated
+        setTimeout(() => {
+          router.push(`/user/${userId}`);
+        }, 100);
       }
     } catch (error) {
       console.error("Failed to update profile:", error);
+      toast.error("Error while updating profile, please try again!");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="p-8 border m-4 min-h-screen rounded-lg">
+    <form onSubmit={handleSubmit} className="p-8 border m-4 min-h-screen rounded-lg">
       <Toaster position="top-right" reverseOrder={false} />
       <div className="text-2xl text-black font-bold">Edit Profile</div>
       <div className="flex text-black pt-4 w-full flex-col gap-4">
         {/* Avatar Upload and Preview */}
         <div className="flex flex-col justify-center relative">
-    <div className="w-[100px] h-[100px] rounded-full overflow-hidden mt-4">
-        {avatarPreview ? (
-            <Image src={avatarPreview} alt="Avatar Preview" width={384} height={384} className="object-cover w-full h-full" />
-        ) : (
-            <Image src={session?.user.avatarUrl || "/default-avatar.png"} alt="User Avatar" width={384} height={384} className="object-cover w-full h-full" />
-        )}
-    </div>
-    <button
-        className="absolute bottom-2 right-2 border p-2 rounded cursor-pointer text-sm"
-        onClick={() => document.getElementById('avatar')?.click()} // Programmatically click the input
-    >
-        Change Avatar
-    </button>
-    <input
-        type="file"
-        id="avatar"
-        accept="image/*"
-        onChange={handleAvatarChange}
-        className="hidden"
-    />
-</div>
-
+          <div className="w-[100px] h-[100px] rounded-full overflow-hidden mt-4">
+            {avatarPreview ? (
+              <Image src={avatarPreview} alt="Avatar Preview" width={384} height={384} className="object-cover w-full h-full" />
+            ) : (
+              <Image src={session?.user.avatarUrl || "/default-avatar.png"} alt="User Avatar" width={384} height={384} className="object-cover w-full h-full" />
+            )}
+          </div>
+          <button
+            type="button" // Prevent form submission
+            className="absolute bottom-2 right-2 border p-2 rounded cursor-pointer text-sm"
+            onClick={() => document.getElementById('avatar')?.click()}
+          >
+            Change Avatar
+          </button>
+          <input
+            type="file"
+            id="avatar"
+            accept="image/*"
+            onChange={handleAvatarChange}
+            className="hidden"
+          />
+        </div>
 
         <div className="flex flex-col">
           <label className="text-sm mb-2" htmlFor="name">Name</label>
@@ -185,14 +196,13 @@ const removeSkill = async (skillToRemove: string) => {
               <div key={skill} className="flex items-center bg-gray-200 rounded-full px-2 py-1 text-sm">
                 {skill}
                 <button
-                   
-                    
-                    className="h-4 w-4 ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full"
-                    onClick={() => removeSkill(skill)}
-                  >
-                    <X className="h-3 w-3" />
-                    <span className="sr-only">Remove {skill} skill</span>
-                  </button>
+                  type="button" // Prevent form submission
+                  className="h-4 w-4 ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full"
+                  onClick={() => removeSkill(skill)}
+                >
+                  <X className="h-3 w-3" />
+                  <span className="sr-only">Remove {skill} skill</span>
+                </button>
               </div>
             ))}
           </div>
@@ -204,16 +214,24 @@ const removeSkill = async (skillToRemove: string) => {
               className="border rounded-lg text-sm px-2 py-1"
               placeholder="Add a new skill"
             />
-            <button onClick={addSkill} className="px-4 py-1 bg-blue-500 text-white rounded-lg">
+            <button 
+              type="button" // Prevent form submission
+              onClick={addSkill} 
+              className="px-4 py-1 bg-blue-500 text-white rounded-lg"
+            >
               Add
             </button>
           </div>
         </div>
 
-        <button onClick={handleSubmit} disabled={isLoading} className={`p-2 bg-blue-500 rounded-lg mt-2 text-white ${isLoading ? "opacity-50" : ""}`}>
+        <button 
+          type="submit"
+          disabled={isLoading} 
+          className={`p-2 bg-blue-500 rounded-lg mt-2 text-white ${isLoading ? "opacity-50" : ""}`}
+        >
           {isLoading ? "Saving..." : "Save Profile"}
         </button>
       </div>
-    </div>
+    </form>
   );
 }
