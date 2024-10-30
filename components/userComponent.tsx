@@ -245,11 +245,11 @@ export default function UserProfilePage() {
   const isOwnProfile = session?.user?.id === userId;
 
   return (
-    <div className="min-h-screen flex flex-col gap-6 overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
+    <div className="min-h-screen flex flex-col gap- overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
       <div className="rounded-lg bg-white flex flex-col ">
         <div className="bg-sky-300 lg:h-[20vh] h-[12vh] lg:mb-8 mb-10 lg:pt-24 pl-2 pt-12 lg:pl-4 w-full">
 
-          <div className="rounded-full bg-yellow-200  lg:w-[100px] w-[80px] h-[80px] lg:h-[100px] overflow-hidden shadow-lg">
+          <div className="rounded-full   lg:w-[100px] w-[80px] h-[80px] lg:h-[100px] overflow-hidden shadow-lg">
             {userProfile?.avatarUrl ? (
               <Image
                 src={userProfile.avatarUrl}
@@ -342,7 +342,7 @@ export default function UserProfilePage() {
           alt={`${tech} icon`}
           className="w-4 h-4 object-contain"
         />
-        <p className="text-xs font-semibold text-black">{tech}</p>
+        <p className="text-xs font- text-black">{tech}</p>
       </span>
     ))}
   </div>
