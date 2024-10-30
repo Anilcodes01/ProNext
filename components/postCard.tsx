@@ -122,7 +122,7 @@ export default function PostCard({ post }: { post: Post }) {
         <div onClick={handlePostClick} className="whitespace-pre-wrap  text-black">
           {showFullContent || post.content.length <= 300
             ? post.content
-            : `${post.content.slice(0, 300)}...`}
+            : `${post.content.slice(0, 200)}...`}
         </div>
         {post.content.length > 300 && (
           <button
