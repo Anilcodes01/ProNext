@@ -1,13 +1,13 @@
-// app/api/users/[userId]/route.ts
+
 
 import { NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma'; // Adjust the import path as needed
+import { prisma } from '@/app/lib/prisma'; 
 
 export async function GET(request: Request, { params }: { params: { userId: string } }) {
   const { userId } = params;
 
   try {
-    // Fetch the user details from the database
+    
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
@@ -18,7 +18,8 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         bio: true,
         website: true,
         city: true,
-        techStack: true
+        techStack: true,
+        ProfilePageImage: true
       },
     });
 
