@@ -149,7 +149,7 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         )}
 
-        <div className="mt-3 ml-2 flex justify-around gap-8">
+        <div className="mt-3 ml-2 flex  gap-8">
           <button
             className={`gap-1 flex items-center ${liked ? "text-red-500" : "text-gray-400"} hover:text-red-600`}
             onClick={handleLikeToggle}
