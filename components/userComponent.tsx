@@ -250,7 +250,7 @@ export default function UserProfilePage() {
             <Image
               src={userProfile.ProfilePageImage}
               alt="User Profile Page Image"
-              width={600}
+              width={1000}
               height={400}
               className="h-[12vh] lg:h-[20vh] w-full rounded object-cover"
             />
@@ -266,6 +266,7 @@ export default function UserProfilePage() {
                 alt="User Avatar"
                 width={384}
                 height={384}
+                
                 className="rounded-full h-full w-full object-cover"
               />
             ) : (
