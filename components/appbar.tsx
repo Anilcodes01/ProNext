@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { MdOutlineNotifications } from "react-icons/md"; // Import search icon
+import { MdOutlineNotifications } from "react-icons/md"; 
 import { FaUserCircle } from "react-icons/fa";
 import { TbSearch } from "react-icons/tb";
 import { signOut } from "next-auth/react";
@@ -21,9 +21,9 @@ export default function Appbar() {
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // To store the search query
-  const [searchResults, setSearchResults] = useState<User[]>([]); // To store the search results
-  const [isSearching, setIsSearching] = useState(false); // To track if searching is ongoing
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchResults, setSearchResults] = useState<User[]>([]); 
+  const [isSearching, setIsSearching] = useState(false); 
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
@@ -175,7 +175,6 @@ export default function Appbar() {
         </>
       ) : (
         <div onClick={() => router.push("/auth/signin")} className="cursor-pointer sm:block block">
-          {/* Make sure it's visible on all screens */}
           Signin
         </div>
       )}

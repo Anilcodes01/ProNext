@@ -28,7 +28,7 @@ export default function ArticleCard({ article }: ArticleProps) {
   return (
     <Link href={`/articles/${article.id}`} passHref>
       <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 rounded-lg w-full p-4">
-        {/* User Info */}
+       
         <div className="flex items-center mb-4">
           {article.user && article.user.avatarUrl ? (
             <Image
@@ -37,7 +37,7 @@ export default function ArticleCard({ article }: ArticleProps) {
             width={384}
             height={384}
             quality={75}
-            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" 
           />
           ) : (
             <FaUserCircle className="w-6 h-6 text-black" />
@@ -57,9 +57,9 @@ export default function ArticleCard({ article }: ArticleProps) {
           </div>
         </div>
 
-        {/* Article Content */}
+       
         <div className="flex flex-col md:flex-row">
-          {/* Article Text */}
+        
           <div className={`flex flex-col ${article.image ? "w-full md:w-3/4" : "w-full"} mb-4 md:mb-0`}>
             <div className="text-xl text-black font-semibold">
               {article.title}
@@ -71,7 +71,7 @@ export default function ArticleCard({ article }: ArticleProps) {
             </p>
           </div>
 
-          {/* Article Image (Visible only if available) */}
+          
           {article.image && (
             <div className="w-full md:w-1/4 mt-4 md:mt-0 md:ml-4 flex justify-center items-center">
               <Image

@@ -7,19 +7,19 @@ interface Post {
   id: string;
   title?: string;
   content: string;
-  image?: string; // Make sure to allow null for optional images
+  image?: string;
   createdAt: string;
   updatedAt: string;
   userId: string;
   user: {
     id: string;
     name: string;
-    avatarUrl?: string ; // Allow null for optional avatars
+    avatarUrl?: string ; 
   };
-  isLiked: boolean; // This field is based on your backend response
+  isLiked: boolean; 
   likeCount: number;
   commentCount: number 
-  isBookmarked: boolean// Ensure this is passed correctly from the backend
+  isBookmarked: boolean
 }
 
 export default function PostList() {
@@ -27,7 +27,7 @@ export default function PostList() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Fetch posts using useEffect
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -45,12 +45,12 @@ export default function PostList() {
         console.error("Failed to fetch posts", error);
         setError("Failed to fetch posts");
       } finally {
-        setLoading(false); // Set loading to false after fetch is complete
+        setLoading(false); 
       }
     };
 
     fetchPosts();
-  }, []); // Run once on component mount
+  }, []); 
 
   if (error) {
     return <p className="text-red-500">{error}</p>;

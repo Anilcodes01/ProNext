@@ -24,7 +24,7 @@ export default function EditProfileForm() {
   const router = useRouter();
   const userId = session?.user?.id;
 
-  // Fetch current user data including skills
+ 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -99,8 +99,8 @@ export default function EditProfileForm() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Prevent form submission
-    if (isLoading) return; // Prevent multiple submissions
+    e.preventDefault(); 
+    if (isLoading) return; 
     
     setIsLoading(true);
     try {
@@ -121,7 +121,7 @@ export default function EditProfileForm() {
       );
 
       if (response.status === 200) {
-        // Update session first
+      
         if (session) {
           await updateSession({
             ...session,
@@ -137,10 +137,10 @@ export default function EditProfileForm() {
           });
         }
         
-        // Show success message
+       
         toast.success("Profile updated successfully!");
         
-        // Navigate after a short delay to ensure session is updated
+        
         setTimeout(() => {
           router.push(`/user/${userId}`);
         }, 100);
@@ -243,7 +243,7 @@ export default function EditProfileForm() {
               <div key={skill} className="flex items-center bg-gray-200 rounded-full px-2 py-1 text-sm">
                 {skill}
                 <button
-                  type="button" // Prevent form submission
+                  type="button" 
                   className="h-4 w-4 ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full"
                   onClick={() => removeSkill(skill)}
                 >
@@ -262,7 +262,7 @@ export default function EditProfileForm() {
               placeholder="Add a new skill"
             />
             <button 
-              type="button" // Prevent form submission
+              type="button" 
               onClick={addSkill} 
               className="px-4 py-1 bg-blue-500 text-white rounded-lg"
             >

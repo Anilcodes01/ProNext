@@ -75,11 +75,11 @@ export default function PollList() {
 
   return (
     <div className='rounded-lg mt-4 text-black'>
-      <CreatePoll onPollCreated={fetchPolls} /> {/* Pass the refetch function to CreatePoll */}
+      <CreatePoll onPollCreated={fetchPolls} /> 
       <div className='mt-8 text-2xl font-semibold'>
         Polls
       </div>
-      {/* Show skeletons while loading */}
+      
       {loading ? (
         <>
           <SkeletonLoader />
@@ -106,9 +106,9 @@ export default function PollList() {
                 </div>
               )}
               <div className='flex items-center text-center gap-2'>
-                {/* Display Creator's Name */}
+               
                 <p className="text-xl font-semibold">{poll.creator?.name}</p>
-                {/* Display Created At Time */}
+               
                 <p className="text-xs mt-0.5 text-gray-600 ">
                   {formatDistanceToNow(new Date(poll.createdAt), { addSuffix: true })}
                 </p>

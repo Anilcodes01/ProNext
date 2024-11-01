@@ -28,11 +28,11 @@ export default function CreatePoll({ onPollCreated }: { onPollCreated: () => voi
         options: options.filter((opt) => opt.trim() !== ''),
       });
 
-      // Clear inputs after successful submission
-      setQuestion('');            // Reset question input
-      setOptions(['', '']);        // Reset options input to two empty fields
+
+      setQuestion('');            
+      setOptions(['', '']);        
       
-      onPollCreated();             // Trigger the poll list refetch
+      onPollCreated();             
     } catch (error) {
       console.error('Error creating poll:', error);
     }

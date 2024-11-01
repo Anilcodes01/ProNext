@@ -45,19 +45,19 @@ export default function BookmarkComponent() {
 
   useEffect(() => {
     const fetchBookmarkedItems = async () => {
-      setLoading(true); // Start loading
+      setLoading(true); 
       try {
         if (view === "posts") {
           const response = await axios.get("/api/users/bookmarks");
           setBookmarkedPosts(response.data.posts);
         } else {
-          const response = await axios.get("/api/users/articleBookmarks"); // Adjust the API endpoint for articles
+          const response = await axios.get("/api/users/articleBookmarks"); 
           setBookmarkedArticles(response.data.articles);
         }
       } catch (error) {
         console.error("Failed to fetch bookmarked items:", error);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false); 
       }
     };
 
@@ -125,9 +125,9 @@ export default function BookmarkComponent() {
       <div className="grid grid-cols-1 gap-2">
         {bookmarksToDisplay.map((item) =>
           view === "posts" ? (
-            <PostCard key={item.id} post={item as Post} /> // Assert type for clarity
+            <PostCard key={item.id} post={item as Post} /> 
           ) : (
-            <ArticleCard key={item.id} article={item as Article} /> // Assert type for clarity
+            <ArticleCard key={item.id} article={item as Article} /> 
           )
         )}
       </div>

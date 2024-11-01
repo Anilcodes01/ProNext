@@ -4,7 +4,7 @@ import axios from "axios";
 
 interface FollowButtonProps {
   isFollowing: boolean;
-  followingId: string;  // ID of the user being followed/unfollowed
+  followingId: string;  
 }
 
 export default function FollowButton({ isFollowing, followingId }: FollowButtonProps) {

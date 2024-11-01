@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
 import { FaUserCircle } from "react-icons/fa";
-import PostList from "./postList"; // Import the new PostList component
+import PostList from "./postList"; 
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -82,7 +82,7 @@ export default function MainContent() {
   };
 
   const handleEmojiSelect = (emojiObject: EmojiClickData) => {
-    setPostContent((prevContent) => prevContent + emojiObject.emoji); // Add emoji to post content
+    setPostContent((prevContent) => prevContent + emojiObject.emoji); 
     setShowEmojiPicker(false);
   };
 
@@ -96,7 +96,7 @@ export default function MainContent() {
           <textarea
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
-            className="outline-none border text-black bg-gray-200 text-black w-full h-20 sm:h-30 text-lg rounded-lg p-2 resize-none"
+            className="outline-none border text-black bg-gray-200  w-full h-20 sm:h-30 text-lg rounded-lg p-2 resize-none"
             placeholder="What's on your mind?..."
           ></textarea>
           {previewUrl && (
@@ -227,7 +227,7 @@ export default function MainContent() {
                 className="rounded-full w-10 h-10 object-cover overflow-hidden cursor-pointer "
               />
             ) : (
-              <FaUserCircle size={32} className="text-gray-500" /> // Larger fallback icon
+              <FaUserCircle size={32} className="text-gray-500" /> 
             )}
           </div>
           <textarea

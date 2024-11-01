@@ -100,8 +100,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         <Image
           src={project.image}
           alt={project.projectName}
-          layout="fill" // Use fill layout for responsive images
-          objectFit="contain" // Ensures the image covers the entire container
+          layout="fill" 
+          objectFit="contain" 
           quality={90}
           className="rounded"
         />
@@ -114,7 +114,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {project.projectName}
           </h3>
 
-          {/* Tech Stack - Visible only on medium screens and above */}
+        
           <div className="hidden md:block">
             {loading ? (
               <p className="text-gray-500">Loading tech stack...</p>

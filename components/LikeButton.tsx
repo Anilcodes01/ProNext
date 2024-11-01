@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import { FaHeart, FaRegHeart } from 'react-icons/fa'; // Import heart icon
+import { FaHeart, FaRegHeart } from 'react-icons/fa'; 
 
 type LikeButtonProps = {
   articleId: string;
@@ -22,7 +22,7 @@ export default function LikeButton({ articleId, initialLiked, initialLikeCount }
     try {
       const res = await axios.post(`/api/articles/${articleId}/like`);
       if (res.status === 200 || res.status === 201) {
-        // Toggle the like state based on the response
+        
         setLiked(res.data.liked);
         setLikeCount((prevCount) => (res.data.liked ? prevCount + 1 : prevCount - 1));
       }

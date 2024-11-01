@@ -26,8 +26,8 @@ export default function UserCard() {
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]); 
   const [loading, setLoading] = useState(true);
-  const [hoveredUser, setHoveredUser] = useState<User | null>(null); // State for hovered user
-  const [hoveredUserPosition, setHoveredUserPosition] = useState<{ top: number; left: number } | null>(null); // Position of the hovered user
+  const [hoveredUser, setHoveredUser] = useState<User | null>(null); 
+  const [hoveredUserPosition, setHoveredUserPosition] = useState<{ top: number; left: number } | null>(null); 
   const router = useRouter();
 
   useEffect(() => {
@@ -75,7 +75,7 @@ export default function UserCard() {
   };
 
   return (
-    <div className="bg-white text-black p-4 relative"> {/* Make this relative for absolute positioning */}
+    <div className="bg-white text-black p-4 relative"> 
       {/* Mobile Back Button */}
       <div onClick={() => router.push('/')} className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex">
         <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
@@ -96,11 +96,11 @@ export default function UserCard() {
               router.push(`/user/${user.id}`)
             }} className="flex rounded-xl pl-2 border pr-2 w-full">
               <div
-                 // Clear hovered user on mouse leave
+                
                 className="cursor-pointer w-full bg-white p-2 flex items-center gap-2"
               >
                 {user.avatarUrl ? (
-                  <div onMouseEnter={(event) => handleMouseEnter(event, user)} // Set hovered user on mouse enter
+                  <div onMouseEnter={(event) => handleMouseEnter(event, user)} 
                   onMouseLeave={handleMouseLeave} className="w-8 h-8 rounded-full overflow-hidden"> 
                     <Image
                       src={user.avatarUrl}
@@ -133,15 +133,14 @@ export default function UserCard() {
         )}
       </div>
 
-      {/* User Details Card */}
-     {/* User Details Card */}
+     
 {hoveredUser && hoveredUserPosition && (
   <div
     className="absolute z-10 max-w-96 min-w-64 bg-white border rounded-lg shadow-lg p-4 transition-transform duration-300 ease-in-out"
     style={{
-      top: `${hoveredUserPosition.top + window.scrollY}px`, // Adjust for scrolling
-      left: `${hoveredUserPosition.left + window.scrollX}px`, // Adjust for scrolling
-      transform: 'translate(-50%, -100%)', // Center the card horizontally, place above the avatar
+      top: `${hoveredUserPosition.top + window.scrollY}px`, 
+      left: `${hoveredUserPosition.left + window.scrollX}px`, 
+      transform: 'translate(-50%, -100%)', 
       opacity: 1,
     }}
   >
