@@ -43,6 +43,7 @@ export default function EditProfileForm() {
         setWebsite(user.website || "");
         setSkills(user.techStack || []);
         setAvatarPreview(user.avatarUrl || "/default-avatar.png");
+        setProfilePageImagePreview(user.ProfilePageImage || "")
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -131,7 +132,7 @@ export default function EditProfileForm() {
               city, 
               website, 
               avatarUrl: response.data.user.avatarUrl ,
-              profilePageImage: response.data.user.profilePageImage
+              profilePageImage: response.data.user.ProfilePageImage
             },
           });
         }
@@ -194,7 +195,7 @@ export default function EditProfileForm() {
             )}
           </div>
           <button
-            type="button" // Prevent form submission
+            type="button" 
             className="absolute bottom-2 right-2 border p-2 rounded cursor-pointer text-sm"
             onClick={() => document.getElementById('avatar')?.click()}
           >
