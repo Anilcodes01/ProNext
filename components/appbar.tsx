@@ -131,7 +131,7 @@ export default function Appbar() {
           </div>
           {dropdownOpen && (
             <div
-              className="absolute right-0 mt-64 w-48 bg-white border rounded-lg shadow-lg"
+              className="absolute right-0 mt-80 w-48 bg-white border rounded-lg shadow-lg"
               onMouseLeave={handleDropdownClose}
             >
               <div className="p-4 flex flex-col cursor-pointer items-center">
@@ -161,10 +161,19 @@ export default function Appbar() {
                   </button>
                   <button
                     onClick={() => {
+                      router.push(`/bookmarks`);
+                    }}
+                    className="border mt-2 mb-2 hover:bg-gray-100 rounded-lg text-black w-full"
+                  >
+                    Bookmarks
+                  </button>
+   <hr />
+                  <button
+                    onClick={() => {
                       signOut({ callbackUrl: "/auth/signin" });
                       handleDropdownClose();
                     }}
-                    className="mt-2 px-4 border hover:bg-gray-100 text-black rounded-lg"
+                    className="px-4 mt-2 border hover:bg-gray-100 text-black rounded-lg"
                   >
                     Sign out
                   </button>
