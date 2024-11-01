@@ -5,8 +5,8 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { MdOutlineNotifications } from "react-icons/md"; 
 import { FaUserCircle } from "react-icons/fa";
-import { TbSearch } from "react-icons/tb";
 import { signOut } from "next-auth/react";
+import { Search } from 'lucide-react';
 import axios from "axios";
 
 type User = {
@@ -56,7 +56,7 @@ export default function Appbar() {
   return (
     <div className="bg-white text-black z-50 fixed border-b w-full justify-between h-16 flex items-center">
       <button onClick={() => router.push("/")} className="lg:text-3xl text-2xl ml-4 font-bold lg:ml-8">
-        Rezin
+        ProNext
       </button>
 
       {/* Search bar for larger screens */}
@@ -100,10 +100,10 @@ export default function Appbar() {
 
       {/* Search icon for mobile screens */}
       <span className="block sm:hidden rounded-full  ">
-        <TbSearch
+          <Search 
           size={24}
           className="cursor-pointer ml-28  rounded-full   hover:bg-slate-200 "
-          onClick={() => router.push("/search")} // Redirect to search page
+          onClick={() => router.push("/search")} 
         />
       </span>
 

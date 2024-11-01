@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { MessageSquareMore } from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { BookmarkCheck } from 'lucide-react';
 import {
   FaUserCircle,
-  FaRegHeart,
+
   FaHeart,
-  FaRegCommentAlt,
-  FaRegBookmark,
+  
+ 
   FaBookmark,
 } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
@@ -146,12 +149,12 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         )}
 
-        <div className="mt-3 ml-2 flex gap-8">
+        <div className="mt-3 ml-2 flex justify-around gap-8">
           <button
             className={`gap-1 flex items-center ${liked ? "text-red-500" : "text-gray-400"} hover:text-red-600`}
             onClick={handleLikeToggle}
           >
-            {liked ? <FaHeart size={19} /> : <FaRegHeart size={19} />}
+            {liked ? <FaHeart size={19} /> : <Heart size={19} />}
             <div className="text-sm">{likeCount}</div>
           </button>
 
@@ -159,7 +162,7 @@ export default function PostCard({ post }: { post: Post }) {
             onClick={handlePostClick}
             className="text-gray-400 gap-1 hover:text-green-400 flex items-center"
           >
-            <FaRegCommentAlt size={18} />
+            <MessageSquareMore size={18} />
             <div className="text-sm">{post.commentCount}</div>
           </button>
 
@@ -172,8 +175,8 @@ export default function PostCard({ post }: { post: Post }) {
             className={`gap-1 flex items-center ${bookmarked ? "text-green-600" : "text-gray-400"} hover:text-green-600`}
             onClick={handleBookmarkToggle}
           >
-            {bookmarked ? <FaBookmark size={18} /> : <FaRegBookmark size={18} />}
-            <div className="text-sm">Save</div>
+            {bookmarked ? <FaBookmark size={18} /> : <BookmarkCheck size={18} />}
+            
           </button>
         </div>
       </div>
