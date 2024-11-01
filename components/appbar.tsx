@@ -108,20 +108,20 @@ export default function Appbar() {
       </span>
 
 
-      <div className="mr-4 lg:mr-8 justify-between flex">
-  <MdOutlineNotifications size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
+      <div className="mr-4  lg:mr-8 justify-between flex">
+  <MdOutlineNotifications className="mt-1" size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
   <div>
     <div className="relative flex items-center lg:ml-4 ml-4">
       {session?.user ? (
         <>
-          <div onClick={handleDropdownToggle} className="flex h-10 w-10 overflow-hidden items-center">
+          <div onClick={handleDropdownToggle} className="flex h-8 w-8 overflow-hidden items-center">
             {session?.user.avatarUrl ? (
               <Image
                 src={session.user.avatarUrl}
                 alt="User Profile Picture"
                 width={192}
                 height={192}
-                className="rounded-full h-10 w-10 overflow-hidden object-cover cursor-pointer"
+                className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
               />
             ) : (
               <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
