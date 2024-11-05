@@ -110,7 +110,7 @@ export default function PostCard({ post }: { post: Post }) {
           </Link>
         ) : (
           <Link href={`/user/${post.user.id}`} passHref>
-            <FaUserCircle className="w-6 h-6 text-black cursor-pointer" />
+            <FaUserCircle className="w-8 h-8 text-black cursor-pointer" />
           </Link>
         )}
         <Link href={`/user/${post.user.id}`} passHref>

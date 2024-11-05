@@ -104,9 +104,9 @@ export default function BookmarkComponent() {
 
   return (
     <div className="container mx-auto min-h-screen mt-4">
-      <div className="flex bg-gray-200 p-2 rounded-xl   mb-4">
+      <div className="flex bg-gray-200 p-1 rounded-xl   mb-4">
         <button
-          className={`px-4 py-1 w-full rounded-xl ${
+          className={`px-4 py-2 w-full rounded-xl ${
             view === "posts" ? "bg-gray-300 text-black" : "text-black"
           }`}
           onClick={() => setView("posts")}
@@ -114,7 +114,7 @@ export default function BookmarkComponent() {
           Posts
         </button>
         <button
-          className={`px-4 w-full py-1 ml-2 rounded-xl ${
+          className={`px-4 w-full py-2 ml-2 rounded-xl ${
             view === "articles" ? "bg-gray-300 text-black" : "text-black"
           }`}
           onClick={() => setView("articles")}

@@ -30,12 +30,12 @@ export async function GET(request: Request, { params }: { params: { userId: stri
       );
     }
 
-    // Fetch the followers count (users following this user)
+
     const followersCount = await prisma.follow.count({
       where: { followingId: userId },
     });
 
-    // Fetch the following count (users this user is following)
+
     const followingCount = await prisma.follow.count({
       where: { followerId: userId },
     });
