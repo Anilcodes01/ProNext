@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 export async function POST(req: Request) {
   const { postId } = await req.json();
 
-  // Validate that postId is provided
+  
   if (!postId) {
     return NextResponse.json(
       { message: "Post ID is required" },
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
   }
 
   try {
-    // Delete all bookmarks associated with the post
+   
     await prisma.bookmark.deleteMany({
       where: { postId },
     });
@@ -22,12 +22,12 @@ export async function POST(req: Request) {
       where: {postId}
     })
 
-    // Delete all likes associated with the post
+    
     await prisma.like.deleteMany({
       where: { postId },
     });
 
-    // Delete the post
+   
     const deletedPost = await prisma.post.delete({
       where: { id: postId },
     });

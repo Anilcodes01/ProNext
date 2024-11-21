@@ -1,7 +1,7 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
-import { getServerSession } from "next-auth"; // Adjust this import based on your auth setup
-import { authOptions } from "@/app/lib/authOptions"; // Adjust the path based on your project structure
+import { getServerSession } from "next-auth"; 
+import { authOptions } from "@/app/lib/authOptions";
 
 export async function GET(
   req: Request,
@@ -9,18 +9,18 @@ export async function GET(
 ) {
   try {
     const { id } = params;
-    const session = await getServerSession(authOptions); // Get session to retrieve the user ID
+    const session = await getServerSession(authOptions); 
 
-    // Check if the user is logged in and safely access the user ID
+ 
     const userId = session?.user?.id || null;
 
-    // Fetch the article with associated user data and count likes directly
+  
     const article = await prisma.article.findUnique({
       where: { id },
       include: {
         user: true,
         likes: true,
-        bookmarks: true, // Include bookmarks if needed later
+        bookmarks: true, 
       },
     });
 
@@ -33,7 +33,7 @@ export async function GET(
       );
     }
 
-    // Check if the article is liked and bookmarked by the logged-in user
+
     const [likedByUser, bookmarkedByUser] = await Promise.all([
       userId ? prisma.like.findUnique({
         where: {
@@ -53,27 +53,27 @@ export async function GET(
       }) : null,
     ]);
 
-    // Count total likes
-    const likeCount = article.likes.length; // Get total likes count
+  
+    const likeCount = article.likes.length; 
 
     return NextResponse.json(
       {
         message: "Article fetched successfully!",
         article: {
           ...article,
-          liked: likedByUser !== null, // true if liked, false otherwise
+          liked: likedByUser !== null, 
           likeCount,
-          bookmarked: bookmarkedByUser !== null, // true if bookmarked, false otherwise
+          bookmarked: bookmarkedByUser !== null, 
         },
       },
       { status: 200 }
     );
   } catch (error) {
-    console.error("Error fetching article:", error); // Log the error for debugging
+    console.error("Error fetching article:", error); 
     return NextResponse.json(
       {
         message: "Error while fetching article!",
-        error: error instanceof Error ? error.message : String(error), // Send a stringified error message
+        error: error instanceof Error ? error.message : String(error), 
       },
       { status: 500 }
     );

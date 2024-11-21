@@ -42,7 +42,7 @@ export default function LikeButton({ articleId, initialLiked, initialLikeCount }
       >
        {liked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
       </button>
-      {likeCount > 0 && ( // Only show the like count if greater than 0
+      {likeCount > 0 && ( 
         <span className="ml-1 text-xs text-gray-600">{likeCount}</span>
       )}
     </div>

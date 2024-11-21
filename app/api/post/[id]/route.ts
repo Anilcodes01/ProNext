@@ -22,8 +22,8 @@ export async function GET(
             avatarUrl: true,
           },
         },
-        likes: true, // Fetch likes for the post
-        bookmarks: true, // Fetch bookmarks for the post
+        likes: true, 
+        bookmarks: true, 
         comments: {
           orderBy: { createdAt: "desc" },
           select: {
@@ -45,19 +45,19 @@ export async function GET(
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
-    // Check if the current logged-in user has liked the post
+   
     const isLiked = userId ? post.likes.some((like) => like.userId === userId) : false;
 
-    // Check if the current logged-in user has bookmarked the post
+   
     const isBookmarked = userId ? post.bookmarks.some((bookmark) => bookmark.userId === userId) : false;
 
-    // Return the post data along with the like count, bookmark status, and whether the post is liked by the current user
+    
     return NextResponse.json({
       ...post,
-      likeCount: post.likes.length, // Calculate like count
-      comments: post.comments, // Return comments
-      isLiked, // Whether the logged-in user liked this post
-      isBookmarked, // Whether the logged-in user bookmarked this post
+      likeCount: post.likes.length, 
+      comments: post.comments, 
+      isLiked, 
+      isBookmarked, 
     });
   } catch (error) {
     console.error("Error fetching post:", error);

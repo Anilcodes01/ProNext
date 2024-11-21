@@ -18,11 +18,11 @@ export async function POST(req: Request) {
 
     let imageUrl = null;
 
-    // If an image is uploaded, upload it to Cloudinary
+    
     if (image) {
-      const buffer = Buffer.from(await image.arrayBuffer()); // Convert File to Buffer
+      const buffer = Buffer.from(await image.arrayBuffer()); 
 
-      // Create a Promise for the upload
+      
       imageUrl = await new Promise<string>((resolve, reject) => {
         const uploadStream = cloudinary.v2.uploader.upload_stream(
           {
@@ -34,7 +34,7 @@ export async function POST(req: Request) {
               reject(new Error("Failed to upload image to Cloudinary"));
             }
             if (result) {
-              resolve(result.secure_url); // Get the secure Cloudinary URL
+              resolve(result.secure_url); 
             } else {
               reject(new Error("Upload result is undefined"));
             }

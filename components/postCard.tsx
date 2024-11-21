@@ -2,26 +2,19 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MessageSquareMore } from 'lucide-react';
-import { Heart } from 'lucide-react';
-import { BookmarkCheck } from 'lucide-react';
-import {
-  FaUserCircle,
-
-  FaHeart,
-  
- 
-  FaBookmark,
-} from "react-icons/fa";
+import { MessageSquareMore } from "lucide-react";
+import { Heart } from "lucide-react";
+import { BookmarkCheck } from "lucide-react";
+import { FaUserCircle, FaHeart, FaBookmark } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link"; 
+import Link from "next/link";
 
 interface User {
-  id: string; 
+  id: string;
   name: string;
   avatarUrl?: string;
 }
@@ -122,7 +115,10 @@ export default function PostCard({ post }: { post: Post }) {
       </div>
 
       <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-">
-        <div onClick={handlePostClick} className="whitespace-pre-wrap  text-black">
+        <div
+          onClick={handlePostClick}
+          className="whitespace-pre-wrap  text-black"
+        >
           {showFullContent || post.content.length <= 300
             ? post.content
             : `${post.content.slice(0, 200)}...`}
@@ -151,7 +147,9 @@ export default function PostCard({ post }: { post: Post }) {
 
         <div className="mt-3 ml-2 flex   gap-8">
           <button
-            className={`gap-1 flex items-center ${liked ? "text-red-500" : "text-gray-400"} hover:text-red-600`}
+            className={`gap-1 flex items-center ${
+              liked ? "text-red-500" : "text-gray-400"
+            } hover:text-red-600`}
             onClick={handleLikeToggle}
           >
             {liked ? <FaHeart size={19} /> : <Heart size={19} />}
@@ -172,11 +170,16 @@ export default function PostCard({ post }: { post: Post }) {
           </button>
 
           <button
-            className={`gap-1 flex items-center ${bookmarked ? "text-green-600" : "text-gray-400"} hover:text-green-600`}
+            className={`gap-1 flex items-center ${
+              bookmarked ? "text-green-600" : "text-gray-400"
+            } hover:text-green-600`}
             onClick={handleBookmarkToggle}
           >
-            {bookmarked ? <FaBookmark size={18} /> : <BookmarkCheck size={18} />}
-            
+            {bookmarked ? (
+              <FaBookmark size={18} />
+            ) : (
+              <BookmarkCheck size={18} />
+            )}
           </button>
         </div>
       </div>

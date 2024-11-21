@@ -5,7 +5,7 @@ import PollList from "@/components/poll";
 import { useState } from "react";
 
 export default function PollPage() {
-    const [pollsUpdatedCount, setPollsUpdatedCount] = useState(0); // Initialize a count for updates
+    const [pollsUpdatedCount, setPollsUpdatedCount] = useState(0); 
 
     console.log(setPollsUpdatedCount)
 
@@ -21,7 +21,7 @@ export default function PollPage() {
                 <div className="ml-52 border-l p-6 min-h-screen w-full lg:ml-80 border-r border-gray-200 lg:mr-52">
                  
                     
-                    {/* Use pollsUpdatedCount as the key to trigger re-render */}
+                    
                     <PollList key={pollsUpdatedCount} />
                 </div>
             </div>

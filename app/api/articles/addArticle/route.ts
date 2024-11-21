@@ -3,7 +3,7 @@ import cloudinary from "cloudinary";
 import { NextResponse } from "next/server";
 import stream from "stream";
 
-// Configure Cloudinary
+
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
@@ -12,7 +12,7 @@ cloudinary.v2.config({
 
 export async function POST(req: Request) {
   try {
-    // Parse the incoming form data (image, title, description, content, userId)
+    
     const formData = await req.formData();
     const title = formData.get("title") as string;
     const description = formData.get("description") as string;
@@ -22,15 +22,15 @@ export async function POST(req: Request) {
 
     let imageUrl = null;
 
-    // If an image is uploaded, upload it to Cloudinary
+   
     if (image) {
       const buffer = Buffer.from(await image.arrayBuffer());
 
-      // Upload image to Cloudinary via stream
+      
       imageUrl = await new Promise<string>((resolve, reject) => {
         const uploadStream = cloudinary.v2.uploader.upload_stream(
           {
-            folder: "articles", // Folder name for storing images in Cloudinary
+            folder: "articles", 
           },
           (error, result) => {
             if (error) {
@@ -38,7 +38,7 @@ export async function POST(req: Request) {
               reject(new Error("Failed to upload image to Cloudinary"));
             }
             if (result) {
-              resolve(result.secure_url); // Get the secure Cloudinary URL
+              resolve(result.secure_url);
             } else {
               reject(new Error("Upload result is undefined"));
             }
@@ -47,21 +47,21 @@ export async function POST(req: Request) {
 
         const readableStream = new stream.PassThrough();
         readableStream.end(buffer);
-        readableStream.pipe(uploadStream); // Pipe the buffer stream to Cloudinary
+        readableStream.pipe(uploadStream); 
       });
     }
 
-    // Save article to the database using Prisma
+    
     const newArticle = await prisma.article.create({
       data: {
         title: title ,
         description: description ,
         content: content ,
-        image: imageUrl || null, // Cloudinary image URL if an image was uploaded
-        userId: userId, // Associate the article with the user
+        image: imageUrl || null, 
+        userId: userId, 
       },
       include: {
-        user: true, // Include user information with the article response
+        user: true, 
       },
     });
 

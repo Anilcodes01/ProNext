@@ -17,7 +17,7 @@ export async function POST(
   const articleId = params.id;
 
   try {
-    // Check if the user has already liked the article
+    
     const existingLike = await prisma.like.findUnique({
       where: {
         articleId_userId: {
@@ -28,7 +28,7 @@ export async function POST(
     });
 
     if (existingLike) {
-      // If a like exists, delete it (unlike)
+      
       await prisma.like.delete({
         where: {
           articleId_userId: {

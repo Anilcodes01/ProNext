@@ -31,7 +31,7 @@ interface Article {
   };
   liked: boolean;
   likeCount: number;
-  bookmarked: boolean; // Ensure this matches the backend response
+  bookmarked: boolean; 
 }
 
 interface User {
@@ -97,7 +97,7 @@ export default function FullArticlePage() {
       setArticle(articleData);
       setInitialLiked(articleData.liked);
       setInitialLikeCount(articleData.likeCount);
-      setIsBookmarked(articleData.bookmarked); // Set initial bookmark status from `bookmarked` key
+      setIsBookmarked(articleData.bookmarked); 
     } catch (error) {
       console.error("Error fetching article", error);
       setError("Failed to fetch article. Please try again later.");
@@ -108,7 +108,7 @@ export default function FullArticlePage() {
     if (!article) return;
     try {
       await axios.post(`/api/articles/bookmark`, { articleId: article.id });
-      setIsBookmarked(!isBookmarked); // Toggle after API call
+      setIsBookmarked(!isBookmarked); 
     } catch (error) {
       console.error("Error updating bookmark status:", error);
       setError("Failed to update bookmark status. Please try again later.");

@@ -9,6 +9,7 @@ import { signOut } from "next-auth/react";
 import { Search } from 'lucide-react';
 import axios from "axios";
 
+
 type User = {
   id: string;
   name: string;
@@ -19,6 +20,7 @@ export default function Appbar() {
   const { data: session } = useSession();
   const userId = session?.user.id;
   const router = useRouter();
+  
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState(""); 

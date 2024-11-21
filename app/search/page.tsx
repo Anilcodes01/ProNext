@@ -19,9 +19,9 @@ export default function Search() {
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); // To store the search query
-  const [searchResults, setSearchResults] = useState<User[]>([]); // To store the search results
-  const [isSearching, setIsSearching] = useState(false); // To track if searching is ongoing
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [searchResults, setSearchResults] = useState<User[]>([]);
+  const [isSearching, setIsSearching] = useState(false); 
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);

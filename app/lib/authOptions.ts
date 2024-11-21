@@ -5,9 +5,9 @@ import bcrypt from "bcryptjs";
 import { JWT } from "next-auth/jwt";
 import { Session, User } from "next-auth";
 
-// Define custom user type
+
 interface CustomUser extends User {
-  avatarUrl?: string; // Remove null to match NextAuth User interface
+  avatarUrl?: string; 
 }
 
 export const authOptions = {
@@ -29,10 +29,10 @@ export const authOptions = {
           return null;
         }
 
-        // Ensure user.password is defined and not null before comparison
+       
         if (!user.password) {
           console.log("User password is missing");
-          return null; // Handle the case where the password is null
+          return null; 
         }
 
         const isValidPassword = await bcrypt.compare(password, user.password);
@@ -46,26 +46,26 @@ export const authOptions = {
           name: user.name,
           email: user.email,
           avatarUrl: user.avatarUrl ?? undefined,
-        } as CustomUser; // Ensure you return the correct type
+        } as CustomUser; 
       },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || "",
       async profile(profile) {
-        // Check if the user exists in the database
+       
         let user = await prisma.user.findUnique({
           where: { email: profile.email },
         });
 
-        // If user doesn't exist, create a new user
+        
         if (!user) {
           user = await prisma.user.create({
             data: {
               name: profile.name,
               email: profile.email,
-              avatarUrl: profile.picture, // Use the profile picture from Google
-              // Optionally, you can add a default password or other fields
+              avatarUrl: profile.picture, 
+              
             },
           });
         }
@@ -75,13 +75,13 @@ export const authOptions = {
           name: user.name,
           email: user.email,
           avatarUrl: user.avatarUrl ?? undefined,
-        } as CustomUser; // Ensure you return the correct type
+        } as CustomUser;
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    jwt: ({ token, user }: { token: JWT; user?: CustomUser }) => { // Specify the types here
+    jwt: ({ token, user }: { token: JWT; user?: CustomUser }) => {
       if (user) {
         token.id = user.id;
         token.name = user.name;
@@ -89,7 +89,7 @@ export const authOptions = {
       }
       return token;
     },
-    session: ({ session, token }: { session: Session; token: JWT }) => { // Specify the types here
+    session: ({ session, token }: { session: Session; token: JWT }) => { 
       if (session && session.user) {
         session.user.id = token.id as string;
         session.user.name = token.name;

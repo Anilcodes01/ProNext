@@ -133,7 +133,7 @@ export default function PostDetail() {
             width={250}
             height={250}
             quality={75}
-            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
+            className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" 
           />
           ) : (
             <FaUserCircle className="w-10 h-10 text-gray-500" />

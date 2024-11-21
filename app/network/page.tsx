@@ -17,7 +17,7 @@ export default function Network() {
           </div>
           {/* Main content */}
           <div className="col-span-1 md:col-span-6 w-full bg-white md:ml-52 lg:ml-80 border-l border-r md:col-span-7 text-black">
-            {/* Ensure UserCard takes full width on mobile */}
+           
             <div className="w-full p-2">
               <UserCard />
             </div>

@@ -1,4 +1,4 @@
-// app/api/polls/route.ts
+
 import { prisma } from '@/app/lib/prisma';
 import { NextResponse } from 'next/server';
 
@@ -8,11 +8,11 @@ export async function GET() {
   try {
     const polls = await prisma.poll.findMany({
       include: {
-        options: true,  // Include poll options
-        creator: {       // Include the creator (user) information
+        options: true,  
+        creator: {      
           select: {
             name: true,
-            avatarUrl: true,  // Assuming avatar is stored in the 'image' field
+            avatarUrl: true,  
             createdAt: true,
           },
         },

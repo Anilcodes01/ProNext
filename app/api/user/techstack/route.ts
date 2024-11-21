@@ -1,4 +1,4 @@
-// app/api/user/techStack/route.ts
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/app/lib/prisma";
 
@@ -29,7 +29,7 @@ export async function DELETE(req: Request) {
             where: { id: userId },
             data: {
                 techStack: {
-                    set: (await prisma.user.findUnique({ where: { id: userId } }))?.techStack.filter(skill => skill !== tech) || [], // Remove the skill
+                    set: (await prisma.user.findUnique({ where: { id: userId } }))?.techStack.filter(skill => skill !== tech) || [], 
                 },
             },
         });

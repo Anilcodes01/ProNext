@@ -12,9 +12,9 @@ export default function EditProfilePage() {
   const router = useRouter();
 
   useEffect(() => {
-    // If the user is not logged in, redirect to the login page
+   
     if (status === "unauthenticated") {
-      router.push("/auth/login"); // Adjust this based on your app's login route
+      router.push("/auth/login"); 
     }
   }, [status, router]);
 

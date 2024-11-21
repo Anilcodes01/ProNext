@@ -18,12 +18,12 @@ export default function BookmarkPage() {
           <Sidebar />
         </div>
         <div className="w-full ml-0 md:ml-52 lg:ml-80 lg:p-4 md:p-4 p-4 lg:mr-52 border-r border-l border-gray-200">
-          {/* Back arrow and "Posts" text - hidden on mobile screens */}
+         
           <div
             onClick={() => {
               router.push("/");
             }}
-            className="flex gap-4 mt-4 cursor-pointer items-center hidden md:flex"  // Hidden on mobile screens
+            className="flex gap-4 mt-4 cursor-pointer items-center hidden md:flex" 
           >
             <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
               <FaArrowLeft

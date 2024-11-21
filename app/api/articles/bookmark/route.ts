@@ -3,7 +3,7 @@ import { prisma } from "@/app/lib/prisma";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-// POST: Bookmark or Unbookmark article based on current state
+
 export async function POST(req: Request) {
   try {
     const session = await getServerSession(authOptions);
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const { articleId } = await req.json();
     const userId = session.user.id;
 
-    // Check if the bookmark already exists
+   
     const existingBookmark = await prisma.bookmark.findUnique({
       where: {
         articleId_userId: {
@@ -25,7 +25,7 @@ export async function POST(req: Request) {
     });
 
     if (existingBookmark) {
-      // Delete the bookmark if it exists (unbookmark)
+      
       await prisma.bookmark.delete({
         where: {
           articleId_userId: {
@@ -36,7 +36,7 @@ export async function POST(req: Request) {
       });
       return NextResponse.json({ message: "Article unbookmarked successfully." }, { status: 200 });
     } else {
-      // Create the bookmark if it does not exist
+     
       const bookmark = await prisma.bookmark.create({
         data: {
           userId,

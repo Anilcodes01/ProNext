@@ -72,7 +72,7 @@ export async function POST(request: Request, { params }: { params: { userId: str
       city?: string;
       website?: string;
       avatarUrl?: string;
-      ProfilePageImage?: string; // Updated field name to match the schema
+      ProfilePageImage?: string; 
     } = {
       name: name || currentUser.name,
       bio: bio || currentUser.bio || undefined,
@@ -92,11 +92,11 @@ export async function POST(request: Request, { params }: { params: { userId: str
       const profileImageBuffer = Buffer.from(await profilePageImageFile.arrayBuffer());
       const profileImageUploadResponse = await uploadToCloudinary(profileImageBuffer, `${currentUserId}_profilePageImage`);
       if (profileImageUploadResponse?.secure_url) {
-        updateData.ProfilePageImage = profileImageUploadResponse.secure_url; // Corrected field name
+        updateData.ProfilePageImage = profileImageUploadResponse.secure_url; 
       }
     }
     
-    // Update user in Prisma
+ 
     const updatedUser = await prisma.user.update({
       where: { id: currentUserId },
       data: updateData,

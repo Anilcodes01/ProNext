@@ -18,7 +18,7 @@ export const GET = async () => {
 
     const userId = session.user.id;
 
-    // Fetch bookmarked articles
+    
     const bookmarkedArticles = await prisma.bookmark.findMany({
       where: {
         userId: userId,
@@ -32,7 +32,7 @@ export const GET = async () => {
       .map((bookmark) => bookmark.articleId)
       .filter((id): id is string => id !== null); 
 
-    // Fetch article details
+  
     const articles = await prisma.article.findMany({
       where: {
         id: { in: articleIds },
@@ -62,7 +62,7 @@ export const GET = async () => {
       },
     });
 
-    // Transform the articles data
+   
     const transformedArticles = articles.map((article) => {
       return {
         ...article,

@@ -1,11 +1,11 @@
-// /app/api/posts/unlike/route.ts
+
 import { NextResponse } from 'next/server';
 import { prisma } from '@/app/lib/prisma';
 
 export async function POST(req: Request) {
     try {
       const { postId, userId } = await req.json();
-      console.log('Received postId:', postId, 'userId:', userId); // Log received IDs
+      console.log('Received postId:', postId, 'userId:', userId); 
   
       if (!postId || !userId) {
         return NextResponse.json({ error: 'Missing postId or userId' }, { status: 400 });
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
         }
       });
   
-      // Optionally log how many likes were deleted
+     
       console.log('Deleted likes count:', result.count);
   
       return NextResponse.json({ message: 'Post unliked' }, { status: 200 });

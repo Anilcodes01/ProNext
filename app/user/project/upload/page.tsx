@@ -37,7 +37,7 @@ export default function UploadProject() {
           "Content-Type": "multipart/form-data",
         },
       });
-      router.push(`/user/${userId}`); // Navigate to profile after successful upload
+      router.push(`/user/${userId}`); 
     } catch (error) {
       console.error("Failed to upload project:", error);
       setError("Failed to upload project. Please try again.");

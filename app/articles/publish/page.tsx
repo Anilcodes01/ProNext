@@ -10,7 +10,7 @@ export default function WriteArticle() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [content, setContent] = useState("");
-  const [image, setImage] = useState<File | null>(null); // Image state
+  const [image, setImage] = useState<File | null>(null); 
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -29,7 +29,7 @@ export default function WriteArticle() {
       formData.append("content", content);
       formData.append("userId", session.user.id);
       if (image) {
-        formData.append("image", image); // Append the image file
+        formData.append("image", image); 
       }
 
       const response = await axios.post("/api/articles/addArticle", formData, {

@@ -1,6 +1,6 @@
-// app/api/search-users/route.ts
+
 import { NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma'; // Assuming you have set up Prisma
+import { prisma } from '@/app/lib/prisma'; 
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
