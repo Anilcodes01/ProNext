@@ -21,7 +21,7 @@ interface User {
 
 interface Post {
   id: string;
-  content: string;
+  content: string | null;
   createdAt: string | Date;
   image?: string;
   user: User;
@@ -87,6 +87,10 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
+  // Calculate if we should show the "Read More" button
+  const contentLength = post.content?.length ?? 0;
+  const shouldTruncate = contentLength > 300;
+
   return (
     <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-100 md:hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
       <div className="flex items-center overflow-hidden">
@@ -117,15 +121,24 @@ export default function PostCard({ post }: { post: Post }) {
       <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-">
         <div
           onClick={handlePostClick}
-          className="whitespace-pre-wrap  text-black"
+          className="whitespace-pre-wrap text-black"
         >
-          {showFullContent || post.content.length <= 300
-            ? post.content
-            : `${post.content.slice(0, 200)}...`}
+          {post.content ? (
+            showFullContent || !shouldTruncate ? (
+              post.content
+            ) : (
+              `${post.content.slice(0, 200)}...`
+            )
+          ) : (
+            <span className="text-gray-500 italic">No content available</span>
+          )}
         </div>
-        {post.content.length > 300 && (
+        {shouldTruncate && (
           <button
-            onClick={() => setShowFullContent(!showFullContent)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowFullContent(!showFullContent);
+            }}
             className="text-blue-500 text-sm mt-2 hover:underline"
           >
             {showFullContent ? "Show Less" : "Read More"}
@@ -145,7 +158,7 @@ export default function PostCard({ post }: { post: Post }) {
           </div>
         )}
 
-        <div className="mt-3 ml-2 flex   gap-8">
+        <div className="mt-3 ml-2 flex gap-8">
           <button
             className={`gap-1 flex items-center ${
               liked ? "text-red-500" : "text-gray-400"
