@@ -3,12 +3,11 @@ import { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { MdOutlineNotifications } from "react-icons/md"; 
+import { MdOutlineNotifications } from "react-icons/md";
 import { FaUserCircle } from "react-icons/fa";
 import { signOut } from "next-auth/react";
-import { Search } from 'lucide-react';
+import { Search } from "lucide-react";
 import axios from "axios";
-
 
 type User = {
   id: string;
@@ -20,18 +19,17 @@ export default function Appbar() {
   const { data: session } = useSession();
   const userId = session?.user.id;
   const router = useRouter();
-  
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(""); 
-  const [searchResults, setSearchResults] = useState<User[]>([]); 
-  const [isSearching, setIsSearching] = useState(false); 
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState<User[]>([]);
+  const [isSearching, setIsSearching] = useState(false);
 
   const handleDropdownToggle = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  console.log(isSearching)
+  console.log(isSearching);
   const handleDropdownClose = () => {
     setDropdownOpen(false);
   };
@@ -57,7 +55,10 @@ export default function Appbar() {
 
   return (
     <div className="bg-white text-black z-50 fixed border-b w-full justify-between h-16 flex items-center">
-      <button onClick={() => router.push("/")} className="lg:text-3xl text-2xl ml-4 font-bold lg:ml-8">
+      <button
+        onClick={() => router.push("/")}
+        className="lg:text-3xl text-2xl ml-4 font-bold lg:ml-8"
+      >
         ProNext
       </button>
 
@@ -87,7 +88,13 @@ export default function Appbar() {
                 onClick={() => router.push(`/user/${user.id}`)}
               >
                 {user.avatarUrl ? (
-                  <Image src={user.avatarUrl} alt={user.name} width={192} height={192} className="rounded-full h-10 w-10 object-cover" />
+                  <Image
+                    src={user.avatarUrl}
+                    alt={user.name}
+                    width={192}
+                    height={192}
+                    className="rounded-full h-10 w-10 object-cover"
+                  />
                 ) : (
                   <FaUserCircle size={28} className="text-gray-500" />
                 )}
@@ -102,97 +109,109 @@ export default function Appbar() {
 
       {/* Search icon for mobile screens */}
       <span className="block sm:hidden rounded-full  ">
-          <Search 
+        <Search
           size={24}
           className="cursor-pointer ml-28  rounded-full   hover:bg-slate-200 "
-          onClick={() => router.push("/search")} 
+          onClick={() => router.push("/search")}
         />
       </span>
 
-
       <div className="mr-4  lg:mr-8 justify-between flex">
-  <MdOutlineNotifications className="mt-1" size={24} strokeLinecap="round" strokeLinejoin="round" strokeWidth="0" />
-  <div>
-    <div className="relative flex items-center lg:ml-4 ml-4">
-      {session?.user ? (
-        <>
-          <div onClick={handleDropdownToggle} className="flex h-8 w-8 overflow-hidden items-center">
-            {session?.user.avatarUrl ? (
-              <Image
-                src={session.user.avatarUrl}
-                alt="User Profile Picture"
-                width={192}
-                height={192}
-                className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
-              />
+        <MdOutlineNotifications
+          className="mt-1"
+          size={24}
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth="0"
+        />
+        <div>
+          <div className="relative flex items-center lg:ml-4 ml-4">
+            {session?.user ? (
+              <>
+                <div
+                  onClick={handleDropdownToggle}
+                  className="flex h-8 w-8 overflow-hidden items-center"
+                >
+                  {session?.user.avatarUrl ? (
+                    <Image
+                      src={session.user.avatarUrl}
+                      alt="User Profile Picture"
+                      width={192}
+                      height={192}
+                      className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                      {session.user.name?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                </div>
+                {dropdownOpen && (
+                  <div
+                    className="absolute right-0 mt-80 w-48 bg-white border rounded-lg shadow-lg"
+                    onMouseLeave={handleDropdownClose}
+                  >
+                    <div className="p-4 flex flex-col cursor-pointer items-center">
+                      {session.user.avatarUrl ? (
+                        <Image
+                          src={session.user.avatarUrl}
+                          alt="User Profile Picture"
+                          width={192}
+                          height={192}
+                          className="rounded-full h-12 w-12 overflow-hidden object-cover cursor-pointer border"
+                        />
+                      ) : (
+                        <FaUserCircle size={40} className="text-gray-500" />
+                      )}
+                      <div className="mt-2 text-center">
+                        <p className="font-semibold">{session.user.name}</p>
+                        <p className="text-sm text-gray-600">
+                          {session.user.email}
+                        </p>
+                      </div>
+                      <div className="flex flex-col w-full mt-4">
+                        <button
+                          onClick={() => {
+                            router.push(`/user/${userId}`);
+                          }}
+                          className="border hover:bg-gray-100 rounded-lg text-black w-full"
+                        >
+                          Profile
+                        </button>
+                        <button
+                          onClick={() => {
+                            router.push(`/bookmarks`);
+                          }}
+                          className="border mt-2 mb-2 hover:bg-gray-100 rounded-lg text-black w-full"
+                        >
+                          Bookmarks
+                        </button>
+                        <hr />
+                        <button
+                          onClick={() => {
+                            signOut({ callbackUrl: "/" });
+                            handleDropdownClose();
+                          }}
+                          className="px-4 mt-2 border hover:bg-gray-100 text-black rounded-lg"
+                        >
+                          Sign out
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </>
             ) : (
-              <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
-                {session.user.name?.charAt(0).toUpperCase()}
+              <div
+                onClick={() => router.push("/auth/signin")}
+                className="cursor-pointer sm:block block"
+              >
+                Signin
               </div>
             )}
           </div>
-          {dropdownOpen && (
-            <div
-              className="absolute right-0 mt-80 w-48 bg-white border rounded-lg shadow-lg"
-              onMouseLeave={handleDropdownClose}
-            >
-              <div className="p-4 flex flex-col cursor-pointer items-center">
-                {session.user.avatarUrl ? (
-                  <Image
-                    src={session.user.avatarUrl}
-                    alt="User Profile Picture"
-                    width={192}
-                    height={192}
-                    className="rounded-full h-12 w-12 overflow-hidden object-cover cursor-pointer border"
-                  />
-                ) : (
-                  <FaUserCircle size={40} className="text-gray-500" />
-                )}
-                <div className="mt-2 text-center">
-                  <p className="font-semibold">{session.user.name}</p>
-                  <p className="text-sm text-gray-600">{session.user.email}</p>
-                </div>
-                <div className="flex flex-col w-full mt-4">
-                  <button
-                    onClick={() => {
-                      router.push(`/user/${userId}`);
-                    }}
-                    className="border hover:bg-gray-100 rounded-lg text-black w-full"
-                  >
-                    Profile
-                  </button>
-                  <button
-                    onClick={() => {
-                      router.push(`/bookmarks`);
-                    }}
-                    className="border mt-2 mb-2 hover:bg-gray-100 rounded-lg text-black w-full"
-                  >
-                    Bookmarks
-                  </button>
-   <hr />
-                  <button
-                    onClick={() => {
-                      signOut({ callbackUrl: "/auth/signin" });
-                      handleDropdownClose();
-                    }}
-                    className="px-4 mt-2 border hover:bg-gray-100 text-black rounded-lg"
-                  >
-                    Sign out
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
-        </>
-      ) : (
-        <div onClick={() => router.push("/auth/signin")} className="cursor-pointer sm:block block">
-          Signin
         </div>
-      )}
-    </div>
-  </div>
-</div>
-
+      </div>
     </div>
   );
 }
