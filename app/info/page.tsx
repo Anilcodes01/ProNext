@@ -46,7 +46,12 @@ export default function Home() {
         </button>
 
         <motion.div {...fadeIn} className="hidden md:flex gap-8 lg:gap-10">
-          <button className="hover:text-green-700 transition-colors">
+          <button
+            onClick={() => {
+              router.push("/aboutUs");
+            }}
+            className="hover:text-green-700 transition-colors"
+          >
             Features
           </button>
           <button className="hover:text-green-700 transition-colors">
@@ -91,7 +96,12 @@ export default function Home() {
             {...fadeIn}
             className="mt-8 flex flex-col sm:flex-row gap-4"
           >
-            <button className="bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-3 text-lg transition-colors">
+            <button
+              onClick={() => {
+                router.push("/auth/signup");
+              }}
+              className="bg-green-600 hover:bg-green-700 text-white rounded-full px-8 py-3 text-lg transition-colors"
+            >
               Get Started
             </button>
             <button className="rounded-full hover:bg-slate-100 border-2 border-green-500 px-8 py-3 text-lg transition-colors">
