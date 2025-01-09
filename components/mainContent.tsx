@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
 import { FaUserCircle } from "react-icons/fa";
-import PostList from "./postList"; 
+import PostList from "./postList";
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -82,7 +82,7 @@ export default function MainContent() {
   };
 
   const handleEmojiSelect = (emojiObject: EmojiClickData) => {
-    setPostContent((prevContent) => prevContent + emojiObject.emoji); 
+    setPostContent((prevContent) => prevContent + emojiObject.emoji);
     setShowEmojiPicker(false);
   };
 
@@ -176,7 +176,7 @@ export default function MainContent() {
             <div>
               <button
                 onClick={handlePostSubmission}
-                className="border text-green-800 hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
+                className="border  hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
               >
                 Post
               </button>
@@ -198,9 +198,9 @@ export default function MainContent() {
       <div className="text-black m-5  text-xl  min-h-screen">
         <div>Please signin first to create a Post...!</div>
         <button
-        onClick={() => {
-          router.push('/auth/signin')
-        }}
+          onClick={() => {
+            router.push("/auth/signin");
+          }}
           type="button"
           className="text-white mt-5 ml-24 bg-gray-800 hover:bg-gray-900   font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-70 dark:border-gray-700"
         >
@@ -227,7 +227,7 @@ export default function MainContent() {
                 className="rounded-full w-10 h-10 object-cover overflow-hidden cursor-pointer "
               />
             ) : (
-              <FaUserCircle size={32} className="text-gray-500" /> 
+              <FaUserCircle size={32} className="text-gray-500" />
             )}
           </div>
           <textarea
@@ -301,7 +301,7 @@ export default function MainContent() {
           <div>
             <button
               onClick={handlePostSubmission}
-              className="border text-green-800 hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
+              className="border  hover:text-green-800 border-green-700 h-8 w-16 rounded-full text-black p-1"
             >
               Post
             </button>
@@ -309,7 +309,6 @@ export default function MainContent() {
         </div>
       </div>
 
-    
       <PostList />
     </div>
   );

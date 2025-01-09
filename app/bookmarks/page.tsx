@@ -1,5 +1,5 @@
 "use client";
-import Appbar from "@/components/appbar";
+
 import BookmarkComponent from "@/components/bookmark";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
