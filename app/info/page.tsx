@@ -104,7 +104,12 @@ export default function Home() {
             >
               Get Started
             </button>
-            <button className="rounded-full hover:bg-slate-100 border-2 border-green-500 px-8 py-3 text-lg transition-colors">
+            <button
+              onClick={() => {
+                router.push("/aboutUs");
+              }}
+              className="rounded-full hover:bg-slate-100 border-2 border-green-500 px-8 py-3 text-lg transition-colors"
+            >
               Learn More
             </button>
           </motion.div>

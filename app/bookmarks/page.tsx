@@ -10,9 +10,7 @@ export default function BookmarkPage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="h-16">
-        <Appbar />
-      </div>
+    
       <div className="flex">
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
@@ -23,7 +21,7 @@ export default function BookmarkPage() {
             onClick={() => {
               router.push("/");
             }}
-            className="flex gap-4 mt-4 cursor-pointer items-center hidden md:flex" 
+            className="flex gap-4 mt-4 md:mt-16 cursor-pointer items-center hidden md:flex" 
           >
             <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
               <FaArrowLeft

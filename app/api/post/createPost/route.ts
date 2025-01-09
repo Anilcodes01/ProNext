@@ -1,7 +1,7 @@
-import {prisma} from "@/app/lib/prisma";
+import { prisma } from "@/app/lib/prisma";
 import cloudinary from "cloudinary";
 import { NextResponse } from "next/server";
-import stream from 'stream';
+import stream from "stream";
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -18,11 +18,9 @@ export async function POST(req: Request) {
 
     let imageUrl = null;
 
-    
     if (image) {
-      const buffer = Buffer.from(await image.arrayBuffer()); 
+      const buffer = Buffer.from(await image.arrayBuffer());
 
-      
       imageUrl = await new Promise<string>((resolve, reject) => {
         const uploadStream = cloudinary.v2.uploader.upload_stream(
           {
@@ -34,30 +32,35 @@ export async function POST(req: Request) {
               reject(new Error("Failed to upload image to Cloudinary"));
             }
             if (result) {
-              resolve(result.secure_url); 
+              resolve(result.secure_url);
             } else {
               reject(new Error("Upload result is undefined"));
             }
           }
         );
 
-        
         const readableStream = new stream.PassThrough();
         readableStream.end(buffer);
         readableStream.pipe(uploadStream);
       });
     }
 
-    console.log(userId)
+    console.log(userId);
 
     const post = await prisma.post.create({
       data: {
         content: content || null,
-        image: imageUrl || null, 
+        image: imageUrl || null,
         userId: userId,
       },
       include: {
-        user: true,  
+        user: {
+          select: {
+            id: true,
+            name: true,
+            avatarUrl: true,
+          },
+        },
       },
     });
 
