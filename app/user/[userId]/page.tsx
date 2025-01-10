@@ -1,4 +1,4 @@
-import Appbar from "@/components/appbar";
+
 import Sidebar from "@/components/Sidebar";
 import UserComponent from "@/components/userComponent";
 
