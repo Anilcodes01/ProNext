@@ -9,6 +9,7 @@ import { toast, Toaster } from "react-hot-toast";
 export default function Signup() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -19,6 +20,7 @@ export default function Signup() {
       const response = await axios.post("/api/auth/signup", {
         name,
         email,
+        username,
         password,
       });
 
@@ -75,6 +77,20 @@ export default function Signup() {
               }}
             />
           </div>
+          <div className="flex flex-col w-full">
+            <label className="font-medium text-sm" htmlFor="username">
+              Username
+            </label>
+            <input
+              value={username}
+              className="rounded-xl text-black border text-sm  p-2 mb-4 w-full outline-none "
+              type="text"
+              placeholder="Enter your Username"
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
+            />
+          </div>
           <div className="flex flex-col">
             <label className="font-medium text-sm" htmlFor="name">
               Email
@@ -90,7 +106,7 @@ export default function Signup() {
             />
           </div>
           <div className="flex flex-col">
-            <label className="font-medium text-sm" htmlFor="name">
+            <label className="font-medium text-sm" htmlFor="password">
               Password
             </label>
             <input
