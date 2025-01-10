@@ -87,7 +87,7 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
-  // Calculate if we should show the "Read More" button
+ 
   const contentLength = post.content?.length ?? 0;
   const shouldTruncate = contentLength > 300;
 

@@ -4,19 +4,9 @@ import Appbar from "@/components/appbar";
 import EditProfileForm from "@/components/editProfileform";
 import Sidebar from "@/components/Sidebar";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
 
 export default function EditProfilePage() {
   const { data: session, status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-   
-    if (status === "unauthenticated") {
-      router.push("/auth/login"); 
-    }
-  }, [status, router]);
 
   if (status === "loading") {
     return (
@@ -41,11 +31,10 @@ export default function EditProfilePage() {
             <div className="text-black mt-4">Profile Image</div>
             <div className="h-16 w-full bg-gray-200 animate-pulse rounded-lg "></div>
             <div className="h-12 mt-6 rounded-lg animate-pulse bg-gray-200"></div>
-
           </div>
         </div>
       </div>
-    ); 
+    );
   }
 
   if (!session?.user) {

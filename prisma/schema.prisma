@@ -8,18 +8,19 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String?
+  id               String   @id @default(uuid())
+  name             String
+  username         String?
+  email            String   @unique
+  password         String?
   ProfilePageImage String?
-  bio       String?
-  city      String?
-  website   String?
-  avatarUrl String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  techStack String[]
+  bio              String?
+  city             String?
+  website          String?
+  avatarUrl        String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  techStack        String[]
 
   posts     Post[]
   articles  Article[]
@@ -75,8 +76,6 @@ model Project {
   user               User     @relation(fields: [userId], references: [id])
 }
 
-
-
 model Comment {
   id        String   @id @default(uuid())
   content   String?
@@ -85,8 +84,6 @@ model Comment {
   userId    String
   user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-
-
 }
 
 model Like {

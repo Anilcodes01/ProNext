@@ -47,8 +47,8 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
   return (
     <div
       className={`bg-white ${
-        isMobile ? "w-full flex-row justify-around" : "w-full flex-col"
-      } flex items-center h-full mt-16 md:h-screen text-black`}
+        isMobile ? "w-full flex-row  justify-around" : "w-full flex-col"
+      } flex items-center h-full md:mt-16 md:h-screen text-black`}
     >
       {/* Navigation buttons */}
       <div

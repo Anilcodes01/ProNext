@@ -5,8 +5,8 @@ import MainContent from "@/components/mainContent";
 export default function Home() {
   return (
     <div className="bg-white min-h-screen flex flex-col">
-      <div className="flex-1 flex">
-        <div className="hidden md:block fixed w-52 lg:w-80 h-full">
+      <div className="flex-1  flex">
+        <div className="hidden md:block  fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
 
