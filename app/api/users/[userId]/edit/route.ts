@@ -79,7 +79,7 @@ export async function POST(
     const updateData: {
       name?: string;
       bio?: string;
-      username?: string | null;
+      username?: string;
       city?: string;
       website?: string;
       avatarUrl?: string;
