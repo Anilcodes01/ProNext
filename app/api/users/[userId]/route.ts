@@ -13,6 +13,7 @@ export async function GET(request: Request, { params }: { params: { userId: stri
       select: {
         id: true,
         name: true,
+        username: true,
         avatarUrl: true,
         createdAt: true, 
         bio: true,

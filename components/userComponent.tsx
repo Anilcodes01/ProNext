@@ -67,6 +67,7 @@ interface Project {
 interface UserProfile {
   id: string;
   name: string;
+  username: string;
   avatarUrl?: string;
   createdAt: string;
   bio?: string;
@@ -243,7 +244,7 @@ export default function UserProfilePage() {
   const isOwnProfile = session?.user?.id === userId;
 
   return (
-    <div className="min-h-screen flex flex-col gap- overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
+    <div className="min-h-screen mt-16 flex flex-col gap- overflow-x-hidden md:p-4 lg:p-5 p-4 bg-gray-50">
       <div className="rounded-lg bg-white flex flex-col ">
         <div className="relative rounded lg:h-[20vh] h-[12vh] lg:mb-8 mb-10 w-full">
           {userProfile?.ProfilePageImage ? (
@@ -266,7 +267,6 @@ export default function UserProfilePage() {
                 alt="User Avatar"
                 width={384}
                 height={384}
-                
                 className="rounded-full h-full w-full object-cover"
               />
             ) : (
@@ -279,6 +279,7 @@ export default function UserProfilePage() {
           <div className="text-black font-bold text-2xl lg:mt-4  mt- ">
             {userProfile?.name}
           </div>
+
           {isOwnProfile ? (
             <button
               onClick={() => (window.location.href = `/user/edit`)}
@@ -297,7 +298,9 @@ export default function UserProfilePage() {
             )
           )}
         </div>
-
+        <div className="text-gray-800 pl-4 text-sm lg:mt-4  mt- ">
+          @{userProfile?.username}
+        </div>
         <div className="text-black pl-4 text-sm mt-2">{userProfile?.bio}</div>
 
         <div className="flex lg:gap-4 lg:flex-row flex-col">

@@ -12,9 +12,11 @@ export async function POST(req: Request) {
   }
 
   try {
+   
     await prisma.bookmark.deleteMany({
       where: { userId },
     });
+    
 
     await prisma.comment.deleteMany({
       where: { userId },
@@ -26,9 +28,8 @@ export async function POST(req: Request) {
     await prisma.article.deleteMany({
       where: { userId },
     });
-    
 
-    const deletedPost = await prisma.post.delete({
+    await prisma.post.deleteMany({
       where: { id: userId },
     });
 
@@ -36,10 +37,13 @@ export async function POST(req: Request) {
       where: { userId },
     });
 
+     await prisma.user.delete({
+      where: { id: userId },
+    });
+
     return NextResponse.json(
       {
-        message: "Post deleted successfully",
-        deletedPost,
+        message: "User deleted successfully",
       },
       { status: 200 }
     );
