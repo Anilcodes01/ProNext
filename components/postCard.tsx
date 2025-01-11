@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MessageSquareMore } from "lucide-react";
+import { MessageCircleMore } from 'lucide-react';
 import { Heart } from "lucide-react";
 import { BookmarkCheck } from "lucide-react";
 import { FaUserCircle, FaHeart, FaBookmark } from "react-icons/fa";
-import { IoMdShare } from "react-icons/io";
+import { Share2 } from 'lucide-react';
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
@@ -121,7 +121,7 @@ export default function PostCard({ post }: { post: Post }) {
       <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-">
         <div
           onClick={handlePostClick}
-          className="whitespace-pre-wrap text-black"
+          className="whitespace-pre-wrap text-md text-gray-600"
         >
           {post.content ? (
             showFullContent || !shouldTruncate ? (
@@ -161,37 +161,37 @@ export default function PostCard({ post }: { post: Post }) {
         <div className="mt-3 ml-2 flex gap-8">
           <button
             className={`gap-1 flex items-center ${
-              liked ? "text-red-500" : "text-gray-400"
+              liked ? "text-red-500" : "text-gray-500"
             } hover:text-red-600`}
             onClick={handleLikeToggle}
           >
-            {liked ? <FaHeart size={19} /> : <Heart size={19} />}
-            <div className="text-sm">{likeCount}</div>
+            {liked ? <FaHeart size={20} /> : <Heart size={20} />}
+            {likeCount > 0 && <div className="text-sm">{likeCount}</div>}
           </button>
 
           <button
             onClick={handlePostClick}
-            className="text-gray-400 gap-1 hover:text-green-400 flex items-center"
+            className="text-gray-500 gap-1 hover:text-green-400 flex items-center"
           >
-            <MessageSquareMore size={18} />
-            <div className="text-sm">{post.commentCount}</div>
+            <MessageCircleMore size={20} />
+            {post.commentCount > 0 && <div className="text-sm">{post.commentCount}</div>}
           </button>
 
-          <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-            <IoMdShare size={18} />
+          <button className="text-gray-500 gap-1 hover:text-green-600 flex items-center">
+            <Share2 size={20} />
             <div className="text-sm">6</div>
           </button>
 
           <button
             className={`gap-1 flex items-center ${
-              bookmarked ? "text-green-600" : "text-gray-400"
+              bookmarked ? "text-green-600" : "text-gray-500"
             } hover:text-green-600`}
             onClick={handleBookmarkToggle}
           >
             {bookmarked ? (
-              <FaBookmark size={18} />
+              <FaBookmark size={20} />
             ) : (
-              <BookmarkCheck size={18} />
+              <BookmarkCheck size={20} />
             )}
           </button>
         </div>

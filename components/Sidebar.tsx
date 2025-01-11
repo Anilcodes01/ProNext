@@ -48,7 +48,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
     <div
       className={`bg-white ${
         isMobile ? "w-full flex-row  justify-around" : "w-full flex-col"
-      } flex items-center h-full md:mt-16 md:h-screen text-black`}
+      } flex items-center  md:mt-16 md:h-screen text-black`}
     >
       {/* Navigation buttons */}
       <div
@@ -139,7 +139,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
       </div>
 
       {/* User profile */}
-      {!isMobile && (
+      {/* {!isMobile && (
         <div className="text-black w-full mt-auto p-4 flex flex-col gap-2">
           <div
             onClick={() => router.push(`/user/${userId}`)}
@@ -161,7 +161,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             <button className="text-xl text-black">{userProfile?.name}</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

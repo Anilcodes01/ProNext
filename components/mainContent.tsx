@@ -231,7 +231,7 @@ export default function MainContent() {
           <textarea
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
-            className="outline-none  p-2 text-gray-800  w-full h-20 sm:h-30 text-sm  rounded-lg resize-none"
+            className="outline-none  p-2 text-gray-800  w-full h-20 sm:h-30 text-  rounded-lg resize-none"
             placeholder="What's on your mind?..."
           ></textarea>
         </div>

@@ -129,14 +129,12 @@ export default function FullArticlePage() {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="h-16">
-        <Appbar />
-      </div>
+     
       <div className="flex">
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="w-full ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
+        <div className="w-full md:mt-16 ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
           <div
             onClick={() => router.push("/articles")}
             className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex"
