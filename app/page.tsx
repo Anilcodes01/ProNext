@@ -15,7 +15,7 @@ export default function Home() {
           <MainContent />
         </div>
 
-        <div className="hidden lg:block fixed right-0 w-1/4 min-h-screen hide-scrollbar p-4">
+        <div className="hidden lg:block fixed right-0 md:mt-20 w-1/4 min-h-screen hide-scrollbar p-4">
           <Suggesstionbar />
         </div>
       </div>

@@ -1,22 +1,70 @@
-export default function Suggesstionbar() {
+"use client";
+
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { MoveRight } from "lucide-react";
+import { useRouter } from "next/navigation";
+
+interface Article {
+  id: string;
+  title: string;
+  description: string;
+  user: {
+    id: string;
+    name: string;
+    avatarUrl: string;
+  };
+}
+
+export default function Suggestionbar() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchSuggestedArticles = async () => {
+      try {
+        const response = await axios.get("/api/articles/suggestedArticles");
+        const articlesData = response.data?.articles || [];
+        setArticles(articlesData);
+      } catch (error) {
+        console.error("Error fetching articles:", error);
+      }
+    };
+    fetchSuggestedArticles();
+  }, []);
+
   return (
-    <div>
-      <div className="mt-20 flex flex-col  min-h-screen gap-6">
-        <div className=" w-full  rounded-lg border text-gray-600 border-gray-100 p-2 ">
-          Serverless functions represent a modern approach to building and
-          deploying scalable applications without the need to manage server
-          infrastructure. Unlike traditional server-based architectures, where
-          developers must provision, configure, and maintain servers, serverless
-          computing abstracts these tasks away. Developers write individual
-          units of logic known as functions, which are executed in response to
-          specific events. These events can be HTTP requests, file uploads,
-          database triggers, or scheduled tasks. Cloud providers such as AWS,
-          Azure, and Google Cloud handle the underlying infrastructure,
-          automatically scaling resources up or down as needed.
-        </div>
-        <div className="h-[40%] w-full rounded-lg bg-yellow-400">
-          Welcome to the world...!
-        </div>
+    <div className=" text-black flex border rounded-lg flex-col p-4  h-auto">
+      <div className="flex gap-2">
+        <span className="text-base font-medium"> Trending Articles</span>
+      </div>
+      <div className="flex flex-col gap-4 mt-4">
+        {articles.length > 0 ? (
+          articles.map((article) => (
+            <div key={article.id}>
+              <h2 className="mt-2  text-base font-medium hover:text-green-500 ">
+                {article.title}
+              </h2>
+              <p className="text-gray-600 text-sm mt-1">
+                {article.description.slice(0, 80)}...
+              </p>
+
+              <div className="flex mt-2 gap-1">
+                <button
+                  onClick={() => {
+                    router.push(`/articles/${article.id}`);
+                  }}
+                  className="text-sm text-green-600 hover:underline"
+                >
+                  Read more
+                </button>
+                <MoveRight size={20} className="text-green-600" />
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>Loading articles...!</p>
+        )}
       </div>
     </div>
   );

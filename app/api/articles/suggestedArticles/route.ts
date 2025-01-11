@@ -54,7 +54,7 @@ export async function GET() {
       select: {
         id: true,
         title: true,
-        content: true,
+        description: true,
         createdAt: true,
         user: {
           select: {
