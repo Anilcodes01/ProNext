@@ -7,41 +7,12 @@ import { GoBookmark } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import axios from "axios";
-
-interface UserProfile {
-  id: string;
-  name: string;
-  avatarUrl?: string;
-  createdAt: string;
-  bio?: string;
-  website?: string;
-  city?: string;
-}
 
 export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const router = useRouter();
   const { data: session } = useSession();
 
   const userId = session?.user?.id;
-
-  useEffect(() => {
-    if (userId) {
-      const fetchUserData = async () => {
-        try {
-          const response = await axios.get(`/api/users/${userId}`);
-          const userData = response.data.user;
-          setUserProfile(userData);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      };
-
-      fetchUserData();
-    }
-  }, [userId]);
 
   return (
     <div
@@ -136,31 +107,6 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           </div>
         )}
       </div>
-
-      {/* User profile */}
-      {/* {!isMobile && (
-        <div className="text-black w-full mt-auto p-4 flex flex-col gap-2">
-          <div
-            onClick={() => router.push(`/user/${userId}`)}
-            className="flex gap-2 items-center bg-slate-100 p-2 cursor-pointer hover:bg-slate-200 rounded-lg hover:text-black"
-          >
-            <div>
-              {session?.user.avatarUrl ? (
-                <Image
-                  src={session.user.avatarUrl}
-                  alt="User Profile Picture"
-                  width={32}
-                  height={32}
-                  className="rounded-full cursor-pointer border"
-                />
-              ) : (
-                <FaUserCircle size={32} className="text-gray-500" />
-              )}
-            </div>
-            <button className="text-xl text-black">{userProfile?.name}</button>
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }
