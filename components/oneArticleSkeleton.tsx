@@ -1,4 +1,4 @@
-import Appbar from "./appbar";
+
 import Sidebar from "./Sidebar";
 import { FaArrowLeft } from "react-icons/fa6";
 export default function OneArticleSkeleton() {
