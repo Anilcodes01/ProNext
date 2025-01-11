@@ -9,7 +9,6 @@ import {
   FaBookmark,
   FaArrowLeft,
 } from "react-icons/fa";
-import Appbar from "@/components/appbar";
 import OneArticleSkeleton from "@/components/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import FollowButton from "@/components/follow";
