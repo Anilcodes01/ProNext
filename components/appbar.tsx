@@ -62,7 +62,6 @@ export default function Appbar() {
         ProNext
       </button>
 
-      {/* Search bar for larger screens */}
       <div className="w-1/2 relative hidden sm:block">
         <form className="max-w-md mx-auto">
           <div className="relative">
@@ -78,7 +77,6 @@ export default function Appbar() {
           </div>
         </form>
 
-        {/* Search results dropdown */}
         {searchResults.length > 0 && (
           <div className="absolute w-full bg-white border rounded-lg shadow-lg mt-2 z-10">
             {searchResults.map((user) => (
@@ -107,7 +105,6 @@ export default function Appbar() {
         )}
       </div>
 
-      {/* Search icon for mobile screens */}
       <span className="block sm:hidden rounded-full  ">
         <Search
           size={24}
