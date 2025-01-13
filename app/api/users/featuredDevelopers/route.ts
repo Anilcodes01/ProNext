@@ -1,6 +1,5 @@
 import { authOptions } from "@/app/lib/authOptions";
 import { prisma } from "@/app/lib/prisma";
-import { Turtle } from "lucide-react";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
