@@ -138,7 +138,7 @@ export default function Appbar() {
                       className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
                     />
                   ) : (
-                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-green-600 text-white">
                       {session.user.name?.charAt(0).toUpperCase()}
                     </div>
                   )}

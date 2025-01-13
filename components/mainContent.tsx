@@ -214,7 +214,7 @@ export default function MainContent() {
     <div className="p-4 mt-12  w-full">
       <div className="border border-gray-100  w-full bg-white rounded-xl mt-8 p-4">
         <div className="flex items-start border-b border-gray-100">
-          <div className="h-10 w-10 overflow-hidden">
+          <div className="h-12 w-12 overflow-hidden">
             {session?.user.avatarUrl ? (
               <Image
                 src={session.user.avatarUrl}
@@ -224,7 +224,9 @@ export default function MainContent() {
                 className="rounded-full w-8 h-8 object-cover overflow-hidden cursor-pointer "
               />
             ) : (
-              <FaUserCircle size={32} className="text-gray-500" />
+              <div className="flex items-center justify-center cursor-pointer h-10 w-10 rounded-full border bg-green-600 text-white">
+                {session?.user.name?.charAt(0).toUpperCase()}
+              </div>
             )}
           </div>
 
