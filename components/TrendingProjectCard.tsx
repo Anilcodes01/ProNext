@@ -33,7 +33,7 @@ export default function TrendingProjectCard({
         </div>
 
         <div className="flex items-center gap-1 ">
-          <Link href={project.projectLink}>
+          <Link href={project.projectLink ?? ""}>
             <button className="text-green-600 text-[14px]">View Project</button>
           </Link>
           <MoveRight size={20} className="text-green-600" />
