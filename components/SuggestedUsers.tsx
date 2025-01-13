@@ -4,6 +4,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import SuggestedUsersSkeleton from "./skeletons/SuggestedUsersSkeleton";
+import { useRouter } from "next/navigation";
 
 interface User {
   id: string;
@@ -15,6 +16,7 @@ interface User {
 export default function SuggestedUsers() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     const suggestedUsers = async () => {
@@ -49,7 +51,12 @@ export default function SuggestedUsers() {
               key={user.id}
               className="flex gap-2 justify-between items-center"
             >
-              <div className="flex">
+              <div
+                onClick={() => {
+                  router.push(`/user/${user.id}`);
+                }}
+                className="flex cursor-pointer"
+              >
                 <Image
                   src={user.avatarUrl || ""}
                   alt="User Profile"
