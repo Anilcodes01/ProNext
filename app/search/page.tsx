@@ -8,6 +8,7 @@ import { signOut } from "next-auth/react";
 import axios from "axios";
 import FeaturedDevelopers from "@/components/featuredUsers";
 import Sidebar from "@/components/Sidebar";
+import TrendingProjects from "@/components/TrendingProjects";
 
 type User = {
   id: string;
@@ -85,7 +86,7 @@ export default function Search() {
   };
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="bg-white min-h-screen">
       <header className="bg-white border-b fixed w-full z-50">
         <div className="max-w-7xl mx-auto px-2 flex items-center justify-between h-16">
           <button
@@ -212,6 +213,7 @@ export default function Search() {
               }`}
             >
               <FeaturedDevelopers />
+              <TrendingProjects />
             </div>
           </div>
         </main>

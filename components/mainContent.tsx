@@ -211,7 +211,7 @@ export default function MainContent() {
 
   return (
     <div className="p-4 mt-12  w-full">
-      <div className="border border-gray-100  w-full bg-white rounded-xl mt-8 p-4">
+      <div className="border border-gray-100 w-full bg-white rounded-xl mt-8 p-4">
         <div className="flex items-start border-b border-gray-100">
           <div className="h-12 w-12 overflow-hidden">
             {session?.user.avatarUrl ? (
