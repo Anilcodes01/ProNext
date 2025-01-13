@@ -4,6 +4,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
+import SuggesstionbarSkeleton from "./skeletons/SuggestionbarSkeleton";
 
 interface Article {
   id: string;
@@ -19,6 +20,7 @@ interface Article {
 export default function Suggestionbar() {
   const [articles, setArticles] = useState<Article[]>([]);
   const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSuggestedArticles = async () => {
@@ -28,10 +30,20 @@ export default function Suggestionbar() {
         setArticles(articlesData);
       } catch (error) {
         console.error("Error fetching articles:", error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchSuggestedArticles();
   }, []);
+
+  if (loading) {
+    return (
+      <div>
+        <SuggesstionbarSkeleton />
+      </div>
+    );
+  }
 
   return (
     <div className=" text-black flex border rounded-lg flex-col p-4  h-auto">
@@ -63,7 +75,9 @@ export default function Suggestionbar() {
             </div>
           ))
         ) : (
-          <p>Loading articles...!</p>
+          <div className="flex text-center justify-center text-xl text-black font-bold">
+            Oops...!, No articles found...!
+          </div>
         )}
       </div>
     </div>

@@ -1,7 +1,7 @@
 "use client";
 import { Suspense } from "react";
 import ArticleList from "@/components/articleList";
-import AllArticleSkeleton from "@/components/allArticleSkeleton";
+import AllArticleSkeleton from "@/components/skeletons/allArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";

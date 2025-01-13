@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
 import ArticleCard from "@/components/articleCard";
-import AllArticleSkeleton from "./allArticleSkeleton";
+import AllArticleSkeleton from "./skeletons/allArticleSkeleton";
 
 interface Article {
   id: string;

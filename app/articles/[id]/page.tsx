@@ -9,7 +9,7 @@ import {
   FaBookmark,
   FaArrowLeft,
 } from "react-icons/fa";
-import OneArticleSkeleton from "@/components/oneArticleSkeleton";
+import OneArticleSkeleton from "@/components/skeletons/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import FollowButton from "@/components/follow";
 import LikeButton from "@/components/LikeButton";
