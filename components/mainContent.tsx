@@ -11,7 +11,6 @@ import { MdOutlineArticle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
-import { FaUserCircle } from "react-icons/fa";
 import PostList from "./postList";
 
 export default function MainContent() {
