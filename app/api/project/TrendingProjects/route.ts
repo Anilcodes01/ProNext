@@ -64,7 +64,7 @@ export async function GET() {
 
     return NextResponse.json(
       {
-        projects: randomProjects,
+        projects: shuffledProjects,
         message: "Projects fetched successfully...!",
       },
       { status: 200 }
