@@ -2,7 +2,6 @@
 import axios from "axios";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import SuggestedUsersSkeleton from "./skeletons/SuggestedUsersSkeleton";
 import { useRouter } from "next/navigation";
 import FeaturedDevelopersSkeleton from "./skeletons/FeaturedDevelopersSkeleton";
 
