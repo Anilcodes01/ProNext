@@ -12,14 +12,15 @@ import TrendingProjects from "@/components/TrendingProjects";
 
 type User = {
   id: string;
-  name?: string | null | undefined;
+  name?: string;
   avatarUrl?: string;
   email?: string;
 };
 
 export default function Search() {
   const { data: session } = useSession();
-  const userId = session?.user?.id;
+  const userId = session?.user?.id ?? "";
+
   const router = useRouter();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -123,14 +124,24 @@ export default function Search() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center space-x-2 hover:opacity-80 transition"
                 >
-                  <UserAvatar user={session.user} />
+                  <Image
+                    src={session.user.avatarUrl || "/default-avatar.png"}
+                    alt="user"
+                    width={196}
+                    height={196}
+                  />
                 </button>
 
                 {dropdownOpen && (
                   <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border animate-fadeIn">
                     <div className="p-4">
                       <div className="flex items-center space-x-3">
-                        <UserAvatar user={session.user} size="lg" />
+                        <Image
+                          src={session.user.avatarUrl || "/default-avatar.png"}
+                          alt="user"
+                          width={196}
+                          height={196}
+                        />
                         <div className="flex-1 min-w-0">
                           <p className="font-semibold truncate">
                             {session.user.name}
