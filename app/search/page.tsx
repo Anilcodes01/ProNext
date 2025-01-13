@@ -8,7 +8,7 @@ import { signOut } from "next-auth/react";
 import axios from "axios";
 import FeaturedDevelopers from "@/components/featuredUsers";
 import Sidebar from "@/components/Sidebar";
-// import TrendingProjects from "@/components/TrendingProjects";
+import TrendingProjects from "@/components/TrendingProjects";
 
 type User = {
   id: string;
@@ -231,7 +231,7 @@ export default function Search() {
               }`}
             >
                <FeaturedDevelopers />
-              {/* <TrendingProjects /> */} 
+              <TrendingProjects /> 
             </div>
           </div>
         </main>
