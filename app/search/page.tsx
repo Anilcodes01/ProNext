@@ -19,7 +19,7 @@ type User = {
 
 export default function Search() {
   const { data: session } = useSession();
-  const userId = session?.user?.id ?? "";
+  const userId = session?.user.id;
 
   const router = useRouter();
 
@@ -124,12 +124,19 @@ export default function Search() {
                   onClick={() => setDropdownOpen(!dropdownOpen)}
                   className="flex items-center space-x-2 hover:opacity-80 transition"
                 >
-                  <Image
-                    src={session.user.avatarUrl || "/default-avatar.png"}
-                    alt="user"
-                    width={196}
-                    height={196}
-                  />
+                  {session?.user.avatarUrl ? (
+                    <Image
+                      src={session.user.avatarUrl}
+                      alt="User Profile Picture"
+                      width={192}
+                      height={192}
+                      className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-green-600 text-white">
+                      {session.user.name?.charAt(0).toUpperCase()}
+                    </div>
+                  )}
                 </button>
 
                 {dropdownOpen && (
