@@ -2,10 +2,11 @@
 import { GoHome } from "react-icons/go";
 import { MdPeopleOutline } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
-import { FiMessageSquare } from "react-icons/fi";
+import { MessageCircleMore } from "lucide-react";
 import { GoBookmark } from "react-icons/go";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { Search } from "lucide-react";
 import Image from "next/image";
 
 export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
@@ -28,7 +29,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             : "flex flex-col w-full text-center p-4 gap-4"
         }`}
       >
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
           <GoHome onClick={() => router.push("/")} size={24} />
           {!isMobile && (
             <button
@@ -39,11 +40,34 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
-          <FiMessageSquare size={22} />
-          {!isMobile && <button className="text-base">Messages</button>}
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+          <Search onClick={() => router.push("/search")} size={24} />
+          {!isMobile && (
+            <button
+              onClick={() => router.push("/search")}
+              className="text-base w-full items-center flex"
+            >
+              Explore
+            </button>
+          )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+          <MessageCircleMore
+            onClick={() => router.push("/messages")}
+            size={22}
+          />
+          {!isMobile && (
+            <button
+              onClick={() => {
+                router.push("/messages");
+              }}
+              className="text-base"
+            >
+              Messages
+            </button>
+          )}
+        </div>
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
           <MdPeopleOutline onClick={() => router.push("/network")} size={24} />
           {!isMobile && (
             <button
@@ -55,7 +79,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           )}
         </div>
 
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
           <IoDocumentTextOutline
             onClick={() => {
               router.push("/articles");
@@ -73,7 +97,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
         </div>
 
         {!isMobile ? (
-          <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
             <GoBookmark onClick={() => router.push("/bookmarks")} size={24} />
             <button
               onClick={() => router.push("/bookmarks")}
@@ -83,7 +107,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           </div>
         ) : (
-          <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
             <div
               onClick={() => {
                 router.push(`/user/${userId}`);
