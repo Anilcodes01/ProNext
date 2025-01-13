@@ -19,7 +19,6 @@ interface Post {
   id: string;
   title?: string;
   content: string;
-
   image?: string;
   createdAt: string;
   updatedAt: string;
@@ -27,6 +26,7 @@ interface Post {
   user: {
     id: string;
     name: string;
+    username: string;
     avatarUrl?: string;
   };
   isLiked: boolean;
@@ -84,6 +84,7 @@ interface Follow {
 interface User {
   id: string;
   name: string | null;
+  username: string;
   avatarUrl: string | null;
 }
 
