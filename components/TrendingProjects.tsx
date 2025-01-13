@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSession } from "next-auth/react";
 import TrendingProjectCard from "./TrendingProjectCard";
 
 interface ProjectCard {
@@ -13,19 +12,11 @@ interface ProjectCard {
 }
 
 export default function TrendingProjects() {
-  const { data: session, status } = useSession();
   const [projects, setProjects] = useState<ProjectCard[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchTrendingProjects = async () => {
-      if (status === "loading") return;
-      
-      if (!session) {
-        setLoading(false);
-        return;
-      }
-
       try {
         const response = await axios.get("/api/project/TrendingProjects");
         const fetchedProjects = Array.isArray(response.data.projects)
@@ -38,22 +29,13 @@ export default function TrendingProjects() {
         setLoading(false);
       }
     };
-
     fetchTrendingProjects();
-  }, [session, status]);
+  }, []);
 
-  if (status === "loading" || loading) {
+  if (loading) {
     return (
-      <div className="text-black text-4xl flex items-center justify-center font-bold">
+      <div className="text-black text-4xl flex items-center justify-center font-bold  ">
         Loading...!
-      </div>
-    );
-  }
-
-  if (!session) {
-    return (
-      <div className="text-black text-center mt-4">
-        Please sign in to view trending projects
       </div>
     );
   }
