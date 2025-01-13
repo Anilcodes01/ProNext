@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import TrendingProjectCard from "./TrendingProjectCard";
+import TrendingProjectsSkeleton from "./skeletons/TrendingProjectsSkeleton";
 
 interface ProjectCard {
   id: string;
@@ -34,8 +35,8 @@ export default function TrendingProjects() {
 
   if (loading) {
     return (
-      <div className="text-black text-4xl flex items-center justify-center font-bold  ">
-        Loading...!
+      <div>
+        <TrendingProjectsSkeleton />
       </div>
     );
   }

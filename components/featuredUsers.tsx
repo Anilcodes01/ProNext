@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import SuggestedUsersSkeleton from "./skeletons/SuggestedUsersSkeleton";
 import { useRouter } from "next/navigation";
-
+import FeaturedDevelopersSkeleton from "./skeletons/FeaturedDevelopersSkeleton";
 
 interface User {
   id: string;
@@ -16,7 +16,9 @@ interface User {
 export default function FeaturedDevelopers() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
-  const [followingState, setFollowingState] = useState<Record<string, boolean>>({});
+  const [followingState, setFollowingState] = useState<Record<string, boolean>>(
+    {}
+  );
   const router = useRouter();
 
   useEffect(() => {
@@ -35,13 +37,13 @@ export default function FeaturedDevelopers() {
   }, []);
 
   const handleFollow = (userId: string) => {
-    setFollowingState(prev => ({
+    setFollowingState((prev) => ({
       ...prev,
-      [userId]: !prev[userId]
+      [userId]: !prev[userId],
     }));
   };
 
-  const UserAvatar = ({ user }: { user: User }) => (
+  const UserAvatar = ({ user }: { user: User }) =>
     user.avatarUrl ? (
       <Image
         src={user.avatarUrl}
@@ -55,11 +57,10 @@ export default function FeaturedDevelopers() {
       <div className="flex items-center justify-center h-12 w-12 rounded-full bg-gradient-to-br from-green-400 to-green-600 text-white font-medium text-lg transition-transform hover:scale-105">
         {user.name?.charAt(0).toUpperCase()}
       </div>
-    )
-  );
+    );
 
   if (loading) {
-    return <SuggestedUsersSkeleton />;
+    return <FeaturedDevelopersSkeleton />;
   }
 
   if (!users.length) {
@@ -72,13 +73,13 @@ export default function FeaturedDevelopers() {
 
   return (
     <div className=" p-2">
-      <h2 className="font-bold text-2xl mb-6 flex items-center">
+      <h2 className="font-bold text-2xl mb-4 flex items-center">
         <span className="bg-gradient-to-r from-green-500 to-green-600 text-black bg-clip-text">
           Featured Developers
         </span>
       </h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {users.map((user) => (
           <div
             key={user.id}
@@ -90,7 +91,7 @@ export default function FeaturedDevelopers() {
                 className="flex items-start space-x-4 cursor-pointer"
               >
                 <UserAvatar user={user} />
-                
+
                 <div className="flex flex-col">
                   <span className="font-medium text-gray-900 hover:text-green-600 transition-colors">
                     {user.name}
@@ -106,13 +107,14 @@ export default function FeaturedDevelopers() {
                 className={`
                   flex items-center justify-center px-2 py-1 rounded-full text-sm font-medium
                   transition-all duration-300 text-green-600 border-green-600 hover:bg-sky-50
-                  ${followingState[user.id]
-                    ? 'bg-green-50 text-green-600 border-green-200 hover:bg-green-100'
-                    : 'border border-gray-200 hover:border-green-400 hover:text-green-600'}
+                  ${
+                    followingState[user.id]
+                      ? "bg-green-50 text-green-600 border-green-200 hover:bg-green-100"
+                      : "border border-gray-200 hover:border-green-400 hover:text-green-600"
+                  }
                 `}
               >
-                
-                {followingState[user.id] ? 'Following' : 'Follow'}
+                {followingState[user.id] ? "Following" : "Follow"}
               </button>
             </div>
           </div>
