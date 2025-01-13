@@ -168,8 +168,8 @@ export default function PostCard({ post }: { post: Post }) {
         <div className="mt-3 ml-2 flex gap-8">
           <button
             className={`gap-1 flex items-center ${
-              liked ? "text-red-500" : "text-gray-500"
-            } hover:text-red-600`}
+              liked ? "text-green-600" : "text-gray-500"
+            } hover:text-green-600`}
             onClick={handleLikeToggle}
           >
             {liked ? <FaHeart size={20} /> : <Heart size={20} />}
@@ -178,7 +178,7 @@ export default function PostCard({ post }: { post: Post }) {
 
           <button
             onClick={handlePostClick}
-            className="text-gray-500 gap-1 hover:text-green-400 flex items-center"
+            className="text-gray-500 gap-1 hover:text-green-600 flex items-center"
           >
             <MessageCircleMore size={20} />
             {post.commentCount > 0 && (

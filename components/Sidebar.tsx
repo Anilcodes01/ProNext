@@ -21,7 +21,6 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
         isMobile ? "w-full flex-row  justify-around" : "w-full flex-col"
       } flex items-center  md:mt-16 md:h-screen text-black`}
     >
-      {/* Navigation buttons */}
       <div
         className={`${
           isMobile
@@ -29,18 +28,18 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             : "flex flex-col w-full text-center p-4 gap-4"
         }`}
       >
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <GoHome onClick={() => router.push("/")} size={24} />
           {!isMobile && (
             <button
               onClick={() => router.push("/")}
-              className="text-base w-full items-center flex"
+              className="text-base w-full  items-center flex"
             >
               Home
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <Search onClick={() => router.push("/search")} size={24} />
           {!isMobile && (
             <button
@@ -51,7 +50,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <MessageCircleMore
             onClick={() => router.push("/messages")}
             size={22}
@@ -67,7 +66,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           )}
         </div>
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <MdPeopleOutline onClick={() => router.push("/network")} size={24} />
           {!isMobile && (
             <button
@@ -79,7 +78,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           )}
         </div>
 
-        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+        <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <IoDocumentTextOutline
             onClick={() => {
               router.push("/articles");
@@ -97,7 +96,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
         </div>
 
         {!isMobile ? (
-          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
             <GoBookmark onClick={() => router.push("/bookmarks")} size={24} />
             <button
               onClick={() => router.push("/bookmarks")}
@@ -107,7 +106,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             </button>
           </div>
         ) : (
-          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-black">
+          <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
             <div
               onClick={() => {
                 router.push(`/user/${userId}`);
@@ -123,7 +122,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
                   className="rounded-full h-8 w-8 overflow-hidden object-cover cursor-pointer"
                 />
               ) : (
-                <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-black">
+                <div className="flex items-center justify-center cursor-pointer h-7 w-7 rounded-full border bg-gray-200 text-green-600">
                   {session?.user.name?.charAt(0).toUpperCase()}
                 </div>
               )}

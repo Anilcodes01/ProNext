@@ -17,7 +17,7 @@ export async function GET(
 
     const projects = await prisma.project.findMany({
       where: { userId },
-      orderBy: { createdAt: "desc" },
+      orderBy: { createdAt: "asc" },
       include: {
         user: {
           select: {
@@ -40,7 +40,7 @@ export async function GET(
     return NextResponse.json(
       {
         message: "Error while fetching Projects...",
-        error
+        error,
       },
       { status: 500 }
     );

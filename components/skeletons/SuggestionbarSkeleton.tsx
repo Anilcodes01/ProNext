@@ -1,6 +1,6 @@
 export default function SuggesstionbarSkeleton() {
   return (
-    <div className="flex flex-col border rounded-lg gap-6 p-4 h-auto">
+    <div className="flex flex-col border border-gray-100 rounded-lg gap-6 p-4 h-auto">
       <Skeleton />
       <Skeleton />
     </div>
