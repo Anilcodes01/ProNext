@@ -57,7 +57,8 @@ export default function SuggestedUsers() {
                 }}
                 className="flex cursor-pointer"
               >
-                <Image
+                {user.avatarUrl ? (
+                  <Image
                   src={user.avatarUrl || ""}
                   alt="User Profile"
                   width={250}
@@ -65,6 +66,13 @@ export default function SuggestedUsers() {
                   quality={75}
                   className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer"
                 />
+                ): (
+                  <div>
+                    <div className="flex items-center justify-center cursor-pointer h-10 w-10 rounded-full border bg-green-600 text-white">
+                      {user.name?.charAt(0).toUpperCase()}
+                    </div>
+                  </div>
+                )}
                 <div className="flex ml-3 flex-col">
                   <span className="text-base ml-1">{user.name}</span>
                   <span className="text-[12px] text-gray-400">
