@@ -2,20 +2,22 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { MessageCircleMore } from 'lucide-react';
+import { MessageCircleMore } from "lucide-react";
 import { Heart } from "lucide-react";
 import { BookmarkCheck } from "lucide-react";
 import { FaUserCircle, FaHeart, FaBookmark } from "react-icons/fa";
-import { Share2 } from 'lucide-react';
+import { Share2 } from "lucide-react";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Dot } from "lucide-react";
 
 interface User {
   id: string;
   name: string;
+  username: string;
   avatarUrl?: string;
 }
 
@@ -87,12 +89,11 @@ export default function PostCard({ post }: { post: Post }) {
     }
   };
 
- 
   const contentLength = post.content?.length ?? 0;
   const shouldTruncate = contentLength > 300;
 
   return (
-    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-100 md:hover:bg-gray-100 p-5 text-black border-gray-200 border rounded-xl">
+    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-100 md:hover:bg-gray-100 p-5 text-black border-gray-100 border rounded-xl">
       <div className="flex items-center overflow-hidden">
         {post.user?.avatarUrl ? (
           <Link href={`/user/${post.user.id}`} passHref>
@@ -102,7 +103,7 @@ export default function PostCard({ post }: { post: Post }) {
               width={250}
               height={250}
               quality={75}
-              className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer"
+              className="rounded-full overflow-hidden h-8 w-8 object-cover cursor-pointer"
             />
           </Link>
         ) : (
@@ -111,9 +112,15 @@ export default function PostCard({ post }: { post: Post }) {
           </Link>
         )}
         <Link href={`/user/${post.user.id}`} passHref>
-          <div className="flex items-center ml-4 cursor-pointer">
-            <div className="text-xl">{post.user?.name || "Unknown User"}</div>
-            <div className="text-xs text-gray-600 ml-2">{formattedDate}</div>
+          <div className="flex items-center  ml-2 cursor-pointer">
+            <div className="text-[18px] ">
+              {post.user?.name || "Unknown User"}
+            </div>
+            <span className="ml-2 text-gray-600 text-sm ">
+              @{post.user.username}
+            </span>
+            <Dot className="text-gray-400" />
+            <div className="text-xs text-gray-600">{formattedDate}</div>
           </div>
         </Link>
       </div>
@@ -121,7 +128,7 @@ export default function PostCard({ post }: { post: Post }) {
       <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-">
         <div
           onClick={handlePostClick}
-          className="whitespace-pre-wrap text-md text-gray-600"
+          className="whitespace-pre-wrap text-base text-gray-600"
         >
           {post.content ? (
             showFullContent || !shouldTruncate ? (
@@ -174,7 +181,9 @@ export default function PostCard({ post }: { post: Post }) {
             className="text-gray-500 gap-1 hover:text-green-400 flex items-center"
           >
             <MessageCircleMore size={20} />
-            {post.commentCount > 0 && <div className="text-sm">{post.commentCount}</div>}
+            {post.commentCount > 0 && (
+              <div className="text-sm">{post.commentCount}</div>
+            )}
           </button>
 
           <button className="text-gray-500 gap-1 hover:text-green-600 flex items-center">

@@ -20,6 +20,7 @@ export const GET = async () => {
           select: {
             id: true,
             name: true,
+            username: true,
             avatarUrl: true,
           },
         },

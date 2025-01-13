@@ -33,7 +33,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           {!isMobile && (
             <button
               onClick={() => router.push("/")}
-              className="text-xl w-full items-center flex"
+              className="text-base w-full items-center flex"
             >
               Home
             </button>
@@ -41,14 +41,14 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
         </div>
         <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
           <FiMessageSquare size={22} />
-          {!isMobile && <button className="text-xl">Messages</button>}
+          {!isMobile && <button className="text-base">Messages</button>}
         </div>
         <div className="flex gap-2 items-center cursor-pointer hover:bg-slate-200 rounded-lg p-2 hover:text-black">
           <MdPeopleOutline onClick={() => router.push("/network")} size={24} />
           {!isMobile && (
             <button
               onClick={() => router.push("/network")}
-              className="text-xl w-full flex items-start"
+              className="text-base w-full flex items-start"
             >
               Network
             </button>
@@ -65,7 +65,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           {!isMobile && (
             <button
               onClick={() => router.push("/articles")}
-              className="text-xl w-full flex items-start"
+              className="text-base w-full flex items-start"
             >
               Articles
             </button>
@@ -77,7 +77,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
             <GoBookmark onClick={() => router.push("/bookmarks")} size={24} />
             <button
               onClick={() => router.push("/bookmarks")}
-              className="text-xl w-full flex items-start"
+              className="text-base w-full flex items-start"
             >
               Bookmarks
             </button>

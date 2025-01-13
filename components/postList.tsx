@@ -14,6 +14,7 @@ interface Post {
   user: {
     id: string;
     name: string;
+    username: string;
     avatarUrl?: string ; 
   };
   isLiked: boolean; 

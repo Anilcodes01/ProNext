@@ -212,8 +212,8 @@ export default function MainContent() {
 
   return (
     <div className="p-4 mt-12  w-full">
-      <div className="border border-gray-200  w-full bg-white rounded-xl mt-8 p-4">
-        <div className="flex items-start border-b border-gray-200">
+      <div className="border border-gray-100  w-full bg-white rounded-xl mt-8 p-4">
+        <div className="flex items-start border-b border-gray-100">
           <div className="h-10 w-10 overflow-hidden">
             {session?.user.avatarUrl ? (
               <Image
@@ -221,7 +221,7 @@ export default function MainContent() {
                 alt="User Profile Picture"
                 width={192}
                 height={192}
-                className="rounded-full w-10 h-10 object-cover overflow-hidden cursor-pointer "
+                className="rounded-full w-8 h-8 object-cover overflow-hidden cursor-pointer "
               />
             ) : (
               <FaUserCircle size={32} className="text-gray-500" />
@@ -231,8 +231,8 @@ export default function MainContent() {
           <textarea
             value={postContent}
             onChange={(e) => setPostContent(e.target.value)}
-            className="outline-none  p-2 text-gray-800  w-full h-20 sm:h-30 text-  rounded-lg resize-none"
-            placeholder="What's on your mind?..."
+            className="outline-none  p-2 text-gray-800  w-full h-20 sm:h-30 text-base  rounded-lg resize-none"
+            placeholder="Share your thoughts...!"
           ></textarea>
         </div>
         {previewUrl && (
@@ -299,7 +299,7 @@ export default function MainContent() {
           <div>
             <button
               onClick={handlePostSubmission}
-              className="  hover:bg-green-700 bg-green-500  h-8 w-16 rounded text-white p-1"
+              className="  hover:bg-green-700 bg-green-600  h-8 w-16 rounded-lg text-white p-1"
             >
               Post
             </button>
