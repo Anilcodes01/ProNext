@@ -6,7 +6,7 @@ import Image from "next/image";
 import { FaSearch } from "react-icons/fa";
 import { signOut } from "next-auth/react";
 import axios from "axios";
-// import FeaturedDevelopers from "@/components/featuredUsers";
+import FeaturedDevelopers from "@/components/featuredUsers";
 import Sidebar from "@/components/Sidebar";
 // import TrendingProjects from "@/components/TrendingProjects";
 
@@ -230,8 +230,8 @@ export default function Search() {
                 showSearchResults ? "translate-y-0" : "-translate-y-4"
               }`}
             >
-              {/* <FeaturedDevelopers />
-              <TrendingProjects /> */}
+               <FeaturedDevelopers />
+              {/* <TrendingProjects /> */} 
             </div>
           </div>
         </main>
