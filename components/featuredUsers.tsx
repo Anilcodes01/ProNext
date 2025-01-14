@@ -71,7 +71,7 @@ export default function FeaturedDevelopers() {
   }
 
   return (
-    <div className=" p-2">
+    <div className=" mt-2">
       <h2 className="font-bold text-2xl mb-4 flex items-center">
         <span className="bg-gradient-to-r from-green-500 to-green-600 text-black bg-clip-text">
           Featured Developers
