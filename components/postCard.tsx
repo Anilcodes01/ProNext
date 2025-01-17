@@ -5,7 +5,7 @@ import Image from "next/image";
 import { MessageCircleMore } from "lucide-react";
 import { Heart } from "lucide-react";
 import { BookmarkCheck } from "lucide-react";
-import { FaUserCircle, FaHeart, FaBookmark } from "react-icons/fa";
+import {  FaHeart, FaBookmark } from "react-icons/fa";
 import { Share2 } from "lucide-react";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
@@ -108,7 +108,9 @@ export default function PostCard({ post }: { post: Post }) {
           </Link>
         ) : (
           <Link href={`/user/${post.user.id}`} passHref>
-            <FaUserCircle className="w-8 h-8 text-black cursor-pointer" />
+            <div className="flex items-center justify-center cursor-pointer h-8 w-8 rounded-full border bg-green-600 text-white">
+              {post.user.name?.charAt(0).toUpperCase()}
+            </div>
           </Link>
         )}
         <Link href={`/user/${post.user.id}`} passHref>

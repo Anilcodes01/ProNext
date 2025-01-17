@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     });
 
     await prisma.post.deleteMany({
-      where: { id: userId },
+      where: {  userId },
     });
 
     await prisma.comment.deleteMany({

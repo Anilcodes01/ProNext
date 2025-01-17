@@ -1,6 +1,5 @@
 "use client";
 import { GoHome } from "react-icons/go";
-import { MdPeopleOutline } from "react-icons/md";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { MessageCircleMore } from "lucide-react";
 import { GoBookmark } from "react-icons/go";
@@ -8,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Search } from "lucide-react";
 import Image from "next/image";
+import { Globe } from 'lucide-react';
 
 export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
   const router = useRouter();
@@ -67,7 +67,7 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
           )}
         </div>
         <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
-          <MdPeopleOutline onClick={() => router.push("/network")} size={24} />
+          <Globe onClick={() => router.push("/network")} size={24} />
           {!isMobile && (
             <button
               onClick={() => router.push("/network")}

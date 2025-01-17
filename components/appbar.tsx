@@ -158,7 +158,9 @@ export default function Appbar() {
                           className="rounded-full h-12 w-12 overflow-hidden object-cover cursor-pointer border"
                         />
                       ) : (
-                        <FaUserCircle size={40} className="text-gray-500" />
+                        <div className="flex items-center justify-center cursor-pointer h-12 w-12 rounded-full border bg-green-600 text-white">
+                      {session.user.name?.charAt(0).toUpperCase()}
+                    </div>
                       )}
                       <div className="mt-2 text-center">
                         <p className="font-semibold">{session.user.name}</p>
