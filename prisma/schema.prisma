@@ -10,7 +10,7 @@ datasource db {
 model User {
   id               String   @id @default(uuid())
   name             String
-  username         String
+  username         String   @unique
   email            String   @unique
   password         String?
   ProfilePageImage String?
@@ -22,6 +22,8 @@ model User {
   updatedAt        DateTime @updatedAt
   techStack        String[]
 
+  chats     Chat[]     @relation("UserChats")
+  messages  Message[]  @relation("UserMessagesSent")
   posts     Post[]
   articles  Article[]
   likes     Like[]
@@ -30,9 +32,29 @@ model User {
   polls     Poll[]
   pollVotes PollVote[]
   projects  Project[]
+  following Follow[]   @relation("Following")
+  followers Follow[]   @relation("Followers")
+}
 
-  following Follow[] @relation("Following")
-  followers Follow[] @relation("Followers")
+model Chat {
+  id        String    @id @unique @default(uuid())
+  userId    String
+  user      User      @relation("UserChats", fields: [userId], references: [id])
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  messages  Message[] @relation("ChatMessages")
+}
+
+model Message {
+  id         String   @id @unique @default(uuid())
+  senderId   String
+  receiverId String
+  sender     User     @relation("UserMessagesSent", fields: [senderId], references: [id])
+  chatId     String
+  chat       Chat     @relation("ChatMessages", fields: [chatId], references: [id])
+  content    String
+  createdAt  DateTime @default(now())
+  read       Boolean  @default(false)
 }
 
 model Post {
@@ -146,7 +168,6 @@ model Follow {
   followingId String
   createdAt   DateTime @default(now())
 
-  // Relations
   follower  User @relation("Following", fields: [followerId], references: [id])
   following User @relation("Followers", fields: [followingId], references: [id])
 
