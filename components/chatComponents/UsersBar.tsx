@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { MessageSquare } from "lucide-react";
 import { ExtendedUser } from "@/types/types";
