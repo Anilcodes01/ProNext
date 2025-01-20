@@ -29,7 +29,7 @@ export interface ChatHeaderProps {
 
 export interface MessageInputProps {
   newMessage: string;
-  setNewMessage: (message: string) => void;
+  setNewMessage: (message: string | ((prev: string) => string)) => void;
   onSubmit: (e: React.FormEvent) => void;
 }
 

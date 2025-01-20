@@ -21,7 +21,7 @@ export function ChatHeader({
             <img
               src={selectedUserAvatarUrl}
               alt={selectedUserName || "User"}
-              className="h-8 w-8 rounded-full"
+              className="h-8 w-8 object-cover rounded-full"
             />
           ) : (
             <div className="h-8 w-8 rounded-full bg-green-200 flex items-center justify-center">

@@ -66,7 +66,7 @@ export default function Users({
                 <img
                   src={user.image || user.avatarUrl}
                   alt={user.name || "User"}
-                  className="h-10 w-10 rounded-full"
+                  className="h-10 w-10 object-cover rounded-full"
                 />
               ) : (
                 <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">

@@ -81,7 +81,7 @@ export default function ChatContainer({
         <img
           src={session.user.avatarUrl}
           alt="user avatar"
-          className=" h-8 w-8 rounded-full"
+          className=" h-6 w-6 object-cover rounded-full"
         />
       ) : (
         <div className="h-6 w-6 rounded-full bg-blue-200 flex items-center justify-center">
@@ -95,7 +95,7 @@ export default function ChatContainer({
         <img
           src={selectedUserAvatarUrl}
           alt="selected user avatar"
-          className=" h-8 w-8 rounded-full"
+          className=" h-6 w-6 object-cover rounded-full"
         />
       ) : (
         <div className="h-6 w-6 rounded-full bg-green-200 flex items-center justify-center">
