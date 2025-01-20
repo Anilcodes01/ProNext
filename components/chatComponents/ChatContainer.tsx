@@ -112,40 +112,40 @@ export default function ChatContainer({
   if (!session) return <EmptyChat type="no-session" />;
 
   return (
-    <div className=" flex flex-col min-h-screen">
-      <ChatHeader
-        selectedUserAvatarUrl={selectedUserAvatarUrl}
-        selectedUserName={selectedUserName}
-        onBack={onBack}
-      />
+  <div className="flex flex-col h-screen">
+    <ChatHeader
+      selectedUserAvatarUrl={selectedUserAvatarUrl}
+      selectedUserName={selectedUserName}
+      onBack={onBack}
+    />
 
-      <div
-        ref={messageContainerRef}
-        className="flex-1 hide-scrollbar mb-20 bg-white overflow-y-auto p-4 scroll-smooth"
-      >
-        {isLoading ? (
-          <EmptyChat type="loading" />
-        ) : messages.length === 0 ? (
-          <EmptyChat type="no-messages" />
-        ) : (
-          <div className="space-y-4 ">
-            {messages.map((message) => (
-              <MessageBubble
-                key={message.id}
-                message={message}
-                isCurrentUser={message.senderId === session.user.id}
-                renderAvatar={renderAvatar}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-
-      <MessageInput
-        newMessage={newMessage}
-        setNewMessage={setNewMessage}
-        onSubmit={sendMessage}
-      />
+    <div
+      ref={messageContainerRef}
+      className="flex-1 hide-scrollbar overflow-y-auto p-4 scroll-smooth pb-32" // Added pb-32 for bottom padding
+    >
+      {isLoading ? (
+        <EmptyChat type="loading" />
+      ) : messages.length === 0 ? (
+        <EmptyChat type="no-messages" />
+      ) : (
+        <div className="space-y-4">
+          {messages.map((message) => (
+            <MessageBubble
+              key={message.id}
+              message={message}
+              isCurrentUser={message.senderId === session.user.id}
+              renderAvatar={renderAvatar}
+            />
+          ))}
+        </div>
+      )}
     </div>
-  );
+
+    <MessageInput
+      newMessage={newMessage}
+      setNewMessage={setNewMessage}
+      onSubmit={sendMessage}
+    />
+  </div>
+);
 }

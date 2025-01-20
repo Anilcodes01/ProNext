@@ -36,7 +36,7 @@ export default function Users({
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center hide-scrollbar justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
       </div>
     );
@@ -53,7 +53,7 @@ export default function Users({
   }
 
   return (
-    <div className="h-full bg-white">
+    <div className="h-full hide-scrollbar bg-white">
       <div className=" space-y-2">
         {users.map((user) => (
           <button

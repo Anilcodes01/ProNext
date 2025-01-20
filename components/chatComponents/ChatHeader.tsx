@@ -8,7 +8,7 @@ export function ChatHeader({
 }: ChatHeaderProps) {
   return (
     <div className="px-4 py-3 bg-white border-b flex justify-between items-center border-gray-200">
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         <button
           onClick={onBack}
           className="md:hidden p-1 hover:bg-gray-100 rounded-full"
