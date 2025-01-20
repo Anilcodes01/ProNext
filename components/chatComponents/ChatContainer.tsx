@@ -121,7 +121,7 @@ export default function ChatContainer({
 
     <div
       ref={messageContainerRef}
-      className="flex-1 hide-scrollbar overflow-y-auto p-4 scroll-smooth pb-32" // Added pb-32 for bottom padding
+      className="flex-1 hide-scrollbar overflow-y-auto p-4 scroll-smooth " 
     >
       {isLoading ? (
         <EmptyChat type="loading" />
