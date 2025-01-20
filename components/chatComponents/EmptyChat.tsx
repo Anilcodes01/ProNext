@@ -5,7 +5,7 @@ export function EmptyChat({ type }: EmptyChatProps) {
   if (type === "loading") {
     return (
       <div className="flex justify-center items-center h-full">
-        <Loader className="w-8 h-8 animate-spin text-blue-500" />
+        <Loader className="w-8 h-8 animate-spin text-emerald-600" />
       </div>
     );
   }
@@ -18,7 +18,7 @@ export function EmptyChat({ type }: EmptyChatProps) {
           <h2 className="text-2xl font-semibold text-gray-900">
             Sign In to Chat
           </h2>
-          <p className="text-sm text-gray-500">Join the fun! 🎉</p>
+          <p className=" text-gray-500">Join the fun! 🎉</p>
         </div>
       </div>
     );
@@ -27,9 +27,9 @@ export function EmptyChat({ type }: EmptyChatProps) {
   if (type === "no-user") {
     return (
       <div className="hidden md:flex flex-col items-center justify-center h-full bg-gradient-to-b from-gray-50 to-gray-100">
-        <User className="w-14 h-14 text-blue-600 mb-4 animate-pulse" />
+        <User className="w-14 h-14 text-emerald-600 mb-4 animate-pulse" />
         <h2 className="text-xl font-semibold text-gray-800">Pick a Buddy</h2>
-        <p className="text-sm text-gray-500">Tap someone and say hello!</p>
+        <p className=" text-gray-500">Tap someone and say hello!</p>
       </div>
     );
   }

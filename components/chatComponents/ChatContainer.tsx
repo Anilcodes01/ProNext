@@ -121,14 +121,14 @@ export default function ChatContainer({
 
       <div
         ref={messageContainerRef}
-        className="flex-1 hide-scrollbar bg-white overflow-y-auto p-4 scroll-smooth"
+        className="flex-1 hide-scrollbar mb-20 bg-white overflow-y-auto p-4 scroll-smooth"
       >
         {isLoading ? (
           <EmptyChat type="loading" />
         ) : messages.length === 0 ? (
           <EmptyChat type="no-messages" />
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4 ">
             {messages.map((message) => (
               <MessageBubble
                 key={message.id}

@@ -28,3 +28,13 @@ body {
     text-wrap: balance;
   }
 }
+
+
+.hide-scrollbar {
+  overflow: scroll; 
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; 
+}

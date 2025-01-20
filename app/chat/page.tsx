@@ -13,7 +13,7 @@ const ChatLayout = () => {
   };
 
   return (
-    <div className="h-screen bg-gray-50 flex flex-hidden">
+    <div className="h-screen bg-gray-50  flex flex-hidden">
       <div className="hidden md:flex md:flex-col md:w-64 bg-white border-r border-gray-200">
         <div className="flex-1 flex flex-col min-h-0">
           <div className="flex-1">
