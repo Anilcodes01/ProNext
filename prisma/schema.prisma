@@ -8,40 +8,39 @@ datasource db {
 }
 
 model User {
-  id               String   @id @default(uuid())
+  id               String     @id @default(uuid())
   name             String
-  username         String   @unique
-  email            String   @unique
+  username         String     @unique
+  email            String     @unique
   password         String?
   ProfilePageImage String?
   bio              String?
   city             String?
   website          String?
   avatarUrl        String?
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
+  createdAt        DateTime   @default(now())
+  updatedAt        DateTime   @updatedAt
   techStack        String[]
-
-  chats     Chat[]     @relation("UserChats")
-  messages  Message[]  @relation("UserMessagesSent")
-  posts     Post[]
-  articles  Article[]
-  likes     Like[]
-  comments  Comment[]
-  bookmarks Bookmark[]
-  polls     Poll[]
-  pollVotes PollVote[]
-  projects  Project[]
-  following Follow[]   @relation("Following")
-  followers Follow[]   @relation("Followers")
+  articles         Article[]
+  bookmarks        Bookmark[]
+  chats            Chat[]     @relation("UserChats")
+  comments         Comment[]
+  following        Follow[]   @relation("Following")
+  followers        Follow[]   @relation("Followers")
+  likes            Like[]
+  messages         Message[]  @relation("UserMessagesSent")
+  polls            Poll[]
+  pollVotes        PollVote[]
+  posts            Post[]
+  projects         Project[]
 }
 
 model Chat {
   id        String    @id @unique @default(uuid())
   userId    String
-  user      User      @relation("UserChats", fields: [userId], references: [id])
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  user      User      @relation("UserChats", fields: [userId], references: [id])
   messages  Message[] @relation("ChatMessages")
 }
 
@@ -49,12 +48,12 @@ model Message {
   id         String   @id @unique @default(uuid())
   senderId   String
   receiverId String
-  sender     User     @relation("UserMessagesSent", fields: [senderId], references: [id])
   chatId     String
-  chat       Chat     @relation("ChatMessages", fields: [chatId], references: [id])
   content    String
   createdAt  DateTime @default(now())
   read       Boolean  @default(false)
+  chat       Chat     @relation("ChatMessages", fields: [chatId], references: [id])
+  sender     User     @relation("UserMessagesSent", fields: [senderId], references: [id])
 }
 
 model Post {
@@ -64,25 +63,24 @@ model Post {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   userId    String
-  user      User       @relation(fields: [userId], references: [id])
-  likes     Like[]
-  comments  Comment[]
   bookmarks Bookmark[]
+  comments  Comment[]
+  likes     Like[]
+  user      User       @relation(fields: [userId], references: [id])
 }
 
 model Article {
-  id          String   @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   description String
   content     String
   image       String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt()
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
   userId      String
-  user        User     @relation(fields: [userId], references: [id])
-
-  likes     Like[]
-  bookmarks Bookmark[]
+  user        User       @relation(fields: [userId], references: [id])
+  bookmarks   Bookmark[]
+  likes       Like[]
 }
 
 model Project {
@@ -93,7 +91,7 @@ model Project {
   projectLink        String?
   projectRepoLink    String?
   createdAt          DateTime @default(now())
-  updatedAt          DateTime @updatedAt()
+  updatedAt          DateTime @updatedAt
   userId             String
   user               User     @relation(fields: [userId], references: [id])
 }
@@ -102,19 +100,19 @@ model Comment {
   id        String   @id @default(uuid())
   content   String?
   postId    String
-  post      Post     @relation(fields: [postId], references: [id])
   userId    String
-  user      User     @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
+  post      Post     @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Like {
   id        String   @id @default(uuid())
   postId    String?
-  post      Post?    @relation(fields: [postId], references: [id])
   articleId String?
-  article   Article? @relation(fields: [articleId], references: [id])
   userId    String
+  article   Article? @relation(fields: [articleId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
   user      User     @relation(fields: [userId], references: [id])
 
   @@unique([postId, userId])
@@ -126,10 +124,10 @@ model Bookmark {
   userId    String
   postId    String?
   createdAt DateTime @default(now())
-  user      User     @relation(fields: [userId], references: [id])
-  post      Post?    @relation(fields: [postId], references: [id])
   articleId String?
   article   Article? @relation(fields: [articleId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 
   @@unique([userId, postId])
   @@unique([articleId, userId])
@@ -138,28 +136,28 @@ model Bookmark {
 model Poll {
   id        String       @id @default(cuid())
   question  String
-  options   PollOption[]
-  creator   User         @relation(fields: [creatorId], references: [id])
   creatorId String
   createdAt DateTime     @default(now())
+  creator   User         @relation(fields: [creatorId], references: [id])
+  options   PollOption[]
 }
 
 model PollOption {
   id          String     @id @default(cuid())
   text        String
   votesNumber Int        @default(0)
-  poll        Poll       @relation(fields: [pollId], references: [id])
   pollId      String
+  poll        Poll       @relation(fields: [pollId], references: [id])
   votes       PollVote[]
 }
 
 model PollVote {
   id        String     @id @default(cuid())
-  user      User       @relation(fields: [userId], references: [id])
   userId    String
-  option    PollOption @relation(fields: [optionId], references: [id])
   optionId  String
   createdAt DateTime   @default(now())
+  option    PollOption @relation(fields: [optionId], references: [id])
+  user      User       @relation(fields: [userId], references: [id])
 }
 
 model Follow {
@@ -167,9 +165,8 @@ model Follow {
   followerId  String
   followingId String
   createdAt   DateTime @default(now())
-
-  follower  User @relation("Following", fields: [followerId], references: [id])
-  following User @relation("Followers", fields: [followingId], references: [id])
+  follower    User     @relation("Following", fields: [followerId], references: [id])
+  following   User     @relation("Followers", fields: [followingId], references: [id])
 
   @@unique([followerId, followingId])
 }
