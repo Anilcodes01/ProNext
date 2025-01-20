@@ -23,8 +23,10 @@ export const useSocket = (userId: string) => {
 
   useEffect(() => {
     if (userId && !isInitialized.current) {
-      socket.current = io("https://socket-server-7ghz.onrender.com", {
-        transports: ["websockets", "polling"],
+      socket.current = io("https://pronext-socket-server.onrender.com", {
+        transports: ["websocket", "polling"],
+        autoConnect: true,
+        
       });
 
       socket.current.on("connect", () => {

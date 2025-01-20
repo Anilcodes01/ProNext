@@ -52,13 +52,13 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
         </div>
         <div className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600">
           <MessageCircleMore
-            onClick={() => router.push("/messages")}
+            onClick={() => router.push("/chat")}
             size={22}
           />
           {!isMobile && (
             <button
               onClick={() => {
-                router.push("/messages");
+                router.push("/chat");
               }}
               className="text-base"
             >
