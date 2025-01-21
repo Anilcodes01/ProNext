@@ -14,72 +14,11 @@ import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 import { getDeviconUrl } from "@/app/lib/getDeviconUrl";
 import { CalendarDays, MapPin } from "lucide-react";
-
-interface Post {
-  id: string;
-  title?: string;
-  content: string;
-  image?: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    id: string;
-    name: string;
-    username: string;
-    avatarUrl?: string;
-  };
-  isLiked: boolean;
-  likeCount: number;
-  commentCount: number;
-  isBookmarked: boolean;
-}
-
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  image?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    name: string;
-    avatarUrl?: string | null;
-  };
-}
-
-interface Project {
-  id: string;
-  projectName: string;
-  projectDescription: string;
-  createdAt: string;
-  image: string;
-  userId: string;
-  projectLink: string;
-  projectRepoLink: string;
-  user: {
-    name: string;
-    avatarUrl: string;
-  };
-}
-
-interface UserProfile {
-  id: string;
-  name: string;
-  username: string;
-  avatarUrl?: string;
-  createdAt: string;
-  bio?: string;
-  website?: string;
-  city?: string;
-  ProfilePageImage?: string;
-  techStack?: string[];
-}
-
-interface Follow {
-  followingId: string;
-}
+import { Post } from "@/types/types";
+import { Article } from "@/types/types";
+import { Project } from "@/types/types";
+import { UserProfile } from "@/types/types";
+import { Follow } from "@/types/types";
 
 interface User {
   id: string;

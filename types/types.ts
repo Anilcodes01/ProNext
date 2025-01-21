@@ -42,3 +42,71 @@ export interface MessageBubbleProps {
 export interface EmptyChatProps {
   type: "loading" | "no-session" | "no-user" | "no-messages";
 }
+
+
+ export interface Post {
+  id: string;
+  title?: string;
+  content: string;
+  image?: string;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  user: {
+    id: string;
+    name: string;
+    username: string;
+    avatarUrl?: string;
+  };
+  isLiked: boolean;
+  likeCount: number;
+  commentCount: number;
+  isBookmarked: boolean;
+}
+
+export interface Article {
+  id: string;
+  title: string;
+  description: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+  userId: string;
+  user: {
+    name: string;
+    avatarUrl?: string | null;
+  };
+}
+
+export interface Project {
+  id: string;
+  projectName: string;
+  projectDescription: string;
+  createdAt: string;
+  image: string;
+  userId: string;
+  projectLink: string;
+  projectRepoLink: string;
+  user: {
+    name: string;
+    avatarUrl: string;
+  };
+}
+
+export interface UserProfile {
+  id: string;
+  name: string;
+  username: string;
+  avatarUrl?: string;
+  createdAt: string;
+  bio?: string;
+  website?: string;
+  city?: string;
+  ProfilePageImage?: string;
+  techStack?: string[];
+}
+
+export interface Follow {
+  followingId: string;
+}
+
