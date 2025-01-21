@@ -85,9 +85,7 @@ export default function PostDetail() {
   if (error) return <div>{error}</div>;
   if (!post) return <div>Post not found</div>;
 
-  const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
-    addSuffix: true,
-  });
+ 
 
   return (
     <div className="h-full overflow-y-auto mt-16 lg:mt-0 hide-scrollbar ">
