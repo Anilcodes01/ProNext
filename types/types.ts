@@ -62,6 +62,7 @@ export interface EmptyChatProps {
   isLiked: boolean;
   likeCount: number;
   commentCount: number;
+  comments: Comment[]
   isBookmarked: boolean;
 }
 
@@ -116,3 +117,9 @@ export interface Follow {
   followingId: string;
 }
 
+export interface Comment {
+  id: string;
+  content: string;
+  createdAt: string | Date;
+  user: User;
+}
