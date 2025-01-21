@@ -1,5 +1,4 @@
 import Sidebar from "../Sidebar";
-import { FaArrowLeft } from "react-icons/fa6";
 export default function OneArticleSkeleton() {
   return (
     <div className="bg-white w-full min-h-screen">
