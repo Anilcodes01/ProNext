@@ -8,15 +8,20 @@ import {
   Share2,
   Dot,
   EllipsisVertical,
+  Trash2 
 } from "lucide-react";
 import Image from "next/image";
 import { FaHeart, FaBookmark } from "react-icons/fa";
+import { BsPencilSquare } from "react-icons/bs";
 import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
+import { TbMessageReport } from "react-icons/tb";
+
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Post } from "@/types/types";
+import { MdBlockFlipped } from "react-icons/md";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,7 +46,7 @@ export default function PostCard({ post }: { post: Post }) {
 
   const handleDeletePost = async () => {
     try {
-      const response = await axios.post("/api/post/delete", {
+      const response = await axios.post("/api/post/deletePost", {
         postId: post.id,
       });
 
@@ -156,30 +161,36 @@ export default function PostCard({ post }: { post: Post }) {
             />
           </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end" sideOffset={5} className="w-24 z-50">
+          <DropdownMenuContent align="end" sideOffset={5} className="w-52 z-50">
             {isOwnPost ? (
               <>
                 <DropdownMenuItem
                   onClick={() => router.push(`/post/${post.id}/edit`)}
+                  className="hover:bg-gray-100 flex items-center cursor-pointer"
                 >
+                  <BsPencilSquare />
                   Edit Post
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   onClick={handleDeletePost}
-                  className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                  className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
                 >
+                   <Trash2 />
                   Delete Post
                 </DropdownMenuItem>
               </>
             ) : (
               <>
-                <DropdownMenuItem onClick={handleReportPost}>
+                <DropdownMenuItem onClick={handleReportPost} className="flex items-center ">
+                <TbMessageReport />
                   Report Post
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => router.push(`/user/${post.user.id}/block`)}
+                   className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
                 >
+                  <MdBlockFlipped />
                   Block @{post.user.username}
                 </DropdownMenuItem>
               </>
