@@ -114,10 +114,10 @@ export default function FullArticlePage() {
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="w-full pt-20 md:pt-0   md:mt-16 ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200 overflow-y-auto hide-scrollbar h-screen">
+        <div className="w-full ml-0  p-4 md:ml-52 lg:ml-80 border-l border-gray-200 overflow-y-auto hide-scrollbar h-screen">
           <div
             onClick={() => router.push("/articles")}
-            className=" gap-4 cursor-pointer  mb-4 items-center hidden md:flex"
+            className=" gap-4 cursor-pointer mt-16 mb-4 items-center hidden md:flex"
           >
             <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
               <FaArrowLeft size={20} className="text-black" />
@@ -125,7 +125,7 @@ export default function FullArticlePage() {
             <div className="text-xl text-black font-bold">Articles</div>
           </div>
 
-          <div className="text-2xl lg:text-5xl font-bold text-black lg:mt-4">
+          <div className="text-2xl lg:text-5xl font-bold text-black mt-16 lg:mt-4">
             {article.title}
           </div>
           <div className="flex mt-4 items-center my-4">
@@ -186,7 +186,7 @@ export default function FullArticlePage() {
             />
           )}
 
-          <div className="text-black text-lg mt-8">
+          <div className="text-black text-lg  mt-8">
             <p className="whitespace-pre-wrap">{article.content}</p>
           </div>
         </div>
