@@ -5,21 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import ArticleCard from "@/components/articleCard";
 import AllArticleSkeleton from "./skeletons/allArticleSkeleton";
-
-interface Article {
-  id: string;
-  title: string;
-  content: string;
-  description: string;
-  image?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    name: string;
-    avatarUrl?: string | null;
-  };
-}
+import { Article } from "@/types/types";
 
 export default function ArticleList() {
   const [error, setError] = useState<string | null>(null);

@@ -192,50 +192,50 @@ export default function Search() {
       </header>
 
       <div className="flex">
-        <aside className="hidden md:block w-64 fixed h-[calc(100vh-4rem)] border-r bg-white">
-          <Sidebar />
-        </aside>
+  <aside className="hidden md:block w-64 fixed h-[calc(100vh-4rem)] border-r bg-white ">
+    <Sidebar />
+  </aside>
 
-        <main className="flex-1 mt-16 md:ml-64">
-          <div className="max-w-4xl mx-auto px-4 py-6">
-            <div
-              className={`transition-all duration-500 ease-in-out ${
-                showSearchResults
-                  ? "opacity-100"
-                  : "opacity-0 h-0 overflow-hidden"
-              }`}
-            >
-              {searchResults.length > 0 && (
-                <div className="mb-6">
-                  <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-                    {searchResults.map((user) => (
-                      <button
-                        key={user.id}
-                        onClick={() => router.push(`/user/${user.id}`)}
-                        className="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition"
-                      >
-                        <UserAvatar user={user} size="lg" />
-                        <p className="mt-2 text-sm font-medium text-gray-900 text-center">
-                          {user.name}
-                        </p>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            <div
-              className={`w-full transition-all duration-500 ease-in-out transform ${
-                showSearchResults ? "translate-y-0" : "-translate-y-4"
-              }`}
-            >
-               <FeaturedDevelopers />
-              <TrendingProjects /> 
+  <main className="flex-1 md:ml-64 mt-16 h-[calc(100vh-4rem)] hide-scrollbar overflow-y-auto">
+    <div className="max-w-4xl mx-auto px-4 py-6">
+      <div
+        className={`transition-all duration-500 ease-in-out ${
+          showSearchResults
+            ? "opacity-100"
+            : "opacity-0 h-0 overflow-hidden"
+        }`}
+      >
+        {searchResults.length > 0 && (
+          <div className="mb-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {searchResults.map((user) => (
+                <button
+                  key={user.id}
+                  onClick={() => router.push(`/user/${user.id}`)}
+                  className="flex flex-col items-center p-3 hover:bg-gray-50 rounded-lg transition"
+                >
+                  <UserAvatar user={user} size="lg" />
+                  <p className="mt-2 text-sm font-medium text-gray-900 text-center">
+                    {user.name}
+                  </p>
+                </button>
+              ))}
             </div>
           </div>
-        </main>
+        )}
       </div>
+
+      <div
+        className={`w-full transition-all duration-500 ease-in-out transform ${
+          showSearchResults ? "translate-y-0" : "-translate-y-4"
+        }`}
+      >
+        <FeaturedDevelopers />
+        <TrendingProjects />
+      </div>
+    </div>
+  </main>
+</div>
     </div>
   );
 }

@@ -67,15 +67,20 @@ export interface EmptyChatProps {
 export interface Article {
   id: string;
   title: string;
+  content: string;
   description: string;
   image?: string | null;
   createdAt: string;
   updatedAt: string;
   userId: string;
   user: {
+    id: string;
     name: string;
     avatarUrl?: string | null;
   };
+  liked: boolean;
+  likeCount: number;
+  bookmarked: boolean; 
 }
 
 export interface Project {

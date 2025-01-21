@@ -13,25 +13,7 @@ import OneArticleSkeleton from "@/components/skeletons/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import FollowButton from "@/components/follow";
 import LikeButton from "@/components/LikeButton";
-
-interface Article {
-  id: string;
-  title: string;
-  content: string;
-  description: string;
-  image?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    id: string;
-    name: string;
-    avatarUrl?: string | null;
-  };
-  liked: boolean;
-  likeCount: number;
-  bookmarked: boolean; 
-}
+import { Article } from "@/types/types";
 
 interface User {
   id: string;
@@ -96,7 +78,7 @@ export default function FullArticlePage() {
       setArticle(articleData);
       setInitialLiked(articleData.liked);
       setInitialLikeCount(articleData.likeCount);
-      setIsBookmarked(articleData.bookmarked); 
+      setIsBookmarked(articleData.bookmarked);
     } catch (error) {
       console.error("Error fetching article", error);
       setError("Failed to fetch article. Please try again later.");
@@ -107,7 +89,7 @@ export default function FullArticlePage() {
     if (!article) return;
     try {
       await axios.post(`/api/articles/bookmark`, { articleId: article.id });
-      setIsBookmarked(!isBookmarked); 
+      setIsBookmarked(!isBookmarked);
     } catch (error) {
       console.error("Error updating bookmark status:", error);
       setError("Failed to update bookmark status. Please try again later.");
@@ -127,16 +109,15 @@ export default function FullArticlePage() {
   }
 
   return (
-    <div className="bg-white min-h-screen">
-     
+    <div className="bg-white overflow-hidden min-h-screen">
       <div className="flex">
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
           <Sidebar />
         </div>
-        <div className="w-full md:mt-16 ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200">
+        <div className="w-full pt-20 md:pt-0   md:mt-16 ml-0 p-4 md:ml-52 lg:ml-80 border-l border-gray-200 overflow-y-auto hide-scrollbar h-screen">
           <div
             onClick={() => router.push("/articles")}
-            className="flex gap-4 cursor-pointer mb-4 items-center hidden md:flex"
+            className=" gap-4 cursor-pointer  mb-4 items-center hidden md:flex"
           >
             <div className="h-8 w-8 hover:bg-gray-200 flex items-center justify-center rounded-full">
               <FaArrowLeft size={20} className="text-black" />

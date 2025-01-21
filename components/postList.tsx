@@ -2,32 +2,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import PostCard from "./postCard";
-
-interface Post {
-  id: string;
-  title?: string;
-  content: string;
-  image?: string;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    id: string;
-    name: string;
-    username: string;
-    avatarUrl?: string ; 
-  };
-  isLiked: boolean; 
-  likeCount: number;
-  commentCount: number 
-  isBookmarked: boolean
-}
+import { Post } from "@/types/types";
 
 export default function PostList() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -40,18 +20,20 @@ export default function PostList() {
           },
         });
 
-        const fetchedPosts = Array.isArray(response.data.posts) ? response.data.posts : [];
+        const fetchedPosts = Array.isArray(response.data.posts)
+          ? response.data.posts
+          : [];
         setPosts(fetchedPosts);
       } catch (error) {
         console.error("Failed to fetch posts", error);
         setError("Failed to fetch posts");
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
     fetchPosts();
-  }, []); 
+  }, []);
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
