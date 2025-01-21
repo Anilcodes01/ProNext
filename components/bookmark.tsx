@@ -5,37 +5,8 @@ import axios from "axios";
 import PostCard from "./postCard";
 import ArticleCard from "./articleCard";
 import { useSession } from "next-auth/react";
-
-interface Post {
-  id: string;
-  content: string;
-  createdAt: string | Date;
-  image?: string;
-  user: {
-    id: string;
-    name: string;
-    username: string;
-    avatarUrl?: string;
-  };
-  isLiked: boolean;
-  isBookmarked: boolean;
-  likeCount: number;
-  commentCount: number;
-}
-
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  image?: string | null;
-  createdAt: string;
-  updatedAt: string;
-  userId: string;
-  user: {
-    name: string;
-    avatarUrl?: string | null;
-  };
-}
+import { Post } from "@/types/types";
+import { Article } from "@/types/types";
 
 export default function BookmarkComponent() {
   const { data: session } = useSession();
