@@ -116,7 +116,7 @@ export default function PostCard({ post }: { post: Post }) {
   const shouldTruncate = contentLength > 300;
 
   return (
-    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-100 md:hover:bg-gray-100 p-5 text-black border-gray-100 border rounded-xl">
+    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-50 md:hover:bg-gray-100 p-5 text-black border-gray-100 border rounded-xl">
       <div className="flex items-center justify-between overflow-hidden">
         <div className="flex items-center ">
           {post.user?.avatarUrl ? (

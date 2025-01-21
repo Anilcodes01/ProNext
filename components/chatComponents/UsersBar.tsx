@@ -1,14 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
-import { MessageSquare } from "lucide-react";
 import { ExtendedUser } from "@/types/types";
 
-export default function Users({
-  onSelectUser,
-}: {
+interface UsersProps {
   onSelectUser: (user: ExtendedUser) => void;
-}) {
+  selectedUserId?: string;
+  searchQuery?: string;
+}
+
+export default function Users({ 
+  onSelectUser, 
+  selectedUserId,
+  searchQuery = "" 
+}: UsersProps) {
   const [users, setUsers] = useState<ExtendedUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const { data: session } = useSession();
@@ -34,6 +39,14 @@ export default function Users({
     }
   }, [session?.user]);
 
+  const filteredUsers = users.filter((user) => {
+    const searchTerm = searchQuery.toLowerCase();
+    return (
+      user.name?.toLowerCase().includes(searchTerm) ||
+      user.email?.toLowerCase().includes(searchTerm)
+    );
+  });
+
   if (isLoading) {
     return (
       <div className="flex items-center hide-scrollbar justify-center min-h-screen">
@@ -42,11 +55,13 @@ export default function Users({
     );
   }
 
-  if (users.length === 0) {
+  if (filteredUsers.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
         <div className="text-center text-gray-500">
-          <p className="mb-2">No users found</p>
+          <p className="mb-2">
+            {searchQuery ? "No users match your search" : "No users found"}
+          </p>
         </div>
       </div>
     );
@@ -54,13 +69,18 @@ export default function Users({
 
   return (
     <div className="h-full hide-scrollbar bg-white">
-      <div className=" space-y-2">
-        {users.map((user) => (
+      <div className="">
+        {filteredUsers.map((user) => (
           <button
             key={user.id}
-            className="w-full p-3 flex items-center space-x-3 hover:bg-gray-50 transition-colors rounded-lg"
+            className={`w-full h-20 flex items-center space-x-3 transition-colors ${
+              selectedUserId === user.id
+                ? "bg-blue-50 hover:bg-blue-100"
+                : "hover:bg-gray-50"
+            }`}
             onClick={() => onSelectUser(user)}
           >
+            <div className={`w-1 h-20 ${selectedUserId === user.id ? "bg-green-500": ""}`}></div>
             <div className="flex-shrink-0">
               {user.avatarUrl ? (
                 <img
@@ -78,14 +98,17 @@ export default function Users({
             </div>
 
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 text-left truncate">
+              <p
+                className={`text font-medium ${
+                  selectedUserId === user.id ? "text-black-700" : "text-black-900"
+                } text-left truncate`}
+              >
                 {user.name || user.email}
               </p>
               <p className="text-xs text-gray-500 text-left truncate">
                 {user.email}
               </p>
             </div>
-            <MessageSquare className="w-5 h-5 text-gray-400" />
           </button>
         ))}
       </div>

@@ -12,6 +12,7 @@ interface ChatProps {
   selectedUserId: string | null;
   selectedUserName: string | null;
   selectedUserAvatarUrl: string | null;
+  selectedUserEmail: string | null
   onBack?: () => void;
 }
 
@@ -19,6 +20,7 @@ export default function ChatContainer({
   selectedUserId,
   selectedUserName,
   selectedUserAvatarUrl,
+  selectedUserEmail,
   onBack,
 }: ChatProps) {
   const [newMessage, setNewMessage] = useState("");
@@ -116,6 +118,7 @@ export default function ChatContainer({
     <ChatHeader
       selectedUserAvatarUrl={selectedUserAvatarUrl}
       selectedUserName={selectedUserName}
+      selectedUserEmail={selectedUserEmail}
       onBack={onBack}
     />
 
