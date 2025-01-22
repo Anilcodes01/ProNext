@@ -187,7 +187,10 @@ export default function FullArticlePage() {
           )}
 
           <div className="text-black text-lg  mt-8">
-            <p className="whitespace-pre-wrap">{article.content}</p>
+            <p
+              className="whitespace-pre-wrap"
+              dangerouslySetInnerHTML={{ __html: article.content }}
+            />
           </div>
         </div>
       </div>

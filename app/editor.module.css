@@ -1,0 +1,36 @@
+/* editor.module.css */
+.quill {
+    background-color: white;
+    border-radius: 0.5rem;
+    border: 1px solid #e2e8f0;
+  }
+  
+  .ql-container {
+    min-height: 20rem;
+    font-size: 1rem;
+    font-family: inherit;
+  }
+  
+  .ql-editor {
+    min-height: 20rem;
+    padding: 1rem;
+  }
+  
+  .ql-toolbar {
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom: 1px solid #e2e8f0;
+    background-color: #f8fafc;
+  }
+  
+  .ql-toolbar button {
+    margin: 0.25rem;
+  }
+  
+  .ql-toolbar button:hover {
+    color: #4f46e5;
+  }
+  
+  .ql-formats {
+    margin-right: 0.5rem !important;
+  }
