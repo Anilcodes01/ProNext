@@ -1,7 +1,7 @@
 "use client";
 
 import Appbar from "@/components/appbar";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import axios from "axios";
 import { toast, Toaster } from "react-hot-toast";
 import { useSession } from "next-auth/react";
