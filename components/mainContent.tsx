@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
 import PostList from "./postList";
+import { Post } from "@/types/types";
+import NoSession from "./skeletons/mainContentSkeleton/noSession";
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -22,6 +24,7 @@ export default function MainContent() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [newPost, setNewPost] = useState<Post | null>(null);
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -64,6 +67,28 @@ export default function MainContent() {
       });
 
       if (response.data.createPost && response.data.createPost.id) {
+        const createdPost: Post = {
+          id: response.data.createPost.id,
+          content: postContent,
+          userId: session?.user?.id || "",
+          user: {
+            id: session?.user?.id || "",
+            name: session?.user?.name || "",
+            username: session?.user?.name || "",
+            avatarUrl: session?.user?.avatarUrl,
+          },
+          image: response.data.createPost.imageUrl || undefined,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+          isLiked: false,
+          likeCount: 0,
+          commentCount: 0,
+          comments: [],
+          isBookmarked: false,
+        };
+
+        setNewPost(createdPost);
+
         setPostContent("");
         setSelectedImage(null);
         setPreviewUrl(null);
@@ -93,20 +118,7 @@ export default function MainContent() {
   }
 
   if (error) {
-    return (
-      <div className="text-black m-5  text-xl  min-h-screen">
-        <div>Please signin first to create a Post...!</div>
-        <button
-          onClick={() => {
-            router.push("/auth/signin");
-          }}
-          type="button"
-          className="text-white mt-5 ml-24 bg-gray-800 hover:bg-gray-900   font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-70 dark:border-gray-700"
-        >
-          Signin
-        </button>
-      </div>
-    );
+    return <NoSession />;
   }
 
   return (
@@ -208,7 +220,7 @@ export default function MainContent() {
         </div>
       </div>
 
-      <PostList />
+      <PostList newPost={newPost} />
     </div>
   );
 }
