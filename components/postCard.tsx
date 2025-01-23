@@ -17,7 +17,6 @@ import axios from "axios";
 import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { TbMessageReport } from "react-icons/tb";
-
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Post } from "@/types/types";

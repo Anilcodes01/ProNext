@@ -79,6 +79,7 @@ export interface Article {
     id: string;
     name: string;
     avatarUrl?: string | null;
+    username: string
   };
   liked: boolean;
   likeCount: number;
