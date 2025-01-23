@@ -33,10 +33,10 @@ export async function POST(req: Request) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
        
-      { message: "Error while deleting article", error: error.message },
+      { message: "Error while deleting article", error },
       { status: 500 }
     );
   }
