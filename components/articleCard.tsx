@@ -18,15 +18,12 @@ import { Trash2 } from "lucide-react";
 import { TbMessageReport } from "react-icons/tb";
 import { MdBlockFlipped } from "react-icons/md";
 
-interface ArticleCardProps {
-  article: Article;
-}
-
-export default function ArticleCard({ article }: ArticleCardProps) {
+export default function ArticleCard({ article }: {article: Article}) {
   const { data: session } = useSession();
   const userId = session?.user?.id;
   console.log(userId)
   const isOwnPost = userId === article.user.id;
+  console.log(article.user.id)
   const router = useRouter();
 
   if (!article) {
