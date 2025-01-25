@@ -44,8 +44,11 @@ export interface EmptyChatProps {
   type: "loading" | "no-session" | "no-user" | "no-messages";
 }
 
+export interface ErrorProps {
+  type: "no-session" | "ai-error" | "fetch-post";
+}
 
- export interface Post {
+export interface Post {
   id: string;
   title?: string;
   content: string;
@@ -62,7 +65,7 @@ export interface EmptyChatProps {
   isLiked: boolean;
   likeCount: number;
   commentCount: number;
-  comments: Comment[]
+  comments: Comment[];
   isBookmarked: boolean;
 }
 
@@ -79,11 +82,11 @@ export interface Article {
     id: string;
     name: string;
     avatarUrl?: string | null;
-    username: string
+    username: string;
   };
   liked: boolean;
   likeCount: number;
-  bookmarked: boolean; 
+  bookmarked: boolean;
 }
 
 export interface Project {

@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useState, useRef } from "react";
 import { FaImage } from "react-icons/fa6";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
+import { SiGooglegemini } from "react-icons/si";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import { EmojiClickData } from "emoji-picker-react";
 import PostList from "./postList";
 import { Post } from "@/types/types";
 import NoSession from "./skeletons/mainContentSkeleton/noSession";
+import { Toaster, toast } from 'sonner';
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -25,6 +27,7 @@ export default function MainContent() {
   const router = useRouter();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [newPost, setNewPost] = useState<Post | null>(null);
+  const [aiLoading, setAILoading] = useState(false);
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -40,6 +43,32 @@ export default function MainContent() {
     setPreviewUrl(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
+    }
+  };
+
+  const handleAIPostContentEnhancement = async () => {
+    if (!postContent.trim()) {
+      return setError("please enter some text to enchance");
+    }
+
+    setAILoading(true);
+
+    try {
+      const response = await axios.post("/api/ai/enhancePostContent", {
+        content: postContent,
+      });
+
+      setPostContent(response.data.enhancedContent);
+    } catch (error) {
+      console.error("Failed to enchance post content", error);
+      toast.error('AI Enhancement Failed', {
+        description: 'Unable to enhance your post. Please try again.',
+        duration: 4000,
+        position: 'top-right'
+      });
+      setAILoading(false)
+    } finally {
+      setAILoading(false);
     }
   };
 
@@ -109,6 +138,8 @@ export default function MainContent() {
     setShowEmojiPicker(false);
   };
 
+
+
   if (loading) {
     return (
       <div className="flex items-center hide-scrollbar justify-center min-h-screen">
@@ -123,6 +154,7 @@ export default function MainContent() {
 
   return (
     <div className="p-4 mt-12 overflow-x-hidden  w-full">
+       <Toaster />
       <div className="border border-gray-100 w-full bg-white rounded-xl mt-8 p-4">
         <div className="flex items-start border-b border-gray-100">
           <div className="h-12 w-12 overflow-hidden">
@@ -227,6 +259,26 @@ export default function MainContent() {
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
+            <div className="flex items-center gap-2">
+              <button
+                title="AI Enhancement"
+                onClick={handleAIPostContentEnhancement}
+                disabled={aiLoading}
+              >
+                <SiGooglegemini
+                  size={26}
+                  className={`
+        ${aiLoading ? "text-gray-400" : "text-green-600 hover:text-green-800"}
+        font-bold
+      `}
+                />
+              </button>
+              {aiLoading && (
+                <span className="text-gray-600 text-sm animate-pulse">
+                  AI is thinking...
+                </span>
+              )}
+            </div>
           </div>
           <div>
             <button
