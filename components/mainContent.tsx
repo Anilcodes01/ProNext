@@ -143,10 +143,29 @@ export default function MainContent() {
 
           <textarea
             value={postContent}
-            onChange={(e) => setPostContent(e.target.value)}
-            className="outline-none  p-2 text-gray-800  w-full h-20 sm:h-30 text-base  rounded-lg resize-none"
+            onChange={(e) => {
+              setPostContent(e.target.value);
+
+              const textarea = e.target;
+              textarea.style.height = "auto";
+              textarea.style.height = `${textarea.scrollHeight}px`;
+            }}
+            rows={1}
+            className="
+    outline-none 
+    hide-scrollbar
+    p-2 
+    text-gray-800 
+    w-full 
+    text-base 
+    rounded-lg 
+    resize-none 
+    overflow-y-auto 
+    min-h-[50px] 
+    max-h-[200px]
+  "
             placeholder="Share your thoughts...!"
-          ></textarea>
+          />
         </div>
         {previewUrl && (
           <div className="relative w-full h-48 mt-2 sm:h-60">
