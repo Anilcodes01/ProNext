@@ -33,11 +33,11 @@ export async function POST(req: NextRequest) {
 
     const enhancedContent = aiResponse.data.candidates[0].content.parts[0].text;
     return NextResponse.json({ enhancedContent });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
       {
         message: "Error while enhancing the post:",
-        error: error.response ? error.response.data : error.message,
+        error
       },
       { status: 500 }
     );
