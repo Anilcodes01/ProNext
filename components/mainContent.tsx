@@ -14,7 +14,7 @@ import { EmojiClickData } from "emoji-picker-react";
 import PostList from "./postList";
 import { Post } from "@/types/types";
 import NoSession from "./skeletons/mainContentSkeleton/noSession";
-import { Toaster, toast } from 'sonner';
+import { Toaster, toast } from "sonner";
 
 export default function MainContent() {
   const { data: session } = useSession();
@@ -61,12 +61,12 @@ export default function MainContent() {
       setPostContent(response.data.enhancedContent);
     } catch (error) {
       console.error("Failed to enchance post content", error);
-      toast.error('AI Enhancement Failed', {
-        description: 'Unable to enhance your post. Please try again.',
+      toast.error("AI Enhancement Failed", {
+        description: "Unable to enhance your post. Please try again.",
         duration: 4000,
-        position: 'top-right'
+        position: "top-right",
       });
-      setAILoading(false)
+      setAILoading(false);
     } finally {
       setAILoading(false);
     }
@@ -138,8 +138,6 @@ export default function MainContent() {
     setShowEmojiPicker(false);
   };
 
-
-
   if (loading) {
     return (
       <div className="flex items-center hide-scrollbar justify-center min-h-screen">
@@ -154,7 +152,7 @@ export default function MainContent() {
 
   return (
     <div className="p-4 mt-12 overflow-x-hidden  w-full">
-       <Toaster />
+      <Toaster />
       <div className="border border-gray-100 w-full bg-white rounded-xl mt-8 p-4">
         <div className="flex items-start border-b border-gray-100">
           <div className="h-12 w-12 overflow-hidden">
@@ -183,19 +181,7 @@ export default function MainContent() {
               textarea.style.height = `${textarea.scrollHeight}px`;
             }}
             rows={1}
-            className="
-    outline-none 
-    hide-scrollbar
-    p-2 
-    text-gray-800 
-    w-full 
-    text-base 
-    rounded-lg 
-    resize-none 
-    overflow-y-auto 
-    min-h-[50px] 
-    max-h-[200px]
-  "
+            className="outline-none hide-scrollbarp-2  text-gray-800 w-full text-base rounded-lg resize-none overflow-y-auto min-h-[50px] max-h-[200px]"
             placeholder="Share your thoughts...!"
           />
         </div>
@@ -259,22 +245,21 @@ export default function MainContent() {
                 className="text-green-600 hover:text-green-800 font-bold"
               />
             </button>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-3  rounded-lg ">
               <button
                 title="AI Enhancement"
                 onClick={handleAIPostContentEnhancement}
                 disabled={aiLoading}
+                className={`flex items-center justify-center rounded-full transition duration-200 ${
+                  aiLoading
+                    ? " text-gray-400 cursor-not-allowed"
+                    : " text-green-600  hover:text-green-800"
+                }`}
               >
-                <SiGooglegemini
-                  size={26}
-                  className={`
-        ${aiLoading ? "text-gray-400" : "text-green-600 hover:text-green-800"}
-        font-bold
-      `}
-                />
+                <SiGooglegemini size={24} />
               </button>
               {aiLoading && (
-                <span className="text-gray-600 text-sm animate-pulse">
+                <span className="text-gray-500 text-sm animate-pulse">
                   AI is thinking...
                 </span>
               )}

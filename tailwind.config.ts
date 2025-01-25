@@ -56,6 +56,19 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      animation: {
+        'pulse-custom': 'pulse-custom 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+      },
+      keyframes: {
+        'pulse-custom': {
+          '0%, 100%': { transform: 'scale(0.7)', opacity: '0.7' },
+          '50%': { transform: 'scale(1)', opacity: "1" },
+        }
+      },
+      animationDelay: {
+        200: '200ms',
+        400: '400ms',
+      }
     },
   },
   plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
