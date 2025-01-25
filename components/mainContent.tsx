@@ -48,7 +48,12 @@ export default function MainContent() {
 
   const handleAIPostContentEnhancement = async () => {
     if (!postContent.trim()) {
-      return setError("please enter some text to enchance");
+      toast.error("Post content is missing...!", {
+        description: "Please write something to enhance it...!",
+        duration: 4000,
+        position: "top-right",
+      });
+      return;
     }
 
     setAILoading(true);
@@ -181,7 +186,7 @@ export default function MainContent() {
               textarea.style.height = `${textarea.scrollHeight}px`;
             }}
             rows={1}
-            className="outline-none hide-scrollbarp-2  text-gray-800 w-full text-base rounded-lg resize-none overflow-y-auto min-h-[50px] max-h-[200px]"
+            className="outline-none hide-scrollbar   text-gray-800 w-full text-base rounded-lg resize-none overflow-y-auto min-h-[50px] max-h-[200px]"
             placeholder="Share your thoughts...!"
           />
         </div>
@@ -218,45 +223,59 @@ export default function MainContent() {
               className="hidden"
               ref={fileInputRef}
             />
-            <button onClick={() => fileInputRef.current?.click()} title="Media">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="group relative"
+            >
               <FaImage
                 size={20}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
+              <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+                Media
+              </span>
             </button>
             <button
-              title="Emoji"
+              className="group relative"
               onClick={() => setShowEmojiPicker((prev) => !prev)}
             >
               <MdOutlineEmojiEmotions
                 size={24}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
+              <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+                Emoji
+              </span>
             </button>
 
             <button
-              title="article"
               onClick={() => {
                 router.push("/articles/publish");
               }}
+              className="group relative"
             >
               <MdOutlineArticle
                 size={26}
                 className="text-green-600 hover:text-green-800 font-bold"
               />
+              <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+                Article
+              </span>
             </button>
-            <div className="flex items-center gap-3  rounded-lg ">
+            <div className="relative flex items-center gap-3 rounded-lg">
               <button
-                title="AI Enhancement"
                 onClick={handleAIPostContentEnhancement}
                 disabled={aiLoading}
-                className={`flex items-center justify-center rounded-full transition duration-200 ${
+                className={`group relative flex items-center justify-center rounded-full transition duration-200 ${
                   aiLoading
-                    ? " text-gray-400 cursor-not-allowed"
-                    : " text-green-600  hover:text-green-800"
+                    ? "text-gray-400 cursor-not-allowed"
+                    : "text-green-600 hover:text-green-800"
                 }`}
               >
                 <SiGooglegemini size={24} />
+                <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+                  ProBot
+                </span>
               </button>
               {aiLoading && (
                 <span className="text-gray-500 text-sm animate-pulse">
