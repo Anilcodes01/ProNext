@@ -1,14 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import {
-  MessageCircleMore,
-  Heart,
-  BookmarkCheck,
-  Share2,
-  Dot,
-  EllipsisVertical,
-  Trash2 
+import { SiGooglegemini } from "react-icons/si";
+import {MessageCircleMore, Heart, BookmarkCheck, Share2, Dot, EllipsisVertical, Trash2 
 } from "lucide-react";
 import Image from "next/image";
 import { FaHeart, FaBookmark } from "react-icons/fa";
@@ -149,6 +143,13 @@ export default function PostCard({ post }: { post: Post }) {
             </div>
           </Link>
         </div>
+        <div className="flex items-center  gap-2">
+          <div className="text-green-600  hover:text-green-800 hover:bg-gray-200 p-1 rounded-full">
+              <SiGooglegemini size={24}  />
+              <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+                  ProBot
+                </span>
+          </div>
         <DropdownMenu>
           <DropdownMenuTrigger
             onClick={(e) => e.stopPropagation()}
@@ -196,6 +197,7 @@ export default function PostCard({ post }: { post: Post }) {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
+        </div>
       </div>
 
       <div className="mt-2 lg:ml-8 lg:mr-8 ml-8 mr-">
