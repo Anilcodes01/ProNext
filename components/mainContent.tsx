@@ -269,7 +269,7 @@ export default function MainContent() {
                 className={`group relative flex items-center justify-center rounded-full transition duration-200 ${
                   aiLoading
                     ? "text-gray-400 cursor-not-allowed"
-                    : "text-green-600 hover:text-green-800"
+                    : "text-green-600 hover:text-green-700"
                 }`}
               >
                 <SiGooglegemini size={24} />
