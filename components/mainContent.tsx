@@ -279,7 +279,7 @@ export default function MainContent() {
               </button>
               {aiLoading && (
                 <span className="text-gray-500 text-sm animate-pulse">
-                  ProBot is cooking up some magic...!
+                  ProBot is enhancing your content...!✨
                 </span>
               )}
             </div>

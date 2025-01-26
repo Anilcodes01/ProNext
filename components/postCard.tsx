@@ -144,7 +144,7 @@ export default function PostCard({ post }: { post: Post }) {
           </Link>
         </div>
         <div className="flex items-center  gap-2">
-          <div className="text-green-600  hover:text-green-800 hover:bg-gray-200 p-1 rounded-full">
+          <div className="text-gray-400  hover:text-green-600 hover:bg-gray-200 p-1 rounded-full">
               <SiGooglegemini size={24}  />
               <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
                   ProBot
