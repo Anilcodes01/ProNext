@@ -186,7 +186,7 @@ export default function MainContent() {
               textarea.style.height = `${textarea.scrollHeight}px`;
             }}
             rows={1}
-            className="outline-none hide-scrollbar   text-gray-800 w-full text-base rounded-lg resize-none overflow-y-auto min-h-[50px] max-h-[200px]"
+            className="outline-none hide-scrollbar p-1  text-gray-800 w-full text-base rounded-lg resize-none overflow-y-auto min-h-[50px] max-h-[200px]"
             placeholder="Share your thoughts...!"
           />
         </div>
