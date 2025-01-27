@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import { SiGooglegemini } from "react-icons/si";
-import {MessageCircleMore, Heart, BookmarkCheck, Share2, Dot, EllipsisVertical, Trash2 
+import {
+  MessageCircleMore,
+  Heart,
+  BookmarkCheck,
+  Share2,
+  Dot,
+  EllipsisVertical,
+  Trash2,
 } from "lucide-react";
 import Image from "next/image";
 import { FaHeart, FaBookmark } from "react-icons/fa";
@@ -15,6 +22,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Post } from "@/types/types";
 import { MdBlockFlipped } from "react-icons/md";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +31,13 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function PostCard({ post, onGeminiClick }: { post: Post; onGeminiClick: (postContent: string) => void }) {
+export default function PostCard({
+  post,
+  onGeminiClick,
+}: {
+  post: Post;
+  onGeminiClick: (postContent: string) => void;
+}) {
   const [liked, setLiked] = useState(post.isLiked);
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [bookmarked, setBookmarked] = useState(post.isBookmarked);
@@ -35,8 +49,8 @@ export default function PostCard({ post, onGeminiClick }: { post: Post; onGemini
 
   const handleGeminiClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    onGeminiClick(post.content)
-  }
+    onGeminiClick(post.content);
+  };
 
   const handlePostClick = () => {
     router.push(`/post/${post.id}`);
@@ -68,9 +82,8 @@ export default function PostCard({ post, onGeminiClick }: { post: Post; onGemini
     }
   };
 
-  const formattedDate = formatDistanceToNow(new Date(post.createdAt), {
-    addSuffix: true,
-  });
+  const formattedDate = format(new Date(post.createdAt), "MMM dd");
+
 
   const handleLikeToggle = async () => {
     if (!userId) {
@@ -110,11 +123,13 @@ export default function PostCard({ post, onGeminiClick }: { post: Post; onGemini
     }
   };
 
+ 
+
   const contentLength = post.content?.length ?? 0;
   const shouldTruncate = contentLength > 300;
 
   return (
-    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-50 md:hover:bg-gray-100 p-5 text-black border-gray-100 border rounded-xl">
+    <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-50 md:hover:bg-gray-100 p-4 sm:p-5 text-black border-gray-100 border rounded-xl">
       <div className="flex items-center justify-between overflow-hidden">
         <div className="flex items-center ">
           {post.user?.avatarUrl ? (
@@ -140,68 +155,83 @@ export default function PostCard({ post, onGeminiClick }: { post: Post; onGemini
               <div className="text-[18px] ">
                 {post.user?.name || "Unknown User"}
               </div>
-              <span className="ml-2 text-gray-600 text-sm ">
-                @{post.user.username}
+              <span className="ml-2 text-gray-600 text-sm">
+                <span className="hidden sm:inline">@{post.user.username}</span>
+                <span className="inline sm:hidden">
+                  @{post.user.username.slice(0, 6)}...
+                </span>
               </span>
+
               <Dot className="text-gray-400" />
+             
               <div className="text-xs text-gray-600">{formattedDate}</div>
             </div>
           </Link>
         </div>
         <div className="flex items-center  gap-2">
-          <div onClick={handleGeminiClick} className="text-gray-400  hover:text-green-600 hover:bg-gray-200 p-1 rounded-full">
-              <SiGooglegemini size={24}  />
-              <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
-                  ProBot
-                </span>
-          </div>
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            onClick={(e) => e.stopPropagation()}
-            className=" hover:bg-gray-200 h-8 w-8 rounded-full flex items-center justify-center focus:outline-none"
+          <div
+            onClick={handleGeminiClick}
+            className="text-gray-400  hover:text-green-600 hover:bg-gray-200 p-1 rounded-full"
           >
-            <EllipsisVertical
-              size={20}
-              className=" text-gray-400 hover:text-green-600"
-            />
-          </DropdownMenuTrigger>
+            <SiGooglegemini size={24} className="" />
+            <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
+              ProBot
+            </span>
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              onClick={(e) => e.stopPropagation()}
+              className=" hover:bg-gray-200 h-8 w-8 rounded-full flex items-center justify-center focus:outline-none"
+            >
+              <EllipsisVertical
+                size={20}
+                className=" text-gray-400 hover:text-green-600"
+              />
+            </DropdownMenuTrigger>
 
-          <DropdownMenuContent align="end" sideOffset={5} className="w-52 z-50">
-            {isOwnPost ? (
-              <>
-                <DropdownMenuItem
-                  onClick={() => router.push(`/post/${post.id}/edit`)}
-                  className="hover:bg-gray-100 flex items-center cursor-pointer"
-                >
-                  <BsPencilSquare />
-                  Edit Post
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleDeletePost}
-                  className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
-                >
-                   <Trash2 />
-                  Delete Post
-                </DropdownMenuItem>
-              </>
-            ) : (
-              <>
-                <DropdownMenuItem onClick={handleReportPost} className="flex items-center ">
-                <TbMessageReport />
-                  Report Post
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => router.push(`/user/${post.user.id}/block`)}
-                   className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
-                >
-                  <MdBlockFlipped />
-                  Block @{post.user.username}
-                </DropdownMenuItem>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
+            <DropdownMenuContent
+              align="end"
+              sideOffset={5}
+              className="w-52 z-50"
+            >
+              {isOwnPost ? (
+                <>
+                  <DropdownMenuItem
+                    onClick={() => router.push(`/post/${post.id}/edit`)}
+                    className="hover:bg-gray-100 flex items-center cursor-pointer"
+                  >
+                    <BsPencilSquare />
+                    Edit Post
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleDeletePost}
+                    className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
+                  >
+                    <Trash2 />
+                    Delete Post
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    onClick={handleReportPost}
+                    className="flex items-center "
+                  >
+                    <TbMessageReport />
+                    Report Post
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => router.push(`/user/${post.user.id}/block`)}
+                    className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
+                  >
+                    <MdBlockFlipped />
+                    Block @{post.user.username}
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 

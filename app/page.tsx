@@ -115,6 +115,51 @@ export default function Home() {
       <div className="md:hidden h-screen">
         <div className="h-[calc(100vh-64px)] overflow-y-auto hide-scrollbar">
           <MainContent onGeminiClick={handleGeminiClick} />
+
+          {showExplainer && (
+            <div
+              ref={explainerRef}
+              className="post-explainer bottom-0  shadow-2xl border fixed p-4 bg-white rounded-lg h-[400px]  left- right- w-[380px] z-50 flex flex-col"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <div className="flex items-center gap-2">
+                  <div className="rounded-full h-8 w-8 bg-yellow-300 flex items-center justify-center">
+                    <SiGooglegemini size={20} className="text-white" />
+                  </div>
+                  <span className="font-medium text-sm">
+                    ProBot Explanation
+                  </span>
+                </div>
+                <button
+                  onClick={() => setShowExplainer(false)}
+                  className="text-gray-500 hover:text-gray-700 rounded-full p-1 hover:bg-gray-100"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              <div className="border rounded-lg p-3 bg-gray-50 mb-4">
+                <p className="text-gray-700 text-sm">
+                  {currentPostContent.slice(0, 100)}
+                  {currentPostContent.length > 100 && "..."}
+                </p>
+              </div>
+
+              <div className="flex-1 overflow-y-auto pr-2 hide-scrollbar">
+                {isLoading ? (
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <div className="animate-spin rounded-full h-8 w-8 border-2 border-green-500 border-t-transparent mb-2"></div>
+                    <p className="text-gray-400">ProBot is thinking...✨</p>
+                  </div>
+                ) : (
+                  <div
+                    className="text-gray-700 text-sm whitespace-pre-wrap"
+                    dangerouslySetInnerHTML={{ __html: explanation }}
+                  ></div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
         <div className="fixed bottom-0 w-full h-16 bg-white border-t border-gray-200">
           <Sidebar isMobile={true} />
