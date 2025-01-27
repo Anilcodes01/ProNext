@@ -16,7 +16,9 @@ import { Post } from "@/types/types";
 import NoSession from "./skeletons/mainContentSkeleton/noSession";
 import { Toaster, toast } from "sonner";
 
-export default function MainContent() {
+
+
+export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postContent: string) => void }) {
   const { data: session } = useSession();
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -295,7 +297,7 @@ export default function MainContent() {
         </div>
       </div>
 
-      <PostList newPost={newPost} />
+      <PostList newPost={newPost} onGeminiClick={onGeminiClick}/>
     </div>
   );
 }

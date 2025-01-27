@@ -7,9 +7,10 @@ import PostListSkeleton from "./skeletons/mainContentSkeleton/postlistSkeleton";
 
 interface PostListProps {
   newPost?: Post | null;
+  onGeminiClick?: (postContent: string) => void
 }
 
-export default function PostList({ newPost }: PostListProps) {
+export default function PostList({ newPost, onGeminiClick = () => {} }: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,10 +58,10 @@ export default function PostList({ newPost }: PostListProps) {
   return (
     <div className="mt-8">
       {posts.map((post, index) => (
-        <PostCard key={post.id ?? `post-${index}`} post={post} />
+        <PostCard key={post.id ?? `post-${index}`} post={post}   onGeminiClick={onGeminiClick} />
       ))}
     </div>
   );
 }
 
-export { PostList };
+

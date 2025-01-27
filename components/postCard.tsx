@@ -23,7 +23,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
-export default function PostCard({ post }: { post: Post }) {
+export default function PostCard({ post, onGeminiClick }: { post: Post; onGeminiClick: (postContent: string) => void }) {
   const [liked, setLiked] = useState(post.isLiked);
   const [likeCount, setLikeCount] = useState(post.likeCount);
   const [bookmarked, setBookmarked] = useState(post.isBookmarked);
@@ -32,6 +32,11 @@ export default function PostCard({ post }: { post: Post }) {
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const isOwnPost = userId === post.user.id;
+
+  const handleGeminiClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onGeminiClick(post.content)
+  }
 
   const handlePostClick = () => {
     router.push(`/post/${post.id}`);
@@ -144,7 +149,7 @@ export default function PostCard({ post }: { post: Post }) {
           </Link>
         </div>
         <div className="flex items-center  gap-2">
-          <div className="text-gray-400  hover:text-green-600 hover:bg-gray-200 p-1 rounded-full">
+          <div onClick={handleGeminiClick} className="text-gray-400  hover:text-green-600 hover:bg-gray-200 p-1 rounded-full">
               <SiGooglegemini size={24}  />
               <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
                   ProBot
