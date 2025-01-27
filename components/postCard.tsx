@@ -15,7 +15,6 @@ import Image from "next/image";
 import { FaHeart, FaBookmark } from "react-icons/fa";
 import { BsPencilSquare } from "react-icons/bs";
 import axios from "axios";
-import { formatDistanceToNow } from "date-fns";
 import { useSession } from "next-auth/react";
 import { TbMessageReport } from "react-icons/tb";
 import { useRouter } from "next/navigation";
