@@ -8,7 +8,13 @@ import { useSession } from "next-auth/react";
 import { Post } from "@/types/types";
 import { Article } from "@/types/types";
 
-export default function BookmarkComponent() {
+interface PostListProps {
+  onGeminiClick?: (postContent: string) => void;
+}
+
+export default function BookmarkComponent({
+  onGeminiClick = () => {},
+}: PostListProps) {
   const { data: session } = useSession();
   const [bookmarkedPosts, setBookmarkedPosts] = useState<Post[]>([]);
   const [bookmarkedArticles, setBookmarkedArticles] = useState<Article[]>([]);
@@ -97,7 +103,11 @@ export default function BookmarkComponent() {
       <div className="grid grid-cols-1 gap-2">
         {bookmarksToDisplay.map((item) =>
           view === "posts" ? (
-            <PostCard key={item.id} post={item as Post} />
+            <PostCard
+              onGeminiClick={onGeminiClick}
+              key={item.id}
+              post={item as Post}
+            />
           ) : (
             <ArticleCard key={item.id} article={item as Article} />
           )

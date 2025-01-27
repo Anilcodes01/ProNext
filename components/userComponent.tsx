@@ -24,7 +24,11 @@ interface User {
   avatarUrl: string | null;
 }
 
-export default function UserProfilePage() {
+interface PostListProps {
+  onGeminiClick?: (postContent: string) => void
+}
+
+export default function UserProfilePage({onGeminiClick = () => {}}: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [followersCount, setFollowersCount] = useState<number | null>(null);
@@ -318,7 +322,7 @@ export default function UserProfilePage() {
           {viewMode === "posts" && (
             <div className="space-y-4">
               {posts.map((post) => (
-                <PostCard key={post.id} post={post} />
+                <PostCard key={post.id} post={post} onGeminiClick={onGeminiClick} />
               ))}
             </div>
           )}
