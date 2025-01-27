@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
             }
           );
       
-          const enhancedContent = aiResponse.data.candidates[0].content.parts[0].text;
-          return NextResponse.json({ enhancedContent });
+          const explainedContent = aiResponse.data.candidates[0].content.parts[0].text;
+          return NextResponse.json({ explainedContent });
     } catch (error) {
         return NextResponse.json({
             message: 'Error while fetching explained post from ai...!',

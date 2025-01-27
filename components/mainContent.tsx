@@ -16,8 +16,6 @@ import { Post } from "@/types/types";
 import NoSession from "./skeletons/mainContentSkeleton/noSession";
 import { Toaster, toast } from "sonner";
 
-
-
 export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postContent: string) => void }) {
   const { data: session } = useSession();
   const [postContent, setPostContent] = useState("");
