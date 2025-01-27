@@ -42,7 +42,7 @@ export default function AboutUs() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-emerald-50 pb-12 to-white min-h-screen">
+    <div className="bg-gradient-to-br from-emerald-50 pb-12 to-white overflow-auto hide-scrollbar h-screen">
       <motion.nav
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
