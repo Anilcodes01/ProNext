@@ -11,6 +11,18 @@ export default function Home() {
           <Sidebar />
         </div>
 
+        <div className="shadow-2xl border absolute p-4 bg-white rounded-lg h-[400px] bottom-3 left-3 right-3 w-[380px]">
+            <div className=" flex gap-2">
+              <div className="rounded-full h-8 w-8 bg-yellow-300"></div>
+              <div className="border p-2 rounded-lg h-[80px] w-[90%]">
+                <p className="text-gray-700">The Healer in clash of clans, despite her aerodynamically unfavourable desing, is...</p>
+              </div>
+            </div>
+            <div>
+              <p className="mt-4 text-gray-400 animate-pulse">ProBot is thinking...✨</p>
+            </div>
+        </div>
+
         <div className="ml-[25%]  h-screen overflow-y-auto hide-scrollbar w-3/4 lg:w-1/2">
           <MainContent />
         </div>
