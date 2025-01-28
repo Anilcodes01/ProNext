@@ -1,46 +1,50 @@
 import { prisma } from "@/app/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request: Request, { params }: { params: { userId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { userId: string } }
+) {
   try {
     const { userId } = params;
 
     const userPosts = await prisma.post.findMany({
       where: { userId },
-      orderBy: { createdAt: 'desc' },
+      orderBy: { createdAt: "desc" },
       include: {
         user: {
           select: {
-            name: true,       
-            avatarUrl: true,  
+            name: true,
+            avatarUrl: true,
+            username: true,
           },
         },
-        likes: {            
+        likes: {
           select: {
-            id: true,      
+            id: true,
           },
         },
-        comments: {        
+        comments: {
           select: {
-            id: true,      
-            content: true,  
-            createdAt: true 
+            id: true,
+            content: true,
+            createdAt: true,
           },
         },
       },
     });
 
-    const postsWithDetails = userPosts.map(post => ({
+    const postsWithDetails = userPosts.map((post) => ({
       ...post,
       likeCount: post.likes.length,
       commentCount: post.comments.length,
-      isLiked: post.likes.length > 0,        
+      isLiked: post.likes.length > 0,
     }));
 
     return NextResponse.json(
       {
         message: "User-specific posts fetched successfully",
-        posts: postsWithDetails, 
+        posts: postsWithDetails,
       },
       { status: 200 }
     );
