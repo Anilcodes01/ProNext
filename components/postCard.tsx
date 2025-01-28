@@ -157,7 +157,7 @@ export default function PostCard({
               <span className="ml-2 text-gray-600 text-sm">
                 <span className="hidden sm:inline">@{post.user.username}</span>
                 <span className="inline sm:hidden">
-                  @{post.user.username.slice(0, 6)}...
+                  @{post.user.username?.slice(0, 6)}...
                 </span>
               </span>
 
