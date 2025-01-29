@@ -51,7 +51,7 @@ export function EmptyChat({ type }: EmptyChatProps) {
             </h2>
             <p className="text-gray-600 max-w-sm">
               Connect with your buddies! Select someone from the list to begin
-              chatting.
+              chatting...!
             </p>
           </div>
 
