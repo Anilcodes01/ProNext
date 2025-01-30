@@ -1,13 +1,13 @@
+import { NextResponse } from "next/server";
+import { prisma } from "@/app/lib/prisma";
 
-
-import { NextResponse } from 'next/server';
-import { prisma } from '@/app/lib/prisma'; 
-
-export async function GET(request: Request, { params }: { params: { userId: string } }) {
+export async function GET(
+  request: Request,
+  { params }: { params: { userId: string } }
+) {
   const { userId } = params;
 
   try {
-    
     const user = await prisma.user.findUnique({
       where: { id: userId },
       select: {
@@ -15,36 +15,55 @@ export async function GET(request: Request, { params }: { params: { userId: stri
         name: true,
         username: true,
         avatarUrl: true,
-        createdAt: true, 
+        createdAt: true,
         bio: true,
         website: true,
         city: true,
         techStack: true,
-        ProfilePageImage: true
+        ProfilePageImage: true,
+        posts: {
+          orderBy: { createdAt: "desc" },
+          select: {
+            likes: {
+              select: {
+                id: true,
+              },
+            },
+            comments: {
+              select: {
+                id: true,
+                content: true,
+                createdAt: true,
+              },
+            },
+          },
+        },
       },
     });
 
     if (!user) {
-      return NextResponse.json(
-        { message: 'User not found' },
-        { status: 404 }
-      );
+      return NextResponse.json({ message: "User not found" }, { status: 404 });
     }
 
+    const [followersCount, followingCount] = await Promise.all([
+      prisma.follow.count({ where: { followingId: userId } }),
+      prisma.follow.count({ where: { followerId: userId } }),
+    ]);
 
-    const followersCount = await prisma.follow.count({
-      where: { followingId: userId },
-    });
-
-
-    const followingCount = await prisma.follow.count({
-      where: { followerId: userId },
-    });
+    const postsWithDetails = user.posts.map((post) => ({
+      ...post,
+      likeCount: post.likes.length,
+      commentCount: post.comments.length,
+      isLiked: post.likes.length > 0,
+    }));
 
     return NextResponse.json(
       {
-        message: 'User fetched successfully',
-        user,
+        message: "User fetched successfully",
+        user: {
+          ...user,
+          posts: postsWithDetails,
+        },
         followersCount,
         followingCount,
       },
@@ -53,7 +72,10 @@ export async function GET(request: Request, { params }: { params: { userId: stri
   } catch (error) {
     console.error("Error fetching user data:", error);
     return NextResponse.json(
-      { message: 'Error fetching user data', error: error instanceof Error ? error.message : "Unknown error" },
+      {
+        message: "Error fetching user data",
+        error: error instanceof Error ? error.message : "Unknown error",
+      },
       { status: 500 }
     );
   }

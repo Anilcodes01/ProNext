@@ -83,7 +83,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
           },
         });
 
-        console.log("User response:", userResponse.data);
+
 
         const response = await axios.get(`/api/post/fetchUserPost/${userId}`, {
           headers: {
