@@ -127,3 +127,8 @@ export interface Comment {
   createdAt: string | Date;
   user: User;
 }
+
+export interface PostListProps {
+  newPost?: Post | null;
+  onGeminiClick?: (postContent: string) => void
+}

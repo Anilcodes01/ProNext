@@ -4,11 +4,8 @@ import axios from "axios";
 import PostCard from "./postCard";
 import { Post } from "@/types/types";
 import PostListSkeleton from "./skeletons/mainContentSkeleton/postlistSkeleton";
+import { PostListProps } from "@/types/types";
 
-interface PostListProps {
-  newPost?: Post | null;
-  onGeminiClick?: (postContent: string) => void
-}
 
 export default function PostList({ newPost, onGeminiClick = () => {} }: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([]);

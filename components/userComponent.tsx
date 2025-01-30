@@ -14,19 +14,9 @@ import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 import { getDeviconUrl } from "@/app/lib/getDeviconUrl";
 import { CalendarDays, MapPin } from "lucide-react";
-import { Article, Project, UserProfile, Follow, Post } from "@/types/types";
+import { Article, Project, UserProfile,  Post } from "@/types/types";
 import UserComponentSkeleton from "./skeletons/userComponentSkeleton";
-
-interface User {
-  id: string;
-  name: string | null;
-  username: string;
-  avatarUrl: string | null;
-}
-
-interface PostListProps {
-  onGeminiClick?: (postContent: string) => void
-}
+import { PostListProps } from "@/types/types";
 
 export default function UserProfilePage({onGeminiClick = () => {}}: PostListProps) {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -39,36 +29,11 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
   const [viewMode, setViewMode] = useState<"posts" | "articles" | "projects">(
     "posts"
   );
-  const [users, setUsers] = useState<User[]>([]);
-  const [following, setFollowing] = useState<string[]>([]);
+  const [following] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { userId } = useParams();
   const { data: session } = useSession();
   const router = useRouter();
-
-  console.log(users);
-
-  useEffect(() => {
-    async function fetchUsersAndFollowing() {
-      try {
-        const [usersResponse, followingResponse] = await Promise.all([
-          axios.get("/api/users"),
-          axios.get("/api/follow"),
-        ]);
-        setUsers(usersResponse.data.users);
-        setFollowing(
-          followingResponse.data.following.map(
-            (follow: Follow) => follow.followingId
-          )
-        );
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchUsersAndFollowing();
-  }, []);
 
   useEffect(() => {
     if (!userId) return;
@@ -83,24 +48,11 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
           },
         });
 
-
-
-        const response = await axios.get(`/api/post/fetchUserPost/${userId}`, {
-          headers: {
-            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-
-        const fetchedPosts = Array.isArray(response.data.posts)
-          ? response.data.posts
-          : [];
-        setPosts(fetchedPosts);
-
         const userData = userResponse.data.user;
         setUserProfile(userData);
-
+        setPosts(userData.posts)
+        setArticles(userData.articles)
+        setProjects(userData.projects)
         setFollowersCount(userResponse.data.followersCount);
         setFollowingCount(userResponse.data.followingCount);
       } catch (error) {
@@ -114,35 +66,9 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
     fetchUserData();
   }, [userId]);
 
-  const fetchArticles = async () => {
-    try {
-      const response = await axios.get(
-        `/api/articles/fetchUserArticles/${userId}`
-      );
-      setArticles(response.data.userArticles);
-    } catch (error) {
-      setError("Failed to fetch articles");
-      console.log(error);
-    }
-  };
-
-  const fetchProjects = async () => {
-    try {
-      const response = await axios.get(`/api/project/fetchProject/${userId}`);
-      setProjects(response.data.projects);
-    } catch (error) {
-      setError("Failed to fetch Projects");
-      console.log(error);
-    }
-  };
-
   const handleViewModeChange = (mode: "posts" | "articles" | "projects") => {
     setViewMode(mode);
-    if (mode === "articles" && articles.length === 0) {
-      fetchArticles();
-    } else if (mode === "projects" && projects.length === 0) {
-      fetchProjects();
-    }
+   
   };
 
   if (error) {

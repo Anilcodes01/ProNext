@@ -23,7 +23,15 @@ export async function GET(
         ProfilePageImage: true,
         posts: {
           orderBy: { createdAt: "desc" },
-          select: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                avatarUrl: true,
+                username: true,
+              },
+            },
             likes: {
               select: {
                 id: true,
@@ -38,6 +46,32 @@ export async function GET(
             },
           },
         },
+        articles: {
+          orderBy: { createdAt: "desc" },
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                name: true,
+                avatarUrl: true,
+              },
+            },
+          },
+        },
+        projects: {
+          orderBy: {createdAt: 'desc'},
+          include: {
+            user: {
+              select: {
+                id: true,
+                name: true,
+                username: true,
+                avatarUrl: true
+              }
+            }
+          }
+        }
       },
     });
 
