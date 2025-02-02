@@ -132,3 +132,11 @@ export interface PostListProps {
   newPost?: Post | null;
   onGeminiClick?: (postContent: string) => void
 }
+
+export interface PostContextType {
+  posts: Post[];
+  postLoading: boolean;
+  postError: string | null;
+  fetchPosts: () => Promise<void>;
+  addPost: (post: Post) => void;
+}

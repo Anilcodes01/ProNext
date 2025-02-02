@@ -1,14 +1,7 @@
 import { createContext, useState, useContext, ReactNode, useCallback, useRef } from "react";
 import { Post } from "@/types/types";
 import axios from "axios";
-
-interface PostContextType {
-  posts: Post[];
-  postLoading: boolean;
-  postError: string | null;
-  fetchPosts: () => Promise<void>;
-  addPost: (post: Post) => void;
-}
+import { PostContextType } from "@/types/types";
 
 const PostContext = createContext<PostContextType>({
   posts: [],

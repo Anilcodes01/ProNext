@@ -17,9 +17,13 @@ import { Toaster, toast } from "sonner";
 import { usePosts } from "@/context/PostContext";
 import PostSkeleton from "./skeletons/postSkeleton";
 import PostCard from "./postCard";
+import { Loader } from "lucide-react";
 
-
-export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClick?: (postContent: string) => void }) {
+export default function MainContent({
+  onGeminiClick = () => {},
+}: {
+  onGeminiClick?: (postContent: string) => void;
+}) {
   const { data: session } = useSession();
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -30,7 +34,7 @@ export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClic
   const router = useRouter();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [aiLoading, setAILoading] = useState(false);
-  const {posts, postLoading, postError, fetchPosts, addPost} = usePosts();
+  const { posts, postLoading, postError, fetchPosts, addPost } = usePosts();
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -43,7 +47,7 @@ export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClic
 
   useEffect(() => {
     fetchPosts();
-  }, [])
+  }, []);
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
@@ -128,7 +132,7 @@ export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClic
           isBookmarked: false,
         };
 
-        addPost(createdPost)
+        addPost(createdPost);
         setPostContent("");
         setSelectedImage(null);
         setPreviewUrl(null);
@@ -148,14 +152,6 @@ export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClic
     setPostContent((prevContent) => prevContent + emojiObject.emoji);
     setShowEmojiPicker(false);
   };
-
-  if (loading) {
-    return (
-      <div className="flex items-center hide-scrollbar justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
-      </div>
-    );
-  }
 
   if (error) {
     return <NoSession />;
@@ -293,33 +289,35 @@ export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClic
           <div>
             <button
               onClick={handlePostSubmission}
-              className="  hover:bg-green-700 bg-green-600  h-8 w-16 rounded-lg text-white p-1"
+              className="  hover:bg-green-700 bg-green-600 flex items-center justify-center  h-8 w-16 rounded-lg text-center text-white p-1"
             >
-              Post
+              {loading ? <Loader className="animate-spin text-green-500" /> : "Post"}
             </button>
           </div>
         </div>
       </div>
 
-     <div>
-      {
-      postLoading ? (
-        <div>
-          <PostSkeleton />
-        </div>
-      ) : postError ? (
-        <div className="text-center text-red-600 text-lg font-bold">
-          {postError}
-        </div>
-      ) : (
-        <div>
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} onGeminiClick={onGeminiClick} />
-          ))}
-        </div>
-      )
-      }
-     </div>
+      <div>
+        {postLoading ? (
+          <div>
+            <PostSkeleton />
+          </div>
+        ) : postError ? (
+          <div className="text-center text-red-600 text-lg font-bold">
+            {postError}
+          </div>
+        ) : (
+          <div>
+            {posts.map((post) => (
+              <PostCard
+                key={post.id}
+                post={post}
+                onGeminiClick={onGeminiClick}
+              />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
