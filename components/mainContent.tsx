@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { FaImage } from "react-icons/fa6";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { SiGooglegemini } from "react-icons/si";
@@ -11,12 +11,15 @@ import { MdOutlineArticle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 import EmojiPicker from "emoji-picker-react";
 import { EmojiClickData } from "emoji-picker-react";
-import PostList from "./postList";
 import { Post } from "@/types/types";
 import NoSession from "./skeletons/mainContentSkeleton/noSession";
 import { Toaster, toast } from "sonner";
+import { usePosts } from "@/context/PostContext";
+import PostSkeleton from "./skeletons/postSkeleton";
+import PostCard from "./postCard";
 
-export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postContent: string) => void }) {
+
+export default function MainContent({ onGeminiClick = () => {} }: { onGeminiClick?: (postContent: string) => void }) {
   const { data: session } = useSession();
   const [postContent, setPostContent] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,8 +29,8 @@ export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postCo
   const fileInputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const [newPost, setNewPost] = useState<Post | null>(null);
   const [aiLoading, setAILoading] = useState(false);
+  const {posts, postLoading, postError, fetchPosts, addPost} = usePosts();
 
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
@@ -37,6 +40,10 @@ export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postCo
       setPreviewUrl(imageUrl);
     }
   };
+
+  useEffect(() => {
+    fetchPosts();
+  }, [])
 
   const handleRemoveImage = () => {
     setSelectedImage(null);
@@ -121,8 +128,7 @@ export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postCo
           isBookmarked: false,
         };
 
-        setNewPost(createdPost);
-
+        addPost(createdPost)
         setPostContent("");
         setSelectedImage(null);
         setPreviewUrl(null);
@@ -295,7 +301,25 @@ export default function MainContent({ onGeminiClick }: { onGeminiClick?: (postCo
         </div>
       </div>
 
-      <PostList newPost={newPost} onGeminiClick={onGeminiClick}/>
+     <div>
+      {
+      postLoading ? (
+        <div>
+          <PostSkeleton />
+        </div>
+      ) : postError ? (
+        <div className="text-center text-red-600 text-lg font-bold">
+          {postError}
+        </div>
+      ) : (
+        <div>
+          {posts.map((post) => (
+            <PostCard key={post.id} post={post} onGeminiClick={onGeminiClick} />
+          ))}
+        </div>
+      )
+      }
+     </div>
     </div>
   );
 }

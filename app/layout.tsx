@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import Providers from "./providers";
 import Appbar from "@/components/appbar";
+import { PostProvider } from "@/context/PostContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,8 +31,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} hide-scrollbar  antialiased`}
       >
         <Providers>
-          {showAppbar && <Appbar />}
-          {children}
+        <PostProvider>
+        {showAppbar && <Appbar />}
+        {children}
+        </PostProvider>
         </Providers>
       </body>
     </html>
