@@ -89,8 +89,12 @@ export default function MainContent({
   };
 
   const handlePostSubmission = async () => {
-    if (!postContent.trim() && !selectedImage) {
-      setError("Post content or image is required!");
+    if (!postContent.trim()) {
+      toast.error("Post content is missing...!", {
+        description: "Please write something to post...!",
+        duration: 4000,
+        position: "top-right",
+      });
       return;
     }
 
