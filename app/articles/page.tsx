@@ -1,13 +1,20 @@
 "use client";
-import { Suspense } from "react";
-import ArticleList from "@/components/articleList";
+import { useEffect } from "react";
 import AllArticleSkeleton from "@/components/skeletons/allArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";
+import { useArticles } from "@/context/ArticleContext";
+import ArticleCard from "@/components/articleCard";
 
 export default function Articles() {
+  const { articles, loading, error, fetchArticles } = useArticles();
   const router = useRouter();
+
+  useEffect(() => {
+    fetchArticles();
+  }, []);
+
   return (
     <div className="bg-white text-black min-h-screen overflow-hidden">
       <div className="flex">
@@ -29,9 +36,23 @@ export default function Articles() {
               </button>
             </div>
 
-            <Suspense fallback={<AllArticleSkeleton />}>
-              <ArticleList />
-            </Suspense>
+            <div>
+              {loading ? (
+                <div>
+                  <AllArticleSkeleton />
+                </div>
+              ) : error ? (
+                <div className="text-center text-red-600 text-lg font-bold">
+                  {error}
+                </div>
+              ) : (
+                <div>
+                  {articles.map((article) => (
+                    <ArticleCard key={article.id} article={article} />
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

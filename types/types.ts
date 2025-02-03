@@ -140,3 +140,11 @@ export interface PostContextType {
   fetchPosts: () => Promise<void>;
   addPost: (post: Post) => void;
 }
+
+export interface ArticleContextType {
+  articles: Article[];
+  loading: boolean;
+  error: string | null;
+  fetchArticles: () => Promise<void>;
+  
+}

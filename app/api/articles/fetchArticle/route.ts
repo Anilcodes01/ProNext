@@ -31,7 +31,7 @@ export async function GET() {
     return NextResponse.json(
       {
         message: "Articles fetched successfully!",
-        getArticles,
+       articles: getArticles,
       },
       { status: 200 }
     );
