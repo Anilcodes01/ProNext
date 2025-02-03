@@ -22,6 +22,7 @@ import Link from "next/link";
 import { Post } from "@/types/types";
 import { MdBlockFlipped } from "react-icons/md";
 import { format } from "date-fns";
+import { Toaster, toast } from "sonner";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,6 +30,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { usePosts } from "@/context/PostContext";
 
 export default function PostCard({
   post,
@@ -45,6 +47,7 @@ export default function PostCard({
   const { data: session } = useSession();
   const userId = session?.user?.id;
   const isOwnPost = userId === post.user.id;
+  const {deletePost} = usePosts();
 
   const handleGeminiClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -55,22 +58,6 @@ export default function PostCard({
     router.push(`/post/${post.id}`);
   };
 
-  const handleDeletePost = async () => {
-    try {
-      const response = await axios.post("/api/post/deletePost", {
-        postId: post.id,
-      });
-
-      if (response.status === 200) {
-        console.log(response.data.message);
-        router.refresh();
-      } else {
-        console.error("Failed to delete post:", response.data.message);
-      }
-    } catch (error) {
-      console.error("Failed to delete post:", error);
-    }
-  };
 
   const handleReportPost = async () => {
     try {
@@ -104,6 +91,20 @@ export default function PostCard({
     }
   };
 
+  const handleDelete = async () => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      try {
+        await deletePost(post.id);
+        toast.success("Post deleted successfully!");
+        
+      } catch (error) {
+        console.error("Failed to delete post:", error);
+        toast.error("Failed to delete the post. Please try again."); 
+       
+      }
+    }
+  };
+
   const handleBookmarkToggle = async () => {
     if (!userId) {
       console.error("User not logged in");
@@ -129,7 +130,9 @@ export default function PostCard({
 
   return (
     <div className="bg-white mt-4 cursor-pointer lg:hover:bg-gray-50 md:hover:bg-gray-100 p-4 sm:p-5 text-black border-gray-100 border rounded-xl">
+        <Toaster />
       <div className="flex items-center justify-between overflow-hidden">
+      
         <div className="flex items-center ">
           {post.user?.avatarUrl ? (
             <Link href={`/user/${post.user.id}`} passHref>
@@ -204,7 +207,7 @@ export default function PostCard({
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem
-                    onClick={handleDeletePost}
+                    onClick={handleDelete}
                     className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
                   >
                     <Trash2 />

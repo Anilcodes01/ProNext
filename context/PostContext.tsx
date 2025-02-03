@@ -9,6 +9,7 @@ const PostContext = createContext<PostContextType>({
   postError: null,
   fetchPosts: async () => {},
   addPost: () => {},
+  deletePost: async (postId: string) => {}
 });
 
 export const PostProvider: React.FC<{ children: ReactNode }> = ({
@@ -42,6 +43,16 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({
     setPosts(currentPosts => [newPost, ...currentPosts]);
   }, []);
 
+  const deletePost = useCallback(async (postId: string) => {
+    try {
+      await axios.delete(`/api/post/deletePost/${postId}`);
+      setPosts((currentPosts) => currentPosts.filter((post) => post.id !== postId));
+    } catch (error) {
+      console.error("Failed to delete post", error);
+      setPostError("Failed to delete post.");
+    }
+  }, []);
+
   return (
     <PostContext.Provider
       value={{
@@ -50,6 +61,7 @@ export const PostProvider: React.FC<{ children: ReactNode }> = ({
         postError,
         fetchPosts,
         addPost,
+        deletePost
       }}
     >
       {children}

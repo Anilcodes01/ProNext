@@ -141,6 +141,7 @@ export interface PostContextType {
   postError: string | null;
   fetchPosts: () => Promise<void>;
   addPost: (post: Post) => void;
+  deletePost: (postId: string) => Promise<void>;
 }
 
 export interface ArticleContextType {
