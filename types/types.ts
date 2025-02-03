@@ -99,6 +99,8 @@ export interface Project {
   projectLink: string;
   projectRepoLink: string;
   user: {
+    id: string;
+    username: string
     name: string;
     avatarUrl: string;
   };
@@ -147,4 +149,23 @@ export interface ArticleContextType {
   error: string | null;
   fetchArticles: () => Promise<void>;
   
+}
+
+export interface ProjectCardProps {
+  project: {
+    id: string;
+    projectName: string;
+    projectDescription: string;
+    createdAt: string;
+    image: string;
+    userId: string;
+    projectLink: string;
+    projectRepoLink: string;
+    user: {
+      id: string;
+      username: string
+      name: string;
+      avatarUrl: string;
+    };
+  };
 }

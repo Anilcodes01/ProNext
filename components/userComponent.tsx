@@ -211,12 +211,12 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
           </div>
         </div>
 
-        <div className="flex gap-6 bg-white border-b ">
+        <div className="flex gap-6 bg-white  ">
           <button
             onClick={() => handleViewModeChange("posts")}
             className={`${
               viewMode === "posts"
-                ? "border-b-4 text-blue-500 border-blue-500"
+                ? "border-b-4 text-green-600 border-green-600"
                 : "border-none text-gray-500"
             } py-2 transition duration-300`}
           >
@@ -226,7 +226,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
             onClick={() => handleViewModeChange("articles")}
             className={`${
               viewMode === "articles"
-                ? "border-b-4 text-blue-500 border-blue-500"
+                ? "border-b-4 text-green-600 border-green-600"
                 : "border-none text-gray-500"
             } py-2 transition duration-300`}
           >
@@ -236,7 +236,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
             onClick={() => handleViewModeChange("projects")}
             className={`${
               viewMode === "projects"
-                ? "border-b-4 text-blue-500 border-blue-500"
+                ? "border-b-4 text-green-600 border-green-600"
                 : "border-none text-gray-500"
             } py-2 transition duration-300`}
           >
@@ -266,7 +266,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
                   onClick={() => {
                     router.push("/user/project/upload");
                   }}
-                  className="bg-blue-500 text-white rounded-lg py-1 px-3 hover:bg-blue-600 transition duration-300"
+                  className="bg-green-500 text-white rounded-lg py-1 px-3 hover:bg-green-600 transition duration-300"
                 >
                   Upload Project
                 </button>

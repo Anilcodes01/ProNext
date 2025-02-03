@@ -3,29 +3,30 @@ import Image from "next/image";
 import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
-interface ProjectCardProps {
-  project: {
-    id: string;
-    projectName: string;
-    projectDescription: string;
-    createdAt: string;
-    image: string;
-    userId: string;
-    projectLink: string;
-    projectRepoLink: string;
-    user: {
-      name: string;
-      avatarUrl: string;
-    };
-  };
-}
+import { ProjectCardProps } from "@/types/types";
+import { EllipsisVertical, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
+import { BsPencilSquare } from "react-icons/bs";
+import { TbMessageReport } from "react-icons/tb";
+import { MdBlockFlipped } from "react-icons/md";
 
 export default function ProjectCard({ project }: ProjectCardProps) {
   const [techStack, setTechStack] = useState<{ [key: string]: number } | null>(
     null
   );
   const [loading, setLoading] = useState<boolean>(true);
+  const router = useRouter();
+  const { data: session } = useSession();
+  const userId = session?.user.id;
+  const isOwnPost = userId === project.user.id;
 
   const fetchTechStack = async (repoUrl: string) => {
     const regex = /github\.com\/([^/]+)\/([^/]+)/;
@@ -60,61 +61,133 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     }
   }, [project.projectRepoLink]);
 
+  const handleDeleteProject = async () => {
+    try {
+      const response = await axios.post("/api/project/deleteProject", {
+        projectId: project.id,
+      });
+
+      if (response.status === 200) {
+        console.log(response.data.message);
+      } else {
+        console.log("failed to delete project", response.data.message);
+      }
+    } catch (error) {
+      console.error("failed to delete project:", error);
+    }
+  };
+
   if (!project) {
     return <div>Error, project data is missing.</div>;
   }
 
   return (
     <div className="bg-neutral-50 shadow-lg mt-4 hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
-      {/* User Info */}
-      <div className="flex items-center mb-4">
-        {project.user && project.user.avatarUrl ? (
-          <Image
-          src={project.user.avatarUrl}
-          alt="User Profile"
-          width={250}
-          height={250}
-          quality={75}
-          className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer" // Add cursor pointer for clarity
-        />
-        ) : (
-          <FaUserCircle className="w-10 h-10 text-gray-500" />
-        )}
-        <div className="ml-3">
-          <div className="text-lg text-gray-900 font-semibold">
-            {project.user?.name || "Unknown User"}
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center">
+          {project.user && project.user.avatarUrl ? (
+            <Image
+              src={project.user.avatarUrl}
+              alt="User Profile"
+              width={250}
+              height={250}
+              quality={75}
+              className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer"
+            />
+          ) : (
+            <FaUserCircle className="w-10 h-10 text-gray-500" />
+          )}
+          <div className="ml-3">
+            <div className="text-lg text-gray-900 font-semibold">
+              {project.user?.name || "Unknown User"}
+            </div>
+            <div className="text-sm text-gray-500">
+              Posted on{" "}
+              {new Date(project.createdAt).toLocaleDateString(undefined, {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </div>
           </div>
-          <div className="text-sm text-gray-500">
-            Posted on{" "}
-            {new Date(project.createdAt).toLocaleDateString(undefined, {
-              day: "numeric",
-              month: "short",
-              year: "numeric",
-            })}
-          </div>
+        </div>
+        <div>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              onClick={(e) => e.stopPropagation()}
+              className=" hover:bg-gray-200 h-8 w-8 rounded-full flex items-center justify-center focus:outline-none"
+            >
+              <EllipsisVertical
+                size={20}
+                className=" text-gray-400 hover:text-green-600"
+              />
+            </DropdownMenuTrigger>
+
+            <DropdownMenuContent
+              align="end"
+              sideOffset={5}
+              className="w-52 z-50"
+            >
+              {isOwnPost ? (
+                <>
+                  <DropdownMenuItem
+                    onClick={() => router.push(`/post/${project.id}/edit`)}
+                    className="hover:bg-gray-100 flex items-center cursor-pointer"
+                  >
+                    <BsPencilSquare />
+                    Edit Post
+                  </DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem
+                    onClick={handleDeleteProject}
+                    className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
+                  >
+                    <Trash2 />
+                    Delete Post
+                  </DropdownMenuItem>
+                </>
+              ) : (
+                <>
+                  <DropdownMenuItem
+                    // onClick={handleReportPost}
+                    className="flex items-center "
+                  >
+                    <TbMessageReport />
+                    Report Post
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() =>
+                      router.push(`/user/${project.user.id}/block`)
+                    }
+                    className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
+                  >
+                    <MdBlockFlipped />
+                    Block @{project.user.username}
+                  </DropdownMenuItem>
+                </>
+              )}
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
 
-      {/* Project Image */}
       <div className="relative w-full h-40 z-10 md:h-80 lg:h-80 rounded overflow-hidden mb-4">
         <Image
           src={project.image}
           alt={project.projectName}
-          layout="fill" 
-          objectFit="contain" 
+          layout="fill"
+          objectFit="contain"
           quality={90}
           className="rounded"
         />
       </div>
 
-      {/* Project Details */}
       <div className="flex flex-col items-start">
         <div className="flex items-center gap-4 w-full justify-between">
           <h3 className="text-2xl font-bold text-gray-900">
             {project.projectName}
           </h3>
 
-        
           <div className="hidden md:block">
             {loading ? (
               <p className="text-gray-500">Loading tech stack...</p>
@@ -130,7 +203,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
                 ))}
               </ul>
             ) : (
-              <p className="text-gray-500">Failed to fetch tech stack data...</p>
+              <p className="text-gray-500">
+                Failed to fetch tech stack data...
+              </p>
             )}
           </div>
         </div>
@@ -139,7 +214,6 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </p>
       </div>
 
-      {/* Links */}
       <div className="flex justify-between mt-4 gap-8">
         <button
           onClick={() => {
