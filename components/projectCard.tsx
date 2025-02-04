@@ -85,7 +85,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   }
 
   return (
-    <div className="bg-neutral-50 shadow-lg mt-4 hover:shadow-xl transition-shadow duration-300 border border-gray-200 rounded-lg w-full p-5">
+    <div className="bg-neutral-50 shadow-lg mt-4 hover:shadow-xl transition-shadow duration-300 border border-gray-100 rounded-lg w-full p-5">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           {project.user && project.user.avatarUrl ? (

@@ -20,6 +20,7 @@ export async function GET() {
             id: true,
             name: true,
             avatarUrl: true,
+            username: true
           },
         },
       },

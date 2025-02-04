@@ -3,12 +3,7 @@ import { Article } from "@/types/types";
 import axios from "axios";
 import { ArticleContextType } from "@/types/types";
 
-const ArticleContext = createContext<ArticleContextType>({
-    articles:[],
-    loading: false,
-    error: null,
-    fetchArticles: async () => {}
-})
+const ArticleContext = createContext<ArticleContextType | undefined>(undefined)
 
 export const ArticleProvider: React.FC<{children: ReactNode}> = ({
     children
@@ -16,6 +11,7 @@ export const ArticleProvider: React.FC<{children: ReactNode}> = ({
     const [articles, setArticles] = useState<Article[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const [selectedArticle, setSelectedArticle] = useState<Article | null>(null)
 
 
     const fetchArticles = useCallback(async () => {
@@ -37,7 +33,7 @@ export const ArticleProvider: React.FC<{children: ReactNode}> = ({
     }, [loading, articles.length])
 
     return (
-        <ArticleContext.Provider value={{articles, loading, error, fetchArticles}}>
+        <ArticleContext.Provider value={{articles, loading, error, fetchArticles, selectedArticle, setSelectedArticle}}>
             {children}
         </ArticleContext.Provider>
     )

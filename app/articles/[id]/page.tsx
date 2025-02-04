@@ -13,7 +13,7 @@ import OneArticleSkeleton from "@/components/skeletons/oneArticleSkeleton";
 import Sidebar from "@/components/Sidebar";
 import FollowButton from "@/components/follow";
 import LikeButton from "@/components/LikeButton";
-import { Article } from "@/types/types";
+import { useArticles } from "@/context/ArticleContext";
 
 interface User {
   id: string;
@@ -26,7 +26,8 @@ interface Follow {
 }
 
 export default function FullArticlePage() {
-  const [article, setArticle] = useState<Article | null>(null);
+  const {selectedArticle, setSelectedArticle} = useArticles();
+  const [article, setArticle] = useState(selectedArticle)
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [following, setFollowing] = useState<string[]>([]);

@@ -6,14 +6,21 @@ import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";
 import { useArticles } from "@/context/ArticleContext";
 import ArticleCard from "@/components/articleCard";
+import { Article } from "@/types/types";
 
 export default function Articles() {
-  const { articles, loading, error, fetchArticles } = useArticles();
+  const { articles, loading, error, fetchArticles, setSelectedArticle } =
+    useArticles();
   const router = useRouter();
 
   useEffect(() => {
     fetchArticles();
   }, []);
+
+  const handleArticleClick = (article: Article) => {
+    setSelectedArticle(article);
+    router.push(`/articles/${article.id}`);
+  };
 
   return (
     <div className="bg-white text-black min-h-screen overflow-hidden">
@@ -48,7 +55,9 @@ export default function Articles() {
               ) : (
                 <div>
                   {articles.map((article) => (
-                    <ArticleCard key={article.id} article={article} />
+                    <div onClick={() => handleArticleClick(article)}>
+                      <ArticleCard key={article.id} article={article} />
+                    </div>
                   ))}
                 </div>
               )}

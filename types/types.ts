@@ -151,6 +151,8 @@ export interface ArticleContextType {
   articles: Article[];
   loading: boolean;
   error: string | null;
+  selectedArticle: Article | null;
+  setSelectedArticle: (article: Article | null) => void;
   fetchArticles: () => Promise<void>;
   
 }

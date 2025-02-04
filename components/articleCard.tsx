@@ -52,7 +52,7 @@ export default function ArticleCard({ article }: { article: Article }) {
     const formattedDate = format(new Date(article.createdAt), "MMM dd");
 
   return (
-    <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 rounded-lg w-full p-4">
+    <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 border-gray-100 rounded-lg w-full p-4">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center">
           {article.user && article.user.avatarUrl ? (
