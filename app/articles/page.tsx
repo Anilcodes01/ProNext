@@ -15,7 +15,7 @@ export default function Articles() {
 
   useEffect(() => {
     fetchArticles();
-  }, []);
+  }, [fetchArticles]);
 
   const handleArticleClick = (article: Article) => {
     setSelectedArticle(article);
@@ -55,7 +55,10 @@ export default function Articles() {
               ) : (
                 <div>
                   {articles.map((article) => (
-                    <div onClick={() => handleArticleClick(article)}>
+                    <div
+                      key={article.id}
+                      onClick={() => handleArticleClick(article)}
+                    >
                       <ArticleCard key={article.id} article={article} />
                     </div>
                   ))}

@@ -26,7 +26,7 @@ interface Follow {
 }
 
 export default function FullArticlePage() {
-  const {selectedArticle, setSelectedArticle} = useArticles();
+  const {selectedArticle} = useArticles();
   const [article, setArticle] = useState(selectedArticle)
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<User[]>([]);
