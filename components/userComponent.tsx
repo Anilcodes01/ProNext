@@ -1,7 +1,5 @@
 "use client";
-
 import { useState, useEffect } from "react";
-import axios from "axios";
 import PostCard from "./postCard";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "next/navigation";
@@ -14,69 +12,35 @@ import ProjectCard from "./projectCard";
 import { useRouter } from "next/navigation";
 import { getDeviconUrl } from "@/app/lib/getDeviconUrl";
 import { CalendarDays, MapPin } from "lucide-react";
-import { Article, Project, UserProfile,  Post } from "@/types/types";
-import UserComponentSkeleton from "./skeletons/userComponentSkeleton";
 import { PostListProps } from "@/types/types";
+import { useUserProfile } from "@/context/UserProfileContext";
 
-export default function UserProfilePage({onGeminiClick = () => {}}: PostListProps) {
-  const [posts, setPosts] = useState<Post[]>([]);
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [followersCount, setFollowersCount] = useState<number | null>(null);
-  const [followingCount, setFollowingCount] = useState<number | null>(null);
-  const [error, setError] = useState<string | null>(null);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [viewMode, setViewMode] = useState<"posts" | "articles" | "projects">(
-    "posts"
-  );
-  const [following] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
+export default function UserProfilePage({
+  onGeminiClick = () => {},
+}: PostListProps) {
   const { userId } = useParams();
   const { data: session } = useSession();
   const router = useRouter();
+  const [following] = useState<string[]>([]);
+  const {
+    userProfile,
+    posts,
+    articles,
+    projects,
+    error,
+    viewMode,
+    setViewMode,
+    fetchUserData,
+  } = useUserProfile();
 
   useEffect(() => {
-    if (!userId) return;
-
-    const fetchUserData = async () => {
-      try {
-        const userResponse = await axios.get(`/api/users/${userId}`, {
-          headers: {
-            "Cache-Control": "no-store, no-cache, max-age=0, must-revalidate",
-            Pragma: "no-cache",
-            Expires: "0",
-          },
-        });
-
-        const userData = userResponse.data.user;
-        setUserProfile(userData);
-        setPosts(userData.posts)
-        setArticles(userData.articles)
-        setProjects(userData.projects)
-        setFollowersCount(userResponse.data.followersCount);
-        setFollowingCount(userResponse.data.followingCount);
-      } catch (error) {
-        console.error("Failed to fetch user data", error);
-        setError("Failed to fetch user data");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUserData();
+    if (userId) {
+      fetchUserData(userId as string);
+    }
   }, [userId]);
-
-  const handleViewModeChange = (mode: "posts" | "articles" | "projects") => {
-    setViewMode(mode);
-   
-  };
 
   if (error) {
     return <p className="text-red-500">{error}</p>;
-  }
-
-  if (loading) {
-    return <UserComponentSkeleton />;
   }
 
   const formatDate = (dateString: string) => {
@@ -91,8 +55,8 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
   const isOwnProfile = session?.user?.id === userId;
 
   return (
-    <div className=" mt-16 flex flex-col md:p-4 lg:p-5 p-4 bg-gray-50">
-      <div className="rounded-lg bg-white   flex flex-col ">
+    <div className=" mt-16 flex flex-col">
+      <div className="rounded-lg bg-white p-4  flex flex-col ">
         <div className="">
           <div className="relative rounded lg:h-[20vh] h-[12vh] lg:mb-8 mb-10 w-full">
             {userProfile?.ProfilePageImage ? (
@@ -183,10 +147,12 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
 
             <div className="text-black flex items-center  pl-4 mt-4 gap-8">
               <div className="cursor-pointer text-sm hover:text-blue-500 transition duration-300">
-                <span className="font-bold">{followersCount}</span> Followers
+                <span className="font-bold">{userProfile?.followersCount}</span>{" "}
+                Followers
               </div>
               <div className="cursor-pointer text-sm hover:text-blue-500 transition duration-300">
-                <span className="font-bold">{followingCount}</span> Following
+                <span className="font-bold">{userProfile?.followingCount}</span>{" "}
+                Following
               </div>
             </div>
 
@@ -211,9 +177,9 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
           </div>
         </div>
 
-        <div className="flex gap-6 bg-white  ">
+        <div className="flex gap-6 ml-4 bg-white  ">
           <button
-            onClick={() => handleViewModeChange("posts")}
+            onClick={() => setViewMode("posts")}
             className={`${
               viewMode === "posts"
                 ? "border-b-4 text-green-600 border-green-600"
@@ -223,7 +189,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
             Posts
           </button>
           <button
-            onClick={() => handleViewModeChange("articles")}
+            onClick={() => setViewMode("articles")}
             className={`${
               viewMode === "articles"
                 ? "border-b-4 text-green-600 border-green-600"
@@ -233,7 +199,7 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
             Articles
           </button>
           <button
-            onClick={() => handleViewModeChange("projects")}
+            onClick={() => setViewMode("projects")}
             className={`${
               viewMode === "projects"
                 ? "border-b-4 text-green-600 border-green-600"
@@ -248,7 +214,11 @@ export default function UserProfilePage({onGeminiClick = () => {}}: PostListProp
           {viewMode === "posts" && (
             <div className="space-y-4">
               {posts.map((post) => (
-                <PostCard key={post.id} post={post} onGeminiClick={onGeminiClick} />
+                <PostCard
+                  key={post.id}
+                  post={post}
+                  onGeminiClick={onGeminiClick}
+                />
               ))}
             </div>
           )}

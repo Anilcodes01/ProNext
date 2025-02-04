@@ -2,8 +2,6 @@
 
 import { useRouter } from "next/navigation";
 
-
-
 export default function NoSession() {
     const router = useRouter();
     return <div className="text-black m-5  text-xl flex items-center justify-center  min-h-screen">

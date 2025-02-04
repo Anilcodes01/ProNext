@@ -2,7 +2,7 @@
 import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 import { Article } from "@/types/types";
-import { EllipsisVertical } from "lucide-react";
+import { Dot, EllipsisVertical } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +17,8 @@ import { Trash2 } from "lucide-react";
 import { TbMessageReport } from "react-icons/tb";
 import { MdBlockFlipped } from "react-icons/md";
 import axios from "axios";
+import { format } from "date-fns";
+
 
 export default function ArticleCard({ article }: { article: Article }) {
   const { data: session } = useSession();
@@ -47,6 +49,8 @@ export default function ArticleCard({ article }: { article: Article }) {
     return <div className="text-red-500">Error: Article data is missing.</div>;
   }
 
+    const formattedDate = format(new Date(article.createdAt), "MMM dd");
+
   return (
     <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 rounded-lg w-full p-4">
       <div className="flex items-center justify-between mb-4">
@@ -59,27 +63,26 @@ export default function ArticleCard({ article }: { article: Article }) {
               height={384}
               quality={75}
               onClick={() => router.push(`/user/${article.user.id}`)}
-              className="rounded-full  overflow-hidden h-10 w-10 object-cover cursor-pointer"
+              className="rounded-full  overflow-hidden h-8 w-8 object-cover cursor-pointer"
             />
           ) : (
-            <FaUserCircle className="w-6 h-6 text-black" />
+            <FaUserCircle className="w-8 h-8 text-black" />
           )}
-          <div className="ml-2 flex">
-            <div
-              onClick={() => router.push(`/user/${article.user.id}`)}
-              className="text-lg text-black font-semibold"
-            >
-              {article.user?.name || "Unknown User"}
+          <div className="flex items-center  ml-2 cursor-pointer">
+              <div className="text-[18px] ">
+                {article.user?.name || "Unknown User"}
+              </div>
+              <span className="ml-2 text-gray-600 text-sm">
+                <span className="hidden sm:inline">@{article.user.username}</span>
+                <span className="inline sm:hidden">
+                  @{article.user.username?.slice(0, 6)}...
+                </span>
+              </span>
+
+              <Dot className="text-gray-400" />
+             
+              <div className="text-xs text-gray-600">{formattedDate}</div>
             </div>
-            <div className="text-sm text-black ml-2 mt-1">
-              {" . "}
-              {new Date(article.createdAt).toLocaleDateString(undefined, {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
-            </div>
-          </div>
         </div>
 
         <DropdownMenu>

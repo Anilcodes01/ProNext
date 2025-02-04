@@ -4,9 +4,10 @@ import { FaUserCircle } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { ProjectCardProps } from "@/types/types";
-import { EllipsisVertical, Trash2 } from "lucide-react";
+import { Dot, EllipsisVertical, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { format } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,6 +51,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     }
   };
 
+   const formattedDate = format(new Date(project.createdAt), "MMM dd");
+
   useEffect(() => {
     if (project.projectRepoLink) {
       fetchTechStack(project.projectRepoLink)
@@ -92,24 +95,26 @@ export default function ProjectCard({ project }: ProjectCardProps) {
               width={250}
               height={250}
               quality={75}
-              className="rounded-full overflow-hidden h-10 w-10 object-cover cursor-pointer"
+              className="rounded-full overflow-hidden h-8 w-8 object-cover cursor-pointer"
             />
           ) : (
-            <FaUserCircle className="w-10 h-10 text-gray-500" />
+            <FaUserCircle className="w-8 h-8 text-gray-500" />
           )}
-          <div className="ml-3">
-            <div className="text-lg text-gray-900 font-semibold">
-              {project.user?.name || "Unknown User"}
+           <div className="flex items-center  ml-2 cursor-pointer">
+              <div className="text-[18px] ">
+                {project.user?.name || "Unknown User"}
+              </div>
+              <span className="ml-2 text-gray-600 text-sm">
+                <span className="hidden sm:inline">@{project.user.username}</span>
+                <span className="inline sm:hidden">
+                  @{project.user.username?.slice(0, 6)}...
+                </span>
+              </span>
+
+              <Dot className="text-gray-400" />
+             
+              <div className="text-xs text-gray-600">{formattedDate}</div>
             </div>
-            <div className="text-sm text-gray-500">
-              Posted on{" "}
-              {new Date(project.createdAt).toLocaleDateString(undefined, {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-              })}
-            </div>
-          </div>
         </div>
         <div>
           <DropdownMenu>

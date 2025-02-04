@@ -60,18 +60,18 @@ export async function GET(
           },
         },
         projects: {
-          orderBy: {createdAt: 'desc'},
+          orderBy: { createdAt: "desc" },
           include: {
             user: {
               select: {
                 id: true,
                 name: true,
                 username: true,
-                avatarUrl: true
-              }
-            }
-          }
-        }
+                avatarUrl: true,
+              },
+            },
+          },
+        },
       },
     });
 
@@ -97,9 +97,9 @@ export async function GET(
         user: {
           ...user,
           posts: postsWithDetails,
+          followersCount: followersCount,
+          followingCount: followingCount,
         },
-        followersCount,
-        followingCount,
       },
       { status: 200 }
     );

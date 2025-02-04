@@ -117,6 +117,9 @@ export interface UserProfile {
   city?: string;
   ProfilePageImage?: string;
   techStack?: string[];
+  followersCount: number | null;
+  followingCount: number | null;
+
 }
 
 export interface Follow {
@@ -169,4 +172,17 @@ export interface ProjectCardProps {
       avatarUrl: string;
     };
   };
+}
+
+export interface UserProfileContextType {
+  userProfile: UserProfile | null;
+  posts: Post[];
+  articles: Article[];
+  projects: Project[];
+  loading: boolean;
+  error: string | null;
+  viewMode: 'posts' | 'articles' | 'projects';
+  setViewMode: (mode: 'posts' | 'articles' | 'projects') => void;
+  fetchUserData: (userId: string) => Promise<void>;
+  updateUserProfile: (updatedProfile: Partial<UserProfile>) => Promise<void>
 }
