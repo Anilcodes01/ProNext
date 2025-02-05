@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SuggesstionbarSkeleton from "./skeletons/SuggestionbarSkeleton";
