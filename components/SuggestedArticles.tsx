@@ -12,12 +12,12 @@ const getRandomArticles = (articles: Article[], count: number) => {
 };
 
 export default function SuggestedArticles() {
-const {articles, loading, error, fetchArticles} = useArticles();
-const router = useRouter();
+  const { articles, loading, error, fetchArticles } = useArticles();
+  const router = useRouter();
 
-useEffect(() => {
-  fetchArticles();
-}, [fetchArticles])
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   if (loading) {
     return (
@@ -35,7 +35,7 @@ useEffect(() => {
     );
   }
 
- const suggestedArticles = getRandomArticles(articles, 2);
+  const suggestedArticles = getRandomArticles(articles, 2);
 
   return (
     <div className=" text-black flex border border-gray-100 rounded-lg flex-col p-4  h-auto">
@@ -43,34 +43,28 @@ useEffect(() => {
         <span className="text-base font-medium"> Trending Articles</span>
       </div>
       <div className="flex flex-col gap-4 mt-4">
-        {suggestedArticles.length > 0 ? (
-          suggestedArticles.map((article) => (
-            <div key={article.id}>
-              <h2 className="mt-2  text-base font-medium hover:text-green-500 ">
-                {article.title}
-              </h2>
-              <p className="text-gray-600 text-sm mt-1">
-                {article.description.slice(0, 80)}...
-              </p>
+        {suggestedArticles.map((article) => (
+          <div key={article.id}>
+            <h2 className="mt-2  text-base font-medium hover:text-green-500 ">
+              {article.title}
+            </h2>
+            <p className="text-gray-600 text-sm mt-1">
+              {article.description.slice(0, 80)}...
+            </p>
 
-              <div className="flex mt-2 gap-1">
-                <button
-                  onClick={() => {
-                    router.push(`/articles/${article.id}`);
-                  }}
-                  className="text-sm text-green-600 hover:underline"
-                >
-                  Read more
-                </button>
-                <MoveRight size={20} className="text-green-600" />
-              </div>
+            <div className="flex mt-2 gap-1">
+              <button
+                onClick={() => {
+                  router.push(`/articles/${article.id}`);
+                }}
+                className="text-sm text-green-600 hover:underline"
+              >
+                Read more
+              </button>
+              <MoveRight size={20} className="text-green-600" />
             </div>
-          ))
-        ) : (
-          <div className="flex text-center justify-center text-xl text-black font-bold">
-            Oops...!, No articles found...!
           </div>
-        )}
+        ))}
       </div>
     </div>
   );
