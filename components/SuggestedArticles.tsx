@@ -1,41 +1,23 @@
 "use client";
-
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import SuggesstionbarSkeleton from "./skeletons/SuggestionbarSkeleton";
+import { Article } from "@/types/types";
+import { useArticles } from "@/context/ArticleContext";
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  user: {
-    id: string;
-    name: string;
-    avatarUrl: string;
-  };
-}
+const getRandomArticles = (articles: Article[], count: number) => {
+  const shuffled = [...articles].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+};
 
 export default function SuggestedArticles() {
-  const [articles, setArticles] = useState<Article[]>([]);
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
+const {articles, loading, error, fetchArticles} = useArticles();
+const router = useRouter();
 
-  useEffect(() => {
-    const fetchSuggestedArticles = async () => {
-      try {
-        const response = await axios.get("/api/articles/suggestedArticles");
-        const articlesData = response.data?.articles || [];
-        setArticles(articlesData);
-      } catch (error) {
-        console.error("Error fetching articles:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchSuggestedArticles();
-  }, []);
+useEffect(() => {
+  fetchArticles();
+}, [fetchArticles])
 
   if (loading) {
     return (
@@ -45,14 +27,24 @@ export default function SuggestedArticles() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="text-center text-red-600">
+        Error loading suggested articles
+      </div>
+    );
+  }
+
+ const suggestedArticles = getRandomArticles(articles, 2);
+
   return (
     <div className=" text-black flex border border-gray-100 rounded-lg flex-col p-4  h-auto">
       <div className="flex gap-2">
         <span className="text-base font-medium"> Trending Articles</span>
       </div>
       <div className="flex flex-col gap-4 mt-4">
-        {articles.length > 0 ? (
-          articles.map((article) => (
+        {suggestedArticles.length > 0 ? (
+          suggestedArticles.map((article) => (
             <div key={article.id}>
               <h2 className="mt-2  text-base font-medium hover:text-green-500 ">
                 {article.title}
