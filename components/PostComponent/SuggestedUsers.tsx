@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { useEffect } from "react";
-import SuggestedUsersSkeleton from "./skeletons/SuggestedUsersSkeleton";
+import SuggestedUsersSkeleton from "../skeletons/SuggestedUsersSkeleton";
 import { useRouter } from "next/navigation";
 import { ExtendedUser } from "@/types/types";
 import { useUsers } from "@/context/UsersContext";

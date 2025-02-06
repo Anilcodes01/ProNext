@@ -49,12 +49,10 @@ export async function POST(req: Request) {
 
     let imageUrl: string | null = null;
 
-    // Upload image to Cloudinary if provided
     if (imageFile) {
       imageUrl = await uploadImageToCloudinary(imageFile);
     }
 
-    // Store project details in the database
     const newProject = await prisma.project.create({
       data: {
         projectName: projectName || "",
@@ -62,7 +60,7 @@ export async function POST(req: Request) {
         projectLink: projectLink,
         projectRepoLink: projectRepoLink,
         image: imageUrl || "",
-        userId: session.user.id, // Associate project with the logged-in user
+        userId: session.user.id, 
       },
     });
 

@@ -1,6 +1,6 @@
 "use client";
 
-import BookmarkComponent from "@/components/bookmark";
+import BookmarkComponent from "@/components/PostComponent/bookmark";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";

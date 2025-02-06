@@ -29,7 +29,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { usePosts } from "@/context/PostContext";
 
 export default function PostCard({

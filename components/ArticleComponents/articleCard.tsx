@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";

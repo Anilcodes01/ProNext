@@ -1,9 +1,8 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import axios from "axios";
-import PostCard from "./postCard";
-import ArticleCard from "./articleCard";
+import PostCard from "../PostComponent/postCard";
+import ArticleCard from "../ArticleComponents/articleCard";
 import { useSession } from "next-auth/react";
 import { Post } from "@/types/types";
 import { Article } from "@/types/types";

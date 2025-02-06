@@ -8,14 +8,8 @@ import { signOut } from "next-auth/react";
 import axios from "axios";
 import FeaturedDevelopers from "@/components/featuredUsers";
 import Sidebar from "@/components/Sidebar";
-import TrendingProjects from "@/components/TrendingProjects";
-
-type User = {
-  id: string;
-  name?: string;
-  avatarUrl?: string;
-  email?: string;
-};
+import TrendingProjects from "@/components/PostComponent/TrendingProjects";
+import { ExtendedUser } from "@/types/types";
 
 export default function Search() {
   const { data: session } = useSession();
@@ -25,7 +19,7 @@ export default function Search() {
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [searchResults, setSearchResults] = useState<User[]>([]);
+  const [searchResults, setSearchResults] = useState<ExtendedUser[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [showSearchResults, setShowSearchResults] = useState(false);
 
@@ -60,7 +54,7 @@ export default function Search() {
     user,
     size = "md",
   }: {
-    user: User;
+    user: ExtendedUser;
     size?: "sm" | "md" | "lg";
   }) => {
     const sizeClasses = {

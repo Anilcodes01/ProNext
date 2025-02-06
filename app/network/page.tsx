@@ -1,6 +1,6 @@
 "use client";
 
-import UserCard from "@/components/userCard";
+import UserCard from "@/components/PostComponent/userCard";
 import Sidebar from "@/components/Sidebar";
 
 export default function Network() {

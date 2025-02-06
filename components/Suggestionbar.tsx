@@ -1,7 +1,7 @@
 "use client";
 
-import SuggestedArticles from "./SuggestedArticles";
-import SuggestedUsers from "./SuggestedUsers";
+import SuggestedArticles from "./ArticleComponents/SuggestedArticles";
+import SuggestedUsers from "./PostComponent/SuggestedUsers";
 
 export default function Suggestionbar() {
   return (

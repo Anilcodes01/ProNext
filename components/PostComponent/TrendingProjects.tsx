@@ -2,7 +2,7 @@
 
 import axios from "axios";
 import { useEffect, useState } from "react";
-import TrendingProjectCard from "./TrendingProjectCard";
+import TrendingProjectCard from "./PostComponent/TrendingProjectCard";
 import TrendingProjectsSkeleton from "./skeletons/TrendingProjectsSkeleton";
 
 interface ProjectCard {

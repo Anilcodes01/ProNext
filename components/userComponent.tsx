@@ -1,14 +1,14 @@
 "use client";
 import { useState, useEffect } from "react";
-import PostCard from "./postCard";
+import PostCard from "./PostComponent/postCard";
 import { FaUserCircle } from "react-icons/fa";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { AiOutlineLink } from "react-icons/ai";
 import { useSession } from "next-auth/react";
-import ArticleCard from "./articleCard";
+import ArticleCard from "./ArticleComponents/articleCard";
 import FollowButton from "./follow";
-import ProjectCard from "./projectCard";
+import ProjectCard from "./PostComponent/projectCard";
 import { useRouter } from "next/navigation";
 import { getDeviconUrl } from "@/app/lib/getDeviconUrl";
 import { CalendarDays, MapPin } from "lucide-react";

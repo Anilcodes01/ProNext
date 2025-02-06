@@ -6,7 +6,7 @@ import MainContent from "@/components/mainContent";
 import Suggesstionbar from "@/components/Suggestionbar";
 import axios from "axios";
 import "./globals.css";
-import PostExplainer from "@/components/PostExplainer";
+import PostExplainer from "@/components/PostComponent/PostExplainer";
 
 export default function Home() {
   const [showExplainer, setShowExplainer] = useState(false);

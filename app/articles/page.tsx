@@ -5,7 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";
 import { useArticles } from "@/context/ArticleContext";
-import ArticleCard from "@/components/articleCard";
+import ArticleCard from "@/components/ArticleComponents/articleCard";
 import { Article } from "@/types/types";
 
 export default function Articles() {

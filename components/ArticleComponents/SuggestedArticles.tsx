@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 import { MoveRight } from "lucide-react";
 import { useRouter } from "next/navigation";
-import SuggesstionbarSkeleton from "./skeletons/SuggestionbarSkeleton";
+import SuggesstionbarSkeleton from "../skeletons/SuggestionbarSkeleton";
 import { Article } from "@/types/types";
 import { useArticles } from "@/context/ArticleContext";
 

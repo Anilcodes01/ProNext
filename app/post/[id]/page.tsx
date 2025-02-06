@@ -1,6 +1,6 @@
 "use client";
 
-import PostDetail from "@/components/postDetails";
+import PostDetail from "@/components/PostComponent/postDetails";
 import Sidebar from "@/components/Sidebar";
 import { useRouter } from "next/navigation";
 import { FaArrowLeft } from "react-icons/fa6";

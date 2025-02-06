@@ -4,8 +4,8 @@ import NoSession from "./skeletons/mainContentSkeleton/noSession";
 import { Toaster } from "sonner";
 import { usePosts } from "@/context/PostContext";
 import PostSkeleton from "./skeletons/postSkeleton";
-import PostCard from "./postCard";
-import CreatePost from "./CreatePost";
+import PostCard from "./PostComponent/postCard";
+import CreatePost from "./PostComponent/CreatePost";
 
 export default function MainContent({
   onGeminiClick = () => {},

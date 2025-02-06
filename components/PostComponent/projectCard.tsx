@@ -14,7 +14,7 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { BsPencilSquare } from "react-icons/bs";
 import { TbMessageReport } from "react-icons/tb";
 import { MdBlockFlipped } from "react-icons/md";
