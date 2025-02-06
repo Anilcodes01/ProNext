@@ -101,20 +101,16 @@ export default function CreatePost() {
         },
       });
 
-      if (response.data.createPost && response.data.createPost.id) {
+      if (response.data.createPost) {
+        const serverPost = response.data.createPost;
         const createdPost: Post = {
-          id: response.data.createPost.id,
-          content: postContent,
-          userId: session?.user?.id || "",
-          user: {
-            id: session?.user?.id || "",
-            name: session?.user?.name || "",
-            username: session?.user?.name || "",
-            avatarUrl: session?.user?.avatarUrl,
-          },
-          image: response.data.createPost.imageUrl || undefined,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
+          id: serverPost.id,
+          content: serverPost.content,
+          userId: serverPost.userId,
+          image: serverPost.image,
+          user: serverPost.user,
+          createdAt: serverPost.createdAt,
+          updatedAt: serverPost.updatedAt,
           isLiked: false,
           likeCount: 0,
           commentCount: 0,
@@ -128,11 +124,11 @@ export default function CreatePost() {
         setPreviewUrl(null);
       } else {
         console.error("Unexpected response structure:", response.data);
-        toast.error('Error while creating post. Please try again...!')
+        toast.error("Error while creating post. Please try again...!");
       }
     } catch (error) {
       console.error("Error while posting!", error);
-      toast.error('Failed to create post. Please try again...!')
+      toast.error("Failed to create post. Please try again...!");
     } finally {
       setLoading(false);
     }
@@ -275,7 +271,11 @@ export default function CreatePost() {
             onClick={handlePostSubmission}
             className="hover:bg-green-700 bg-green-600 flex items-center justify-center h-8 w-16 rounded-lg text-center text-white p-1"
           >
-            {loading ? <Loader className="animate-spin text-green-500" /> : "Post"}
+            {loading ? (
+              <Loader className="animate-spin text-green-500" />
+            ) : (
+              "Post"
+            )}
           </button>
         </div>
       </div>
