@@ -5,10 +5,6 @@ import { FaArrowLeft } from "react-icons/fa6";
 import { useUsers } from "@/context/UsersContext";
 import { useEffect } from "react";
 
-interface Follow {
-  followingId: string;
-}
-
 export default function UserCard() {
   const { users, loading, error, fetchUsers } =
     useUsers();
