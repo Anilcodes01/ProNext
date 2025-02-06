@@ -7,6 +7,7 @@ import Appbar from "@/components/appbar";
 import { PostProvider } from "@/context/PostContext";
 import { ArticleProvider } from "@/context/ArticleContext";
 import { UserProfileProvider } from "@/context/UserProfileContext";
+import { UserProvider } from "@/context/UsersContext";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,8 +37,10 @@ export default function RootLayout({
           <PostProvider>
             <ArticleProvider>
               <UserProfileProvider>
-                {showAppbar && <Appbar />}
-                {children}
+               <UserProvider>
+               {showAppbar && <Appbar />}
+               {children}
+               </UserProvider>
               </UserProfileProvider>
             </ArticleProvider>
           </PostProvider>

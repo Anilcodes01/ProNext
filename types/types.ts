@@ -158,12 +158,12 @@ export interface ArticleContextType {
 }
 
 export interface UserContextType {
-  user: ExtendedUser[];
+  users: ExtendedUser[];
   loading: boolean;
   error: string | null;
   selectedUser: ExtendedUser | null;
   setSelectedUser: (user: ExtendedUser | null) => void;
-  fetchUser: () => Promise<void>
+  fetchUsers: () => Promise<void>
 }
 
 export interface ProjectCardProps {

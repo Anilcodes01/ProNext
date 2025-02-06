@@ -20,7 +20,7 @@ export async function GET() {
     return NextResponse.json(
       {
         message: "Users fetched successfully!",
-        users,
+        users: users,
       },
       { status: 200 }
     );
