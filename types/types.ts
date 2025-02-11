@@ -81,7 +81,7 @@ export interface Article {
   user: {
     id: string;
     name: string;
-    avatarUrl?: string | null;
+    avatarUrl?: string ;
     username: string;
   };
   liked: boolean;

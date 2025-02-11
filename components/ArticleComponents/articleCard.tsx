@@ -1,15 +1,6 @@
 "use client";
-import { FaUserCircle } from "react-icons/fa";
 import Image from "next/image";
 import { Article } from "@/types/types";
-import { Dot, EllipsisVertical } from "lucide-react";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { BsPencilSquare } from "react-icons/bs";
@@ -18,7 +9,7 @@ import { TbMessageReport } from "react-icons/tb";
 import { MdBlockFlipped } from "react-icons/md";
 import axios from "axios";
 import { format } from "date-fns";
-
+import CardHeader from "../PostComponent/CardHeader";
 
 export default function ArticleCard({ article }: { article: Article }) {
   const { data: session } = useSession();
@@ -45,6 +36,46 @@ export default function ArticleCard({ article }: { article: Article }) {
     }
   };
 
+  const handleReportPost = async () => {
+    try {
+      await axios.post("/api/post/report", { postId: article.id });
+      alert("Post reported successfully");
+    } catch (error) {
+      console.error("Failed to report post:", error);
+    }
+  };
+
+  const dropdownItems = isOwnPost
+  ? [
+      {
+        icon: <BsPencilSquare />,
+        label: 'Edit Post',
+        onClick: () => router.push(`/post/${article.id}/edit`),
+        className: 'hover:bg-gray-100 flex items-center cursor-pointer'
+      },
+      {
+        icon: <Trash2 />,
+        label: 'Delete Post',
+        onClick: () => handleDeleteArticle,
+        className: 'text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50'
+      }
+    ]
+  : [
+      {
+        icon: <TbMessageReport />,
+        label: 'Report Post',
+        onClick: () => handleReportPost,
+        className: 'flex items-center'
+      },
+      {
+        icon: <MdBlockFlipped />,
+        label: `Block @${article.user.username}`,
+        onClick: () => router.push(`/user/${article.user.id}/block`),
+        className: 'text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50'
+      }
+    ];
+
+
   if (!article) {
     return <div className="text-red-500">Error: Article data is missing.</div>;
   }
@@ -53,89 +84,10 @@ export default function ArticleCard({ article }: { article: Article }) {
 
   return (
     <div className="bg-white cursor-pointer hover:bg-gray-100 border mt-4 border-gray-100 rounded-lg w-full p-4">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center">
-          {article.user && article.user.avatarUrl ? (
-            <Image
-              src={article.user.avatarUrl}
-              alt="User Profile"
-              width={384}
-              height={384}
-              quality={75}
-              onClick={() => router.push(`/user/${article.user.id}`)}
-              className="rounded-full  overflow-hidden h-8 w-8 object-cover cursor-pointer"
-            />
-          ) : (
-            <FaUserCircle className="w-8 h-8 text-black" />
-          )}
-          <div className="flex items-center  ml-2 cursor-pointer">
-              <div className="text-[18px] ">
-                {article.user?.name || "Unknown User"}
-              </div>
-              <span className="ml-2 text-gray-600 text-sm">
-                <span className="hidden sm:inline">@{article.user.username}</span>
-                <span className="inline sm:hidden">
-                  @{article.user.username?.slice(0, 6)}...
-                </span>
-              </span>
-
-              <Dot className="text-gray-400" />
-             
-              <div className="text-xs text-gray-600">{formattedDate}</div>
-            </div>
-        </div>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger
-            onClick={(e) => e.stopPropagation()}
-            className=" hover:bg-gray-200 h-8 w-8 rounded-full flex items-center justify-center focus:outline-none"
-          >
-            <EllipsisVertical
-              size={20}
-              className=" text-gray-400 hover:text-green-600"
-            />
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align="end" sideOffset={5} className="w-52 z-50">
-            {isOwnPost ? (
-              <>
-                <DropdownMenuItem
-                  className="hover:bg-gray-100 flex items-center cursor-pointer"
-                  onClick={() => router.push("./edit")}
-                >
-                  <BsPencilSquare />
-                  Edit Post
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  onClick={handleDeleteArticle}
-                  className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
-                >
-                  <Trash2 />
-                  Delete Post
-                </DropdownMenuItem>
-              </>
-            ) : (
-              <>
-                <DropdownMenuItem
-                  onClick={() => router.push("./delted")}
-                  className="flex items-center "
-                >
-                  <TbMessageReport />
-                  Report Post
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  onClick={() => router.push(`/user/${article.user.id}/block`)}
-                  className="text-red-600 focus:text-red-600 flex items-center font-semibold hover:bg-gray-100 cursor-pointer focus:bg-red-50"
-                >
-                  <MdBlockFlipped />
-                  Block @{article.user.name}
-                </DropdownMenuItem>
-              </>
-            )}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
+     <CardHeader  user={article.user }
+        date={formattedDate}
+      
+        dropdownItems={dropdownItems} />
 
       <div
         onClick={() => {

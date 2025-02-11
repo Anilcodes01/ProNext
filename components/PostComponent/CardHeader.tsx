@@ -64,7 +64,7 @@ import { CardHeaderProps } from '@/types/types';
               onClick={onGeminiClick}
               className="text-gray-400 hover:text-green-600 hover:bg-gray-200 p-1 rounded-full"
             >
-              <SiGooglegemini size={24} />
+              <SiGooglegemini className='hover:animate-pulse-custom' size={24} />
               <span className="absolute top-full mt-1 hidden w-max text-xs font-semibold text-green-600 bg-white rounded-lg px-2 py-1 shadow-lg group-hover:flex">
                 ProBot
               </span>
