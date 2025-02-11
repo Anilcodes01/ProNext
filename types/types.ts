@@ -11,7 +11,7 @@ export interface Message {
 export interface ExtendedUser extends User {
   id: string;
   name: string;
-  email: string;
+  email?: string;
   avatarUrl?: string;
 }
 
@@ -196,4 +196,17 @@ export interface UserProfileContextType {
   setViewMode: (mode: 'posts' | 'articles' | 'projects') => void;
   fetchUserData: (userId: string) => Promise<void>;
   updateUserProfile: (updatedProfile: Partial<UserProfile>) => Promise<void>
+}
+
+export interface CardHeaderProps {
+  user: ExtendedUser;
+  date: string;
+  onGeminiClick?: (e: React.MouseEvent) => void;
+  dropdownItems: {
+    icon: React.ReactNode;
+    label: string;
+    onClick: () => void;
+    className?: string;
+  }[];
+  showGeminiButton?: boolean;
 }
