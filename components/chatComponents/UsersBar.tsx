@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { ExtendedUser } from "@/types/types";
+import Image from "next/image";
 
 interface UsersProps {
   onSelectUser: (user: ExtendedUser) => void;
@@ -9,10 +10,10 @@ interface UsersProps {
   searchQuery?: string;
 }
 
-export default function Users({ 
-  onSelectUser, 
+export default function Users({
+  onSelectUser,
   selectedUserId,
-  searchQuery = "" 
+  searchQuery = "",
 }: UsersProps) {
   const [users, setUsers] = useState<ExtendedUser[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -80,10 +81,16 @@ export default function Users({
             }`}
             onClick={() => onSelectUser(user)}
           >
-            <div className={`w-1 h-20 ${selectedUserId === user.id ? "bg-green-500": ""}`}></div>
+            <div
+              className={`w-1 h-20 ${
+                selectedUserId === user.id ? "bg-green-500" : ""
+              }`}
+            ></div>
             <div className="flex-shrink-0">
               {user.avatarUrl ? (
-                <img
+                <Image
+                  width={200}
+                  height={200}
                   src={user.image || user.avatarUrl}
                   alt={user.name || "User"}
                   className="h-10 w-10 object-cover rounded-full"
@@ -100,7 +107,9 @@ export default function Users({
             <div className="flex-1 min-w-0">
               <p
                 className={`text font-medium ${
-                  selectedUserId === user.id ? "text-black-700" : "text-black-900"
+                  selectedUserId === user.id
+                    ? "text-black-700"
+                    : "text-black-900"
                 } text-left truncate`}
               >
                 {user.name || user.email}

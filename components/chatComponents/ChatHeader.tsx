@@ -1,5 +1,6 @@
 import { Phone, Video, EllipsisVertical, ChevronLeft } from "lucide-react";
 import { ChatHeaderProps } from "@/types/types";
+import Image from "next/image";
 
 export function ChatHeader({
   selectedUserName,
@@ -19,7 +20,9 @@ export function ChatHeader({
 
         <div className="flex-shrink-0">
           {selectedUserAvatarUrl ? (
-            <img
+            <Image
+              width={200}
+              height={200}
               src={selectedUserAvatarUrl}
               alt={selectedUserName || "User"}
               className="h-10 w-10 object-cover rounded-full"

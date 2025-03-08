@@ -7,12 +7,13 @@ import { useScrollToBottom } from "@/app/hooks/useScrollToBottom";
 import { EmptyChat } from "./EmptyChat";
 import { ChatHeader } from "./ChatHeader";
 import { MessageInput } from "./MessageInput";
+import Image from "next/image";
 
 interface ChatProps {
   selectedUserId: string | null;
   selectedUserName: string | null;
   selectedUserAvatarUrl: string | null;
-  selectedUserEmail: string | null
+  selectedUserEmail: string | null;
   onBack?: () => void;
 }
 
@@ -80,7 +81,9 @@ export default function ChatContainer({
   const renderAvatar = (isCurrentUser: boolean) => {
     if (isCurrentUser) {
       return session?.user.avatarUrl ? (
-        <img
+        <Image
+          width={200}
+          height={200}
           src={session.user.avatarUrl}
           alt="user avatar"
           className=" h-6 w-6 object-cover rounded-full"
@@ -94,7 +97,9 @@ export default function ChatContainer({
       );
     } else {
       return selectedUserAvatarUrl ? (
-        <img
+        <Image
+          width={200}
+          height={200}
           src={selectedUserAvatarUrl}
           alt="selected user avatar"
           className=" h-6 w-6 object-cover rounded-full"
@@ -114,41 +119,41 @@ export default function ChatContainer({
   if (!session) return <EmptyChat type="no-session" />;
 
   return (
-  <div className="flex flex-col h-screen">
-    <ChatHeader
-      selectedUserAvatarUrl={selectedUserAvatarUrl}
-      selectedUserName={selectedUserName}
-      selectedUserEmail={selectedUserEmail}
-      onBack={onBack}
-    />
+    <div className="flex flex-col h-screen">
+      <ChatHeader
+        selectedUserAvatarUrl={selectedUserAvatarUrl}
+        selectedUserName={selectedUserName}
+        selectedUserEmail={selectedUserEmail}
+        onBack={onBack}
+      />
 
-    <div
-      ref={messageContainerRef}
-      className="flex-1 hide-scrollbar pb-60 sm:pb-44   overflow-y-auto p-4 scroll-smooth " 
-    >
-      {isLoading ? (
-        <EmptyChat type="loading" />
-      ) : messages.length === 0 ? (
-        <EmptyChat type="no-messages" />
-      ) : (
-        <div className="space-y-4">
-          {messages.map((message) => (
-            <MessageBubble
-              key={message.id}
-              message={message}
-              isCurrentUser={message.senderId === session.user.id}
-              renderAvatar={renderAvatar}
-            />
-          ))}
-        </div>
-      )}
+      <div
+        ref={messageContainerRef}
+        className="flex-1 hide-scrollbar pb-60 sm:pb-44   overflow-y-auto p-4 scroll-smooth "
+      >
+        {isLoading ? (
+          <EmptyChat type="loading" />
+        ) : messages.length === 0 ? (
+          <EmptyChat type="no-messages" />
+        ) : (
+          <div className="space-y-4">
+            {messages.map((message) => (
+              <MessageBubble
+                key={message.id}
+                message={message}
+                isCurrentUser={message.senderId === session.user.id}
+                renderAvatar={renderAvatar}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <MessageInput
+        newMessage={newMessage}
+        setNewMessage={setNewMessage}
+        onSubmit={sendMessage}
+      />
     </div>
-
-    <MessageInput
-      newMessage={newMessage}
-      setNewMessage={setNewMessage}
-      onSubmit={sendMessage}
-    />
-  </div>
-);
+  );
 }

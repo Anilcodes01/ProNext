@@ -164,9 +164,11 @@ export default function UserProfilePage({
                     className="inline-flex gap-1 p-1 bg-slate-100 rounded-full items-center"
                     style={{ minWidth: "8px" }}
                   >
-                    <img
+                    <Image
                       src={getDeviconUrl(tech)}
                       alt={`${tech} icon`}
+                      width={200}
+                      height={200}
                       className="w-4 h-4 object-contain"
                     />
                     <p className="text-xs font- text-black">{tech}</p>

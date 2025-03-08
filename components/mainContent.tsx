@@ -18,7 +18,7 @@ export default function MainContent({
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [fetchPosts]);
 
   if (error) {
     return <NoSession />;
