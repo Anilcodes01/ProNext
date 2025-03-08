@@ -3,7 +3,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import Appbar from "@/components/appbar";
 import Sidebar from "@/components/Sidebar";
 import { useSession } from "next-auth/react";
 
