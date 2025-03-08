@@ -205,7 +205,7 @@ export interface CardHeaderProps {
   dropdownItems: {
     icon: React.ReactNode;
     label: string;
-    onClick: () => void;
+    onClick: (e?: React.MouseEvent) => void | Promise<void>;
     className?: string;
   }[];
   showGeminiButton?: boolean;

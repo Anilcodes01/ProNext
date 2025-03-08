@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
   try {
     const aiResponse = await axios.post(
-      "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+      "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
       {
         contents: [
           {
@@ -42,11 +42,11 @@ export async function POST(req: NextRequest) {
 
     const enhancedContent = aiResponse.data.candidates[0].content.parts[0].text;
     return NextResponse.json({ enhancedContent });
-  } catch (error) {
+  } catch (error: any) {
     return NextResponse.json(
       {
         message: "Error while enhancing the post:",
-        error,
+        error: error.message,
       },
       { status: 500 }
     );

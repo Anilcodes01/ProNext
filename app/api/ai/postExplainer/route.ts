@@ -14,14 +14,14 @@ export async function POST(req: NextRequest) {
 
     try {
         const aiResponse = await axios.post(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent",
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
             {
               contents: [
                 {
                   role: "user",
                   parts: [
                     {
-                      text: `Explain this post content in deep and thorough and make it more understandable without losing the context, Original text:${content}`,
+                      text: `Explain this post content in deep and thorough and make it more understandable without losing the context and the explained content should be should and should be less than 400 words, Original text:${content}`,
                     },
                   ],
                 },
