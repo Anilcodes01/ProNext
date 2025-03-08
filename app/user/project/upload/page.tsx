@@ -46,20 +46,18 @@ export default function UploadProject() {
 
   return (
    <div className="bg-white min-h-screen">
-    <div className="h-16">
-        <Appbar />
-    </div>
+   
     <div className="flex">
         <div className="hidden md:block fixed w-52 lg:w-80 h-full">
             <Sidebar />
         </div>
-        <div className="w-full ml-0 md:ml-52  lg:ml-80 h-screen lg:mr-52 border-r border-l border-gray-200">
+        <div className="w-full ml-0 md:ml-52 mt-16  lg:ml-80 h-screen lg:mr-80 border-r border-l border-gray-200">
         <div className="min-h-screen flex w-full flex-col  p-5">
       <form
-        className="flex flex-col gap-4 border w-full p-5 rounded-md w-full "
+        className="flex flex-col gap-4 border w-full p-5 rounded-md  "
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl text-black font-bold">Upload New Project</h2>
+        <h2 className="text-2xl text-green-600 font-bold">Upload New Project</h2>
         
         {error && <p className="text-red-500">{error}</p>}
 
@@ -68,15 +66,16 @@ export default function UploadProject() {
           placeholder="Project Name"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          className="border text-black outline-none p-2 rounded"
+          className="border text-black outline-none p-2 rounded-lg"
           required
         />
         
         <textarea
           placeholder="Project Description"
           value={projectDescription}
+          rows={5}
           onChange={(e) => setProjectDescription(e.target.value)}
-          className="border text-black outline-none p-2 rounded"
+          className="border text-black outline-none p-2 rounded-lg"
           required
         />
         
@@ -85,7 +84,7 @@ export default function UploadProject() {
           placeholder="Live Project Link"
           value={projectLink}
           onChange={(e) => setProjectLink(e.target.value)}
-          className="border text-black outline-none p-2 rounded"
+          className="border text-black outline-none p-2 rounded-lg"
         />
         
         <input
@@ -93,18 +92,18 @@ export default function UploadProject() {
           placeholder="GitHub Repo Link"
           value={projectRepoLink}
           onChange={(e) => setProjectRepoLink(e.target.value)}
-          className="border text-black outline-none p-2 rounded"
+          className="border text-black outline-none p-2 rounded-lg"
         />
         
         <input
           type="file"
           onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
-          className="border text-black outline-none p-2 rounded"
+          className="border text-green-600 outline-none p-2 rounded-lg"
         />
         
         <button
           type="submit"
-          className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+          className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
         >
           Upload Project
         </button>

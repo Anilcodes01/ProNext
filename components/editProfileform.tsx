@@ -39,7 +39,7 @@ export default function EditProfileForm() {
         });
         const user = userResponse.data.user;
         setName(user.name || "");
-        setUsername(username || "");
+        setUsername(user.username || "");
         setProfilePageImage(user.profilePageImage || "");
         setBio(user.bio || "");
         setCity(user.city || "");
@@ -157,29 +157,25 @@ export default function EditProfileForm() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="p-8 border m-4 min-h-screen rounded-lg"
-    >
+    <form onSubmit={handleSubmit} className="p-8 border m-4  rounded-lg">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="text-2xl text-black font-bold">Edit Profile</div>
-      <div className="flex text-black pt-4 w-full flex-col gap-4">
-        {/* Profile Page Image Upload and Preview */}
+      <div className="text-2xl text-green-600 font-bold">Edit Profile</div>
+      <div className="flex text-black  w-full flex-col gap-4">
         <div className="flex flex-col justify-center relative">
           <div className="w-full h-[20vh] rounded-lg overflow-hidden mt-4">
             {profilePageImagePreview && (
               <Image
                 src={profilePageImagePreview}
                 alt="Profile Page Image Preview"
-                width={150}
-                height={150}
+                width={800}
+                height={800}
                 className="object-cover w-full h-full"
               />
             )}
           </div>
           <button
             type="button"
-            className="mt-2 border p-2 rounded cursor-pointer text-sm"
+            className="mt-2 border p-2 rounded-lg cursor-pointer text-sm"
             onClick={() => document.getElementById("profilePageImage")?.click()}
           >
             Change Profile Page Image
@@ -193,7 +189,6 @@ export default function EditProfileForm() {
           />
         </div>
 
-        {/* Avatar Upload and Preview */}
         <div className="flex flex-col justify-center relative">
           <div className="w-[100px] h-[100px] rounded-full overflow-hidden mt-4">
             {avatarPreview ? (
@@ -216,7 +211,7 @@ export default function EditProfileForm() {
           </div>
           <button
             type="button"
-            className="absolute bottom-2 right-2 border p-2 rounded cursor-pointer text-sm"
+            className="absolute bottom-2 right-2 border p-2 rounded-lg cursor-pointer text-sm"
             onClick={() => document.getElementById("avatar")?.click()}
           >
             Change Avatar
@@ -296,7 +291,6 @@ export default function EditProfileForm() {
           </div>
         </div>
 
-        {/* Skills Section */}
         <div className="flex flex-col">
           <label className="text-sm mb-2">Skills</label>
           <div className="flex flex-wrap gap-2">
@@ -308,7 +302,7 @@ export default function EditProfileForm() {
                 {skill}
                 <button
                   type="button"
-                  className="h-4 w-4 ml-1 hover:bg-destructive hover:text-destructive-foreground rounded-full"
+                  className="h-4 w-4 ml-1 hover:bg-destructive flex items-center justify-center hover:text-destructive-foreground rounded-full"
                   onClick={() => removeSkill(skill)}
                 >
                   <X className="h-3 w-3" />
@@ -328,7 +322,7 @@ export default function EditProfileForm() {
             <button
               type="button"
               onClick={addSkill}
-              className="px-4 py-1 bg-blue-500 text-white rounded-lg"
+              className="px-4 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600"
             >
               Add
             </button>
@@ -338,7 +332,7 @@ export default function EditProfileForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className={`p-2 bg-blue-500 rounded-lg mt-2 text-white ${
+          className={`p-2 bg-green-500 hover:bg-green-600 mb-16 rounded-lg mt-2 text-white ${
             isLoading ? "opacity-50" : ""
           }`}
         >
