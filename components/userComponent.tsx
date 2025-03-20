@@ -95,7 +95,7 @@ export default function UserProfilePage({
               {isOwnProfile ? (
                 <button
                   onClick={() => (window.location.href = `/user/edit`)}
-                  className="text-sm rounded-full  px-3 py-1 border border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition duration-300"
+                  className="text-sm rounded-full  px-3 py-1 border border-green-600 text-green-600 hover:bg-green-600 hover:text-white transition duration-300"
                 >
                   Edit Profile
                 </button>
@@ -238,7 +238,7 @@ export default function UserProfilePage({
                   onClick={() => {
                     router.push("/user/project/upload");
                   }}
-                  className="bg-green-500 text-white rounded-lg py-1 px-3 hover:bg-green-600 transition duration-300"
+                  className="bg-green-600 text-white rounded-lg py-1 px-3 hover:bg-green-700 transition duration-300"
                 >
                   Upload Project
                 </button>

@@ -56,7 +56,7 @@ export default function UploadProject() {
         className="flex flex-col gap-4 border w-full p-5 rounded-md  "
         onSubmit={handleSubmit}
       >
-        <h2 className="text-2xl text-green-600 font-bold">Upload New Project</h2>
+        <h2 className="text-2xl text-black font-bold">Upload New Project</h2>
         
         {error && <p className="text-red-500">{error}</p>}
 
@@ -65,7 +65,7 @@ export default function UploadProject() {
           placeholder="Project Name"
           value={projectName}
           onChange={(e) => setProjectName(e.target.value)}
-          className="border text-black outline-none p-2 rounded-lg"
+          className="border text-black outline-none p-2 text-sm rounded-lg"
           required
         />
         
@@ -74,7 +74,7 @@ export default function UploadProject() {
           value={projectDescription}
           rows={5}
           onChange={(e) => setProjectDescription(e.target.value)}
-          className="border text-black outline-none p-2 rounded-lg"
+          className="border text-black outline-none p-2 text-sm rounded-lg"
           required
         />
         
@@ -83,7 +83,7 @@ export default function UploadProject() {
           placeholder="Live Project Link"
           value={projectLink}
           onChange={(e) => setProjectLink(e.target.value)}
-          className="border text-black outline-none p-2 rounded-lg"
+          className="border text-black outline-none p-2 text-sm rounded-lg"
         />
         
         <input
@@ -91,18 +91,18 @@ export default function UploadProject() {
           placeholder="GitHub Repo Link"
           value={projectRepoLink}
           onChange={(e) => setProjectRepoLink(e.target.value)}
-          className="border text-black outline-none p-2 rounded-lg"
+          className="border text-black outline-none p-2 text-sm rounded-lg"
         />
         
         <input
           type="file"
           onChange={(e) => setImage(e.target.files ? e.target.files[0] : null)}
-          className="border text-green-600 outline-none p-2 rounded-lg"
+          className="border text-green-600 outline-none p-2 text-sm rounded-lg"
         />
         
         <button
           type="submit"
-          className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+          className="bg-green-600 text-white p-2 text-sm rounded-lg hover:bg-green-700"
         >
           Upload Project
         </button>

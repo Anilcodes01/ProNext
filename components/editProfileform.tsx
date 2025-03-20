@@ -159,7 +159,7 @@ export default function EditProfileForm() {
   return (
     <form onSubmit={handleSubmit} className="p-8 border m-4  rounded-lg">
       <Toaster position="top-right" reverseOrder={false} />
-      <div className="text-2xl text-green-600 font-bold">Edit Profile</div>
+      <div className="text-2xl text-black font-bold">Edit Profile</div>
       <div className="flex text-black  w-full flex-col gap-4">
         <div className="flex flex-col justify-center relative">
           <div className="w-full h-[20vh] rounded-lg overflow-hidden mt-4">
@@ -322,7 +322,7 @@ export default function EditProfileForm() {
             <button
               type="button"
               onClick={addSkill}
-              className="px-4 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600"
+              className="px-4 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700"
             >
               Add
             </button>
@@ -332,7 +332,7 @@ export default function EditProfileForm() {
         <button
           type="submit"
           disabled={isLoading}
-          className={`p-2 bg-green-500 hover:bg-green-600 mb-16 rounded-lg mt-2 text-white ${
+          className={`p-2 bg-green-600 hover:bg-green-700 mb-16 rounded-lg mt-2 text-white ${
             isLoading ? "opacity-50" : ""
           }`}
         >
