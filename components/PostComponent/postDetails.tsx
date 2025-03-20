@@ -7,7 +7,6 @@ import {
   FaRegHeart,
   FaBookmark,
   FaHeart,
-  FaRegCommentAlt,
   FaRegBookmark,
 } from "react-icons/fa";
 import { IoMdShare } from "react-icons/io";
