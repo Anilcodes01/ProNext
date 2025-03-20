@@ -16,6 +16,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Post } from "@/types/types";
+import { MessageCircle } from 'lucide-react'
 
 export default function PostDetail() {
   const [post, setPost] = useState<Post | null>(null);
@@ -155,7 +156,7 @@ export default function PostDetail() {
                 </button>
 
                 <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-                  <FaRegCommentAlt size={18} />
+                  <MessageCircle size={18} />
                   <span>{post.comments?.length || 0} </span>
                 </button>
 
@@ -195,7 +196,7 @@ export default function PostDetail() {
             </form>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-4">
+          <div className="bg-white rounded-xl  p-4">
             <h2 className="text-lg font-semibold text-gray-900 mb-4">
               Comments
             </h2>
@@ -229,7 +230,7 @@ export default function PostDetail() {
                 ))}
               </div>
             ) : (
-              <div>No comments yet.</div>
+              <div>No comments yet, be the first one to comment...❤️</div>
             )}
           </div>
         </>
