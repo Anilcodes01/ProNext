@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import { Globe } from "lucide-react";
+import { TbBox } from "react-icons/tb";
 
 export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
   const router = useRouter();
@@ -105,6 +106,26 @@ export default function Sidebar({ isMobile }: { isMobile?: boolean }) {
               className="text-base w-full flex items-start"
             >
               Articles
+            </button>
+          )}
+        </div>
+
+        <div
+          onClick={() => {
+            router.push("/showcase");
+          }}
+          className="flex gap-2 items-center cursor-pointer hover:bg-sky-50 rounded-lg p-2 hover:text-green-600"
+        >
+          <TbBox
+           
+            size={24}
+          />
+          {!isMobile && (
+            <button
+              onClick={() => router.push("/showcase")}
+              className="text-base w-full flex items-start"
+            >
+              Startups
             </button>
           )}
         </div>

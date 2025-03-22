@@ -15,7 +15,7 @@ import { formatDistanceToNow } from "date-fns";
 import { useParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Post } from "@/types/types";
-import { MessageCircle } from 'lucide-react'
+import { MessageCircleMore } from 'lucide-react'
 
 export default function PostDetail() {
   const [post, setPost] = useState<Post | null>(null);
@@ -155,7 +155,7 @@ export default function PostDetail() {
                 </button>
 
                 <button className="text-gray-400 gap-1 hover:text-green-600 flex items-center">
-                  <MessageCircle size={18} />
+                  <MessageCircleMore size={18} />
                   <span>{post.comments?.length || 0} </span>
                 </button>
 
