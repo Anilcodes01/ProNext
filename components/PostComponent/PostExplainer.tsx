@@ -65,7 +65,7 @@ export default function PostExplainer({
                 initial={{ rotate: -180, opacity: 0 }}
                 animate={{ rotate: 0, opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="rounded-full h-8 w-8 bg-yellow-300 flex items-center justify-center"
+                className="rounded-full h-8 w-8 bg-green-500 flex items-center justify-center"
               >
                 <SiGooglegemini size={20} className="text-white" />
               </motion.div>
